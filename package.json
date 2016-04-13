@@ -46,6 +46,7 @@
     "history": "2.0.1",
     "html-webpack-plugin": "^2.15.0",
     "js-cookie": "^2.1.0",
+    "json-loader": "^0.5.4",
     "koa": "^1.2.0",
     "koa-better-body": "^1.0.17",
     "koa-hbs": "^0.8.0",
