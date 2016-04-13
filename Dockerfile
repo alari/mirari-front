@@ -12,7 +12,7 @@ RUN mkdir -p /usr/src/app
 
 WORKDIR /usr/src/app
 
-EXPOSE $UD_APP_PORT
+EXPOSE $MR_APP_PORT
 
 COPY node_modules /usr/src/app/node_modules
 COPY . /usr/src/app
