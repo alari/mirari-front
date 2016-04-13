@@ -1,0 +1,43 @@
+@component Pagination {
+  padding: 12px;
+
+  @descendent loadMore {
+    @descendent container {
+      padding: 12px;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+    }
+    @descendent btn {
+
+    }
+  }
+
+  @descendent list {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+  @descendent item {
+    padding: 6px;
+  }
+  @descendent link {
+    display: block;
+    min-width: 50px;
+    height: 36px;
+    line-height: 36px;
+    color: #fff;
+    text-decoration: none;
+    text-align: center;
+    border-radius: 2px;
+    transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+    background-color: #00bcd4;
+    box-shadow:0 1px 6px rgba(0,0,0,0.12), 0 1px 4px rgba(0,0,0,0.12);
+
+    &:hover {
+      color: #fff;
+      text-decoration: none;
+      background-color: rgba(0, 188, 212, 0.8);
+    }
+  }
+}

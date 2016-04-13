@@ -2,16 +2,43 @@ import "./style.css";
 import React from "react";
 import {connect} from "react-redux";
 import {Link} from "react-router";
+import {map} from 'ramda'
+import { getNodesList } from 'nodes/redux/actions'
+import Pagination from "pagination/components/Pagination";
 
-const mapStateToProps = (state) => ({})
+const mapStateToProps = (state) => ({
+  nodes: state.nodes.list
+})
 
-const mapDispatchToProps = (dispatch) => ({})
+const mapDispatchToProps = (dispatch) => ({
+  setPage: (p)=> {
+    dispatch(getNodesList({...p,_expand:"values*user"}))
+  }
+})
+
+const NodeSnippet = (node) => {
+  return (<article key={node.id}>
+    <b><Link to={"/nodes/"+node.id}>{ node.title }</Link></b><br/>
+    <i>{ node.user.name }</i>
+  </article>)
+}
 
 const HomeView = (props) => {
+
   return (
       <div>
-        <h1>Home View</h1>
-        <Link to="/nodes/node-id">GO TO SINGLE NODE</Link>
+        <h1>Мирари</h1>
+
+        { map(NodeSnippet, props.nodes.values) }
+
+        <Pagination
+            setPage={ props.setPage }
+            limit={props.nodes.limit}
+            offset={props.nodes.offset}
+            total={props.nodes.total}
+            itemsLength={props.nodes.values.length}
+        />
+        
       </div>
   )
 }
