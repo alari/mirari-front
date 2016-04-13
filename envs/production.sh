@@ -1,0 +1,7 @@
+export NODE_APP_PREFIX="MR"
+export MR_ENV="production"
+export MR_APP_PORT="3000"
+export MR_API_REMOTE_HOST="http://api:9000"
+export MR_API_REMOTE_PATH="/"
+export MR_API_ROOT="api"
+export NODE_ENV="production"
