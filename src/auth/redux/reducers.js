@@ -30,7 +30,7 @@ export default createReducer({}, {
 
   [LOGIN_USER.REQUEST]: (state, action) => {
     return {
-        ... state,
+        ...state,
       _error: null,
       _progress: true
     }

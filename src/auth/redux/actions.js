@@ -16,7 +16,7 @@ export const updateToken = (token) => {
   };
 };
 
-export const get = () => {
+export const getAuth = () => {
   return createApiAction({
     url: '/auth'
   }, GET_AUTH);
@@ -31,7 +31,7 @@ export const setCredentials = (credentials) => {
 
 export const login = (email, password, redirect) => {
   return createApiAction({
-    url: '/auth',
+    url: '/auth?_expand=user',
     method: 'POST',
     data: {
       email,
@@ -44,7 +44,7 @@ export const login = (email, password, redirect) => {
 
 export const signup = (email, password, redirect) => {
   return createApiAction({
-    url: '/auth',
+    url: '/auth?_expand=user',
     method: 'PUT',
     data: {
       email,
