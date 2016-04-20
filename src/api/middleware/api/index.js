@@ -28,7 +28,7 @@ export default (store) => next => action => {
 
   return request({
     ...action,
-    requestHeaders
+    headers: requestHeaders
   }).then(
       ({ result, error }) => {
         if(!error){

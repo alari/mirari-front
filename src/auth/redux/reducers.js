@@ -1,16 +1,23 @@
 import {
-  LOGIN_USER,
-  LOGOUT_USER,
-  SIGNUP_USER,
-  GET_AUTH,
-  UPDATE_TOKEN,
-  AUTH_TOKEN_HEADER,
-  SET_CREDENTIALS_FIELDS
-} from './constants';
-
-import { createReducer } from 'utils';
+    LOGIN_USER,
+    LOGOUT_USER,
+    SIGNUP_USER,
+    GET_AUTH,
+    UPDATE_TOKEN,
+    AUTH_TOKEN_HEADER,
+    SET_CREDENTIALS_FIELDS
+} from "./constants";
+import {RESOLVED_ON_SERVER} from "state/redux/constants";
+import {createReducer} from "utils";
 
 export default createReducer({}, {
+  [RESOLVED_ON_SERVER]: (state, action) => {
+    return {
+      ...state,
+      headers: null
+    }
+  },
+
   [UPDATE_TOKEN]: (state, action) => {
     return {
       ...state,
@@ -20,17 +27,17 @@ export default createReducer({}, {
 
   [SET_CREDENTIALS_FIELDS]: (state, action) => {
     return {
-        ...state,
+      ...state,
       credentials: {
-          ...state.credentials,
-          ...action.credentials
+        ...state.credentials,
+        ...action.credentials
       }
     }
   },
 
   [LOGIN_USER.REQUEST]: (state, action) => {
     return {
-        ...state,
+      ...state,
       _error: null,
       _progress: true
     }
@@ -38,30 +45,33 @@ export default createReducer({}, {
 
   [LOGIN_USER.SUCCESS]: (state, action) => {
     return {
-    ...state,
-    ...action.result.body,
+      ...state,
+      ...action.result.body,
       _error: null,
       _progress: false,
       credentials: {}
-  }},
+    }
+  },
 
   [LOGIN_USER.FAILURE]: (state, action) => {
     return {
-        ...state,
+      ...state,
       _progress: false,
-    _error: action.error.body
-  }},
+      _error: action.error.body
+    }
+  },
 
   [GET_AUTH.SUCCESS]: (state, action) => {
     return {
-    ...state,
-    ...action.result.body
-  }},
+      ...state,
+      ...action.result.body
+    }
+  },
 
   [SIGNUP_USER.REQUEST]: (state, action) => {
     return {
-        ...state,
-        _error: null,
+      ...state,
+      _error: null,
       _progress: true,
     }
   },
@@ -75,7 +85,7 @@ export default createReducer({}, {
   }),
 
   [SIGNUP_USER.FAILURE]: (state, action) => ({
-      ...state,
+    ...state,
     _progress: false,
     _error: action.error.body
   }),
