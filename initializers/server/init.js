@@ -18,17 +18,20 @@ import { put, select } from 'redux-saga/effects'
 
 import sagaMiddleware from 'store/middleware/saga'
 
-export const matchRoute = function(path, token){
+export const matchRoute = function(request, token){
+
+  const path = request.url
 
   const memoryHistory = createMemoryHistory(path)
   const location = memoryHistory.createLocation(path)
   const store = configureStore({
     auth: {
+      headers: {
+        'accept-language': request.header['accept-language'],
+        'user-agent': 'node-superagent ' + request.header['user-agent']
+      },
       token: token
-    },
-    // google: {
-    //   geocoding: environmental.config().google.googleGeocoding
-    // }
+    }
   }, memoryHistory)
 
   const history = syncHistoryWithStore(memoryHistory, store)

@@ -20,12 +20,11 @@ module.exports = function (middlewareConfig){
     const constants = require('../../src/auth/constants')
     const token = this.cookies.get(constants.AUTH_TOKEN_HEADER)
 
-
-    var result = yield App.matchRoute(this.request.url, token ? decodeURIComponent(token) : undefined)
-
     GLOBAL.navigator = {
       userAgent: this.request.header['user-agent'] || 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.155 Safari/537.36'
     }
+
+    var result = yield App.matchRoute(this.request, token ? decodeURIComponent(token) : undefined)
 
     if(result.error){
       this.status = 500
@@ -37,6 +36,7 @@ module.exports = function (middlewareConfig){
       try {
         html = result.render()
       } catch(e) {
+        // TODO: error page
         console.error(e)
       }
       this.status = 200
@@ -47,6 +47,7 @@ module.exports = function (middlewareConfig){
       })
     } else {
       this.status = 404
+      // TODO: 404 page
       this.body = 'Not found'
     }
   }

@@ -18,9 +18,6 @@ export default (requestConfig) => {
       [sendMethod(HTTPMethod)](requestConfig.params)
 
     if(requestConfig.headers){
-      if (requestConfig.headers['transfer-encoding'] === 'chunked') {
-        delete requestConfig.headers['content-length'];
-      }
       httpRequest.set(requestConfig.headers)
     }
 
