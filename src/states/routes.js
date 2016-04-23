@@ -17,7 +17,7 @@ export default [{
 
     resolve: function* resolveHome() {
       return yield [
-        put(getNodesList({limit: 7, _expand: "values*user"})),
+        put(getNodesList({limit: 13, _expand: "values*user"})),
         put(getAuth())
       ]
     }

@@ -1,12 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-//import {
-//  CircularProgress
-//} from 'material-ui'
+import {
+ CircularProgress
+} from 'material-ui'
 
 const Loading = () => {
-  return <div>LOADING</div>
+  return (<div style={{margin:'auto'}}><CircularProgress/></div>)
 }
 
 const mapStateToProps = (state) => ({

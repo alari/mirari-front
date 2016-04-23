@@ -1,31 +1,39 @@
-import React from 'react'
+import React from "react";
 import {Link} from "react-router";
 import {connect} from "react-redux";
-import ReactMarkdown from 'react-markdown'
+import ReactMarkdown from "react-markdown";
+import {
+  Toolbar,
+ToolbarGroup,
+ToolbarTitle
+} from "material-ui"
+import moment from 'moment'
 
 const mapStateToProps = (state) => ({
   node: state.nodes.node
 })
 
-const mapDispatchToProps = (dispatch) => ({
-})
+const mapDispatchToProps = (dispatch) => ({})
 
 const NodeView = (props) => {
   const node = props.node
 
   return (
-      <article>
-        <Link to="/">Мирари</Link>
-
-        { node && <article>
+      <div>
+        { node && <article style={{padding:"15px"}}>
           <h1>{ node.title }</h1>
 
-          <div>
-            <ReactMarkdown source={node.text.content}/>
-          </div>
-          </article>}
+          {node.text.content && <ReactMarkdown source={node.text.content}/>}
+        </article>}
 
-  </article>
+        <Toolbar>
+          <ToolbarGroup>
+            <ToolbarTitle text={node.user.name}/>
+            <ToolbarTitle text={moment(node.dateCreated).fromNow()}/>
+          </ToolbarGroup>
+        </Toolbar>
+
+      </div>
   )
 }
 

@@ -1,18 +1,18 @@
-import React, { Component, PropTypes } from 'react'
-import { Router, match } from 'react-router'
-import { Provider } from 'react-redux'
-import { HISTORY_CHANGE } from 'containers/constants'
-import routes from 'states/routes'
-import { resolveRoutes } from 'utils'
+import React, {Component, PropTypes} from "react";
+import {Router, match} from "react-router";
+import {Provider} from "react-redux";
+import {HISTORY_CHANGE} from "containers/constants";
+import routes from "states/routes";
+import {resolveRoutes} from "utils";
 
 class Root extends Component {
   componentWillMount() {
-    const { history, store, onReady } = this.props
+    const {history, store, onReady} = this.props
     var isLoaded = false
 
 
     history.listen(location => {
-      match({ history, location, routes }, (error, redirect, state) => {
+      match({history, location, routes}, (error, redirect, state) => {
         if (redirect) {
           history.push(redirect.pathname + redirect.search)
           return
@@ -28,7 +28,7 @@ class Root extends Component {
           history.goBack()
         }
 
-        if(!isLoaded && onReady){
+        if (!isLoaded && onReady) {
           onReady()
         }
       })
@@ -36,12 +36,12 @@ class Root extends Component {
   }
 
   render() {
-    const { history, store } = this.props
+    const {history, store} = this.props
 
     return (
-      <Provider store={ store }>
-        <Router routes={ routes } history={ history } />
-      </Provider>
+        <Provider store={ store }>
+          <Router routes={ routes } history={ history }/>
+        </Provider>
     )
   }
 }

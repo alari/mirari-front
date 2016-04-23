@@ -3,7 +3,9 @@ import './styles.css'
 import React from 'react'
 import {times, last, add, slice, map} from 'ramda'
 
-
+import {
+    RaisedButton
+} from 'material-ui'
 
 export default (props) => {
 
@@ -67,29 +69,29 @@ export default (props) => {
   }
 
   return (
-    <div className="Pagination">
-      { (pages.active != pages.last) && <div className="Pagination-loadMore-container">
-        <button className="Pagination-loadMore-btn" onClick={ setPage(pages.next, true) }>Загрузить ещё</button>
-      </div> }
+      <div className="Pagination">
+        { (pages.active != pages.last) && <div className="Pagination-loadMore-container">
+          <RaisedButton label="Загрузить ещё" fullWidth={true} className="Pagination-loadMore-btn" onClick={ setPage(pages.next, true) }/>
+        </div> }
 
-      <div className="Pagination-list">
-        <div className="Pagination-item">
-          <button secondary={true} disabled={ pages.active == pages.first } onClick={ setPage(pages.prev) } >Назад</button>
-        </div>
+        <div className="Pagination-list">
+          <div className="Pagination-item">
+            <RaisedButton label="Назад" secondary={true} disabled={ pages.active == pages.first } onClick={ setPage(pages.prev) } />
+          </div>
 
-        {
+          {
             map((n) => {
               return <div className="Pagination-item" key={"page"+n}>
-                <button secondary={ pages.active != n } disabled={pages.active == n } onClick={ setPage(n) }>{n}</button>
+                <RaisedButton label={ n } secondary={ pages.active != n } disabled={pages.active == n } onClick={ setPage(n) }/>
               </div>
             }, pages.numbers)
-        }
+          }
 
-        <div className="Pagination-item">
-          <button secondary={true} disabled={pages.active == pages.last} onClick={ setPage(pages.next) } >Вперёд</button>
+          <div className="Pagination-item">
+            <RaisedButton label="Вперёд" secondary={true} disabled={pages.active == pages.last} onClick={ setPage(pages.next) } />
+          </div>
+
         </div>
-
       </div>
-    </div>
   )
 }

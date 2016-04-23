@@ -54,6 +54,7 @@
     "koa-proxy": "^0.5.0",
     "koa-static": "^2.0.0",
     "koa-useragent": "^0.1.4",
+    "material-ui": "^0.15.0-beta.2",
     "moment": "^2.12.0",
     "postcss-bem": "^0.4.1",
     "postcss-custom-media": "^5.0.1",
