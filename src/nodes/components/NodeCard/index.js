@@ -5,7 +5,7 @@ import moment from 'moment'
 
 export default (props) => {
   const node = props.node
-  return (node && <Card key={node.id}>
+  return (node && <Card>
     <CardHeader
         title={<Link to={"/nodes/"+node.id} style={{color:'#333'}}>{ node.title }</Link>}
         subtitle={<span>{node.user.name}{ node.firstPublished && <span>, <i>{moment(node.firstPublished).fromNow()}</i></span> } </span>}

@@ -10,7 +10,6 @@ import {push} from "react-router-redux";
 import {logout} from "auth/redux/actions";
 
 const mapStateToProps = (state) => {
-  console.log(state)
   return {
     title: state.page.title,
     user: state.auth.user

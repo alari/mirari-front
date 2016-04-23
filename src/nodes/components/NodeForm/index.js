@@ -38,8 +38,6 @@ const kinds = {
 
 const NodeForm = (props) => {
 
-  console.log(props.node, props.changed)
-
   const base = props.node
 
   const changed = props.changed
