@@ -23,7 +23,7 @@ const NodeSnippet = (node) => {
   return (<Card key={node.id}>
     <CardHeader
         title={<Link to={"/nodes/"+node.id} style={{color:'#333'}}>{ node.title }</Link>}
-        subtitle={<span>{node.user.name}, <i>{moment(node.dateCreated).fromNow()}</i></span>}
+        subtitle={<span>{node.user.name}{ node.firstPublished && <span>, <i>{moment(node.firstPublished).fromNow()}</i></span> } </span>}
         avatar={node.user.avatarUrl}
     />
   </Card>)

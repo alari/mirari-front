@@ -2,12 +2,8 @@ import React from "react";
 import {Link} from "react-router";
 import {connect} from "react-redux";
 import ReactMarkdown from "react-markdown";
-import {
-  Toolbar,
-ToolbarGroup,
-ToolbarTitle
-} from "material-ui"
-import moment from 'moment'
+import {Toolbar, ToolbarGroup, ToolbarTitle} from "material-ui";
+import moment from "moment";
 
 const mapStateToProps = (state) => ({
   node: state.nodes.node
@@ -29,7 +25,7 @@ const NodeView = (props) => {
         <Toolbar>
           <ToolbarGroup>
             <ToolbarTitle text={node.user.name}/>
-            <ToolbarTitle text={moment(node.dateCreated).fromNow()}/>
+            {node.firstPublished && <ToolbarTitle text={moment(node.firstPublished).fromNow()}/>}
           </ToolbarGroup>
         </Toolbar>
 
