@@ -16,7 +16,7 @@ import { resolvedOnServer } from 'state/redux/actions'
 import { takeLatest } from 'redux-saga'
 import { put, select } from 'redux-saga/effects'
 
-import sagaMiddleware from 'store/middleware/saga'
+import sagaMiddleware from 'store/sagas'
 
 export const matchRoute = function(request, token){
 

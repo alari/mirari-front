@@ -26,6 +26,7 @@ const NodeView = (props) => {
           <ToolbarGroup>
             <ToolbarTitle text={node.user.name}/>
             {node.firstPublished && <ToolbarTitle text={moment(node.firstPublished).fromNow()}/>}
+            <Link to={"/my/node/" + node.id}>РЕДАКТИРОВАТЬ</Link>
           </ToolbarGroup>
         </Toolbar>
 

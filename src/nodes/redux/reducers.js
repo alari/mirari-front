@@ -1,10 +1,6 @@
 import {concat, map} from "ramda";
 import {createReducer, update} from "utils";
-import {
-    NODES_LIST,
-    NODES_LIST_APPEND,
-    NODES_GET
-} from "./constants";
+import {NODES_LIST, NODES_LIST_APPEND, NODES_GET, NODES_CLEAR_CHANGED, NODES_SET_CHANGED_FIELDS,NODES_SAVE} from "./constants";
 
 
 const updateNodeInStore = (state, id, handler) => {
@@ -60,6 +56,57 @@ export default createReducer({}, {
     return {
       ...state,
       node: action.result.body
+    }
+  },
+
+  [NODES_CLEAR_CHANGED]: (state, action) => {
+    return {
+      ...state,
+      node: action.create ? null : state.node,
+      changed: {},
+      error: null,
+      progress: false
+    }
+  },
+
+  [NODES_SET_CHANGED_FIELDS]: (state, action) => {
+    return {
+      ...state,
+      changed: {
+        ...state.changed,
+        ...action.fields
+      }
+    }
+  },
+
+  [NODES_SAVE.REQUEST]: (state, action) => {
+    return {
+      ...updateNodeInStore(state, action.nodeId, (user) => {
+        return update.set(user, action.params)
+      }),
+      error: null,
+      progress: true
+    }
+  },
+
+  [NODES_SAVE.SUCCESS]: (state, action) => {
+    return {
+      ...(updateNodeInStore(state, action.nodeId, (node) => {
+        return update.commit(node, action.result.body)
+      })),
+      changed: {},
+      error: null,
+      progress: false
+    }
+  },
+
+  [NODES_SAVE.FAILURE]: (state, action) => {
+    return {
+      ...updateNodeInStore(state, action.nodeId, (node) => {
+        return update.revert(node)
+      }),
+      error: action.error.body,
+      progress: false
     }
   }
 

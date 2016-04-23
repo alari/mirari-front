@@ -6,7 +6,7 @@ import cookie from 'auth/services/cookie'
 
 const { save, remove } = cookie(AUTH_TOKEN_HEADER)
 
-export default function* cookieSaga(getState) {
+export default function* cookieSaga() {
   yield* takeEvery([
     UPDATE_TOKEN,
     LOGOUT_USER

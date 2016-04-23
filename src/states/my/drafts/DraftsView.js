@@ -1,4 +1,3 @@
-import "./style.css";
 import React from "react";
 import {connect} from "react-redux";
 import {Link} from "react-router";
@@ -13,14 +12,16 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   setPage: (p)=> {
-    dispatch(getNodesList({...p,_expand:"values*user"}))
+    dispatch(getNodesList({...p,draft:true,_expand:"values*user"}))
   }
 })
 
-const HomeView = (props) => {
+const DraftsView = (props) => {
 
   return (
       <div>
+
+        <h1>Черновики</h1>
 
         { map((n) => <NodeCard node={n} key={n.id}/>, props.nodes.values) }
 
@@ -36,4 +37,4 @@ const HomeView = (props) => {
   )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomeView)
+export default connect(mapStateToProps, mapDispatchToProps)(DraftsView)

@@ -1,18 +1,21 @@
 import React from "react";
-import {AppBar, IconMenu, MenuItem, IconButton,Paper} from "material-ui";
-import {NavigationMoreVert} from 'material-ui/svg-icons'
+import {AppBar, IconMenu, MenuItem, IconButton, Paper} from "material-ui";
+import {NavigationMoreVert} from "material-ui/svg-icons";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import {purple500, purple700, purple100} from "material-ui/styles/colors";
 import {connect} from "react-redux";
 import {Link} from "react-router";
-import {push} from "react-router-redux"
+import {push} from "react-router-redux";
 import {logout} from "auth/redux/actions";
 
-const mapStateToProps = (state) => ({
-  title: state.page.title,
-  user: state.auth.user
-})
+const mapStateToProps = (state) => {
+  console.log(state)
+  return {
+    title: state.page.title,
+    user: state.auth.user
+  }
+}
 
 const mapDispatchToProps = (dispatch) => ({
   logout: () => {
@@ -26,22 +29,30 @@ const mapDispatchToProps = (dispatch) => ({
   },
   rootRedirect: () => {
     dispatch(push("/"))
+  },
+  draftsRedirect: () => {
+    dispatch(push("/my/drafts"))
+  },
+  newNodeRedirect: () => {
+    dispatch(push("/my/add-node"))
   }
 })
 
 const AuthMenu = (props) => {
   const content = () => {
-    if(!!props.user) {
+    if (!!props.user) {
       return (
           <div>
-            <MenuItem onClick={props.logout} primaryText="Выход" secondaryText={props.user.name} />
+            <MenuItem onClick={props.newNodeRedirect} primaryText="+ Добавить"/>
+            <MenuItem onClick={props.draftsRedirect} primaryText="Черновики"/>
+            <MenuItem onClick={props.logout} primaryText="Выход" secondaryText={props.user.name}/>
           </div>
       )
     } else {
       return (
           <div>
-            <MenuItem onClick={props.signIn} primaryText="Войти" />
-            <MenuItem onClick={props.signUp} primaryText="Регистрация" />
+            <MenuItem onClick={props.signIn} primaryText="Войти"/>
+            <MenuItem onClick={props.signUp} primaryText="Регистрация"/>
           </div>
       )
     }
@@ -73,7 +84,7 @@ const RootView = (props) => {
         <div>
           <AppBar
               showMenuIconButton={false}
-              title={props.title}
+              title="М."
               iconElementRight={<AuthMenu {...props}/>}
               onTitleTouchTap={props.rootRedirect}
           />

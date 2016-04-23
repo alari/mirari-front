@@ -9,7 +9,7 @@ import {
 
 import apiMiddleware from 'api/middleware/api'
 import googleApiMiddleware from 'google/middleware/googleapi'
-import sagaMiddleware from './middleware/saga'
+import sagaMiddleware from './sagas'
 
 let DevTools
 

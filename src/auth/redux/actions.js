@@ -18,7 +18,7 @@ export const updateToken = (token) => {
 
 export const getAuth = () => {
   return createApiAction({
-    url: '/auth'
+    url: '/auth?_expand=user'
   }, GET_AUTH);
 };
 
