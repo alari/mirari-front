@@ -1,5 +1,6 @@
 const config = require('environmental').config()
 import reload from './reload'
+import Helmet from "react-helmet";
 
 let App = null
 
@@ -41,9 +42,15 @@ module.exports = function (middlewareConfig){
       }
       this.status = 200
 
+      const head = Helmet.rewind();
+
       yield this.render(middlewareConfig.view, {
         initialState: JSON.stringify(result.data),
-        app: html
+        app: html,
+        title: head.title.toString(),
+        meta: head.meta.toString(),
+        link: head.link.toString(),
+        htmlAttributes: head.htmlAttributes.toString()
       })
     } else {
       this.status = 404

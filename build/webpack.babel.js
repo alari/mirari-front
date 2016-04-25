@@ -64,8 +64,8 @@ export default [{
       vendor: [
         'react',
         'react-dom',
-        'react-router',
-        //'material-ui',
+        'react-router',  
+        'material-ui',  
         'redux',
         'ramda'
       ],

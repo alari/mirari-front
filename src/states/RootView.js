@@ -1,17 +1,20 @@
+import "./style.css";
 import React from "react";
 import {AppBar, IconMenu, MenuItem, IconButton, Paper} from "material-ui";
 import {NavigationMoreVert} from "material-ui/svg-icons";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-import {purple500, purple700, purple100} from "material-ui/styles/colors";
+import {green100, green500, green700} from "material-ui/styles/colors";
 import {connect} from "react-redux";
 import {Link} from "react-router";
 import {push} from "react-router-redux";
 import {logout} from "auth/redux/actions";
+import Helmet from "react-helmet";
 
 const mapStateToProps = (state) => {
   return {
     title: state.page.title,
+    meta: (state.page.meta || []).concat([]),
     user: state.auth.user
   }
 }
@@ -75,12 +78,21 @@ const RootView = (props) => {
   return (
       <MuiThemeProvider muiTheme={getMuiTheme({
     palette: {
-    primary1Color: purple500,
-    primary2Color: purple700,
-    primary3Color: purple100,
+    primary1Color: green500,
+    primary2Color: green700,
+    primary3Color: green100,
   }
     })}>
         <div>
+          <Helmet
+              title={props.title}
+              defaultTitle="Мирари"
+              link={[
+                {rel:"stylesheet",href:"https://fonts.googleapis.com/css?family=Roboto:400,300,500&subset=latin,cyrillic",type:"text/css"},
+                {rel:"stylesheet",href:"/bundle.css",type:"text/css",media:"screen,projection"}
+                ]}
+              meta={props.meta}
+          />
           <AppBar
               showMenuIconButton={false}
               title="М."

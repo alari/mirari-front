@@ -1,10 +1,11 @@
 import {
-  SET_PAGE_TITLE
+  SET_PAGE_PROPS
 } from './constants'
 
-export const setPageTitle = (title) => {
+export const setPageProps = ({title,meta=[]}) => {
   return {
-    type: SET_PAGE_TITLE,
-    title
+    type: SET_PAGE_PROPS,
+    title,
+    meta
   }
 }
