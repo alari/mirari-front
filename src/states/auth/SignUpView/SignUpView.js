@@ -11,11 +11,9 @@ const mapStateToProps = (state) => ({
   credentials: state.auth.credentials || {}
 })
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    signup: ({email, password}, redirect) => dispatch(signup(email, password, redirect)),
-    setCredentials: (crds) => dispatch(setCredentials(crds))
-  }
+const mapDispatchToProps = {
+    signup: ({email, password}, redirect) => signup(email, password, redirect),
+    setCredentials: (crds) => setCredentials(crds)
 }
 
 const SignUpView = (props) => {

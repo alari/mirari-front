@@ -17,15 +17,13 @@ const mapStateToProps = (state) => ({
   error: state.nodes.error
 })
 
-const mapDispatchToProps = (dispatch) => ({
-  setFields: (data) => {
-    dispatch(setChangedFields(data))
-  },
+const mapDispatchToProps = {
+  setFields: (data) => setChangedFields(data),
   saveNode: (base, changed) => {
     changed.kind = propOr(base.kind, "kind")(changed)
-    dispatch(saveNode(base,changed))
+    return saveNode(base,changed)
   }
-})
+}
 
 const kinds = {
   Post: "Пост",

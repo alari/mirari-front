@@ -8,9 +8,7 @@ const mapStateToProps = (state) => ({
   
 })
 
-const mapDispatchToProps = (dispatch) => ({
-  
-})
+const mapDispatchToProps = {}
 
 const AddNodeView = (props) => {
 

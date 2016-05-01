@@ -3,7 +3,7 @@ import Resolve from 'state/components/Resolve'
 import { put, select, call,take } from 'redux-saga/effects'
 import { getNode,clearChanged } from 'nodes/redux/actions'
 import {NODES_GET} from 'nodes/redux/constants'
-import {setPageTitle} from 'page/redux/actions'
+import {setPageProps} from 'page/redux/actions'
 
 export default {
   component: Resolve(ChangeNodeView),
@@ -23,10 +23,10 @@ export default {
       resolve.push(yield take(NODES_GET.SUCCESS))
       resolve.push(yield call(function*(){
         const title = yield select((s) => s.nodes.node.title)
-        yield put(setPageTitle(title))
+        yield put(setPageProps({title}))
       }))
     } else {
-      resolve.push(yield put(setPageTitle(node.title)))
+      resolve.push(yield put(setPageProps({title:node.title})))
     }
 
     return resolve

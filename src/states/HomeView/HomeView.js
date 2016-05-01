@@ -11,11 +11,9 @@ const mapStateToProps = (state) => ({
   nodes: state.nodes.list
 })
 
-const mapDispatchToProps = (dispatch) => ({
-  setPage: (p)=> {
-    dispatch(getNodesList({...p,_expand:"values*user"}))
-  }
-})
+const mapDispatchToProps = {
+  setPage: (p)=> getNodesList({...p, _expand: "values*user"})
+}
 
 const HomeView = (props) => {
 

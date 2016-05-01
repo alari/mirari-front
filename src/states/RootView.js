@@ -19,26 +19,21 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  logout: () => {
-    dispatch(logout())
-  },
-  signIn: () => {
-    dispatch(push("/auth/in"))
-  },
-  signUp: () => {
-    dispatch(push("/auth/up"))
-  },
-  rootRedirect: () => {
-    dispatch(push("/"))
-  },
-  draftsRedirect: () => {
-    dispatch(push("/my/drafts"))
-  },
-  newNodeRedirect: () => {
-    dispatch(push("/my/add-node"))
-  }
-})
+const mapDispatchToProps = {
+  logout: () =>
+      logout(),
+  signIn: () =>
+      push("/auth/in"),
+  signUp: () =>
+      push("/auth/up"),
+  rootRedirect: () =>
+      push("/"),
+  draftsRedirect: () =>
+      push("/my/drafts"),
+  newNodeRedirect: () =>
+      push("/my/add-node")
+
+}
 
 const AuthMenu = (props) => {
   const content = () => {

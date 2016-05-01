@@ -12,12 +12,10 @@ const mapStateToProps = (state) => ({
   credentials: state.auth.credentials || {}
 })
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    login: ({email, password}, redirectLocation) => dispatch(login(email, password, redirectLocation)),
-    setCredentials: (crds) => dispatch(setCredentials(crds))
+const mapDispatchToProps = {
+    login: ({email, password}, redirectLocation) => login(email, password, redirectLocation),
+    setCredentials: (crds) => setCredentials(crds)
   }
-}
 
 const SignInView = (props) => {
   const onChange = (fieldName) => (e) => {

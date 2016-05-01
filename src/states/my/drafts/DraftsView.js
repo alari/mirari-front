@@ -10,11 +10,10 @@ const mapStateToProps = (state) => ({
   nodes: state.nodes.list
 })
 
-const mapDispatchToProps = (dispatch) => ({
-  setPage: (p)=> {
-    dispatch(getNodesList({...p,draft:true,_expand:"values*user"}))
-  }
-})
+const mapDispatchToProps = {
+  setPage: (p)=>
+      getNodesList({...p, draft: true, _expand: "values*user"})
+}
 
 const DraftsView = (props) => {
 

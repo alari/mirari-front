@@ -2,6 +2,8 @@ import NodeView from './NodeView'
 import Resolve from 'state/components/Resolve'
 import { put, select, call,take } from 'redux-saga/effects'
 import { getNode } from 'nodes/redux/actions'
+import { getAuth } from 'auth/redux/actions'
+import {GET_AUTH} from 'auth/redux/constants'
 import {NODES_GET} from 'nodes/redux/constants'
 import {setPageProps} from 'page/redux/actions'
 
@@ -15,7 +17,11 @@ export default {
     const path = state.routing.locationBeforeTransitions.pathname
     const id = path.match(/^\/nodes\/([\w\d-]+)/)[1]
 
-    const { nodes: { node }} = state
+    const { nodes: { node }, auth: {userId}} = state
+
+    if(!userId) {
+      resolve.push(yield put(getAuth()))
+    }
 
     const setNodeProps = (n) => {
       return setPageProps({
