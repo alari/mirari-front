@@ -1,10 +1,10 @@
 import React from "react";
 import {Link} from "react-router";
 import {connect} from "react-redux";
-import ReactMarkdown from "react-markdown";
 import {Toolbar, ToolbarGroup, ToolbarTitle, ToolbarSeparator} from "material-ui";
 import moment from "moment";
 import NodeAction from "nodes/components/NodeAction"
+import NodeText from "nodes/components/NodeText"
 
 const mapStateToProps = (state) => ({
   node: state.nodes.node
@@ -15,12 +15,13 @@ const mapDispatchToProps = {}
 const NodeView = (props) => {
   const node = props.node
 
+
   return (
       <div>
         { node && <article style={{padding:"15px"}}>
           <h1>{ node.title }</h1>
 
-          {node.text.content && <ReactMarkdown source={node.text.content}/>}
+          <NodeText node={node}/>
         </article>}
 
         <Toolbar>
