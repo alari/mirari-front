@@ -9,14 +9,11 @@ import routes from 'states/routes'
 import configureStore from 'store/index'
 import createMemoryHistory from 'history/lib/createMemoryHistory'
 import { resolveRoutes } from 'utils'
-import environmental from 'environmental'
 import { HISTORY_CHANGE } from 'containers/constants'
 import { HISTORY_CHANGE_RESOLVED } from 'state/constants'
 import { resolvedOnServer } from 'state/redux/actions'
 import { takeLatest } from 'redux-saga'
 import { put, select } from 'redux-saga/effects'
-
-import sagaMiddleware from 'store/sagas'
 
 export const matchRoute = function(request, token){
 
@@ -49,7 +46,7 @@ export const matchRoute = function(request, token){
           </Provider>
         )
 
-        sagaMiddleware.run(function* () {
+        store.runSaga(function* () {
           yield takeLatest(HISTORY_CHANGE_RESOLVED, function*(){
             yield put(resolvedOnServer());
             const data = store.getState();
@@ -57,7 +54,7 @@ export const matchRoute = function(request, token){
           })
         })
 
-        sagaMiddleware.run(function* () {
+        store.runSaga(function* () {
           yield put({
             type: HISTORY_CHANGE,
             store,

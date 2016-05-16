@@ -38,7 +38,6 @@ export default {
 
     if(!(node && node.id === id && !!node.user)) {
       resolve.push(yield put(getNode(id, {_expand:"text,user"})))
-      resolve.push(yield take(NODES_GET.SUCCESS))
       resolve.push(yield call(function*(){
         const n = yield select((s) => s.nodes.node)
         yield put(setNodeProps(n))

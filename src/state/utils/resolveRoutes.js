@@ -1,5 +1,5 @@
 import { filter, map, propOr, compose, is, identity, F } from 'ramda'
-import { call, fork } from 'redux-saga/effects'
+import { call, fork, select } from 'redux-saga/effects'
 
 
 export default function* (store, state){
@@ -16,7 +16,7 @@ export default function* (store, state){
 
     try {
       result = yield call(saga)
-      console.log("should be defined:", result)
+      //console.log("should be defined:", result)
     } catch (e) {
       console.error("Resolve error: ", e, e.stack);
     }

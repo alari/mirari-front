@@ -23,7 +23,7 @@ export default [{
     }
   },
 
-  resolve: function*(){
+  resolve: function* rootResolveRoutes(){
     const {user} = yield select((s) => s.auth)
     if(!user) {
       yield put(getAuth())
