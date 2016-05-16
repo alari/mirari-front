@@ -1,7 +1,8 @@
 import {
   RESOLVE_ROUTE_END,
   RESOLVE_ROUTE_START,
-  RESOLVED_ON_SERVER,
+  RESOLVED_ON_SERVER, 
+  RESOLVE_KEEP,
 } from './constants'
 
 export const resolvedOnServer = () => {
@@ -21,3 +22,7 @@ export const resolveEnd = () => {
     type: RESOLVE_ROUTE_END
   }
 }
+
+export const resolveKeep = () => ({
+  type: RESOLVE_KEEP
+})

@@ -1,5 +1,6 @@
 import { filter, map, propOr, compose, is, identity, F } from 'ramda'
 import { call, fork, select } from 'redux-saga/effects'
+import {STOP_RESOLVE} from 'commons/state/constants'
 
 
 export default function* (store, state){
@@ -16,6 +17,10 @@ export default function* (store, state){
 
     try {
       result = yield call(saga)
+      if(result === STOP_RESOLVE) {
+        //console.log("STOP RESOLVE")
+        routeSagas.splice(0,routeSagas.length)
+      }
       //console.log("should be defined:", result)
     } catch (e) {
       console.error("Resolve error: ", e, e.stack);
