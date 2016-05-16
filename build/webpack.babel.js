@@ -105,6 +105,8 @@ export default [{
         __ENV__: config.env,
         'process.env.NODE_ENV': '"'+config.env+'"',
         __REQUEST_API_ENDPOINT__: config.api.request ? config.api.request.endpoint : '"/api"',
+        __AUTH_LOGIN_HREF__: '"/auth/in"',
+        __AUTH_FORBIDDEN_HREF__: '"/"',
       }),
       new webpack.optimize.CommonsChunkPlugin(/* chunkName= */"vendor", /* filename= */"vendor.bundle.js"),
       new ExtractTextPlugin("[name].css"),

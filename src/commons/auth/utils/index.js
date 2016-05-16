@@ -12,7 +12,7 @@ export const requireAuth = () => call(function*() {
     const auth = yield put(getAuth())
     if(auth.type === GET_AUTH.FAILURE) {
       const redirectAfterLogin = yield select((s) => s.routing.locationBeforeTransitions.pathname)
-      yield put(push("/auth/in?next="+redirectAfterLogin))
+      yield put(push(__AUTH_LOGIN_HREF__+"?next="+redirectAfterLogin))
       yield put(resolveKeep())
       return STOP_RESOLVE
     }
@@ -25,7 +25,7 @@ export const requireRoles = (...roles) => call(function*(){
   const userRoles = yield select((s) => s.auth.roles)
   const rolesIntersection = intersection(lower(roles), lower(userRoles || []))
   if(rolesIntersection.length === 0) {
-    yield put(push("/"))
+    yield put(push(__AUTH_FORBIDDEN_HREF__))
     yield put(resolveKeep())
     return STOP_RESOLVE
   }

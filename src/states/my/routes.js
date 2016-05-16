@@ -13,9 +13,6 @@ export default {
   ],
 
   resolve: function* resolveMy() {
-    console.log("resolve my")
-    const z = yield requireAuth()
-    console.log("z", z)
-    return z
+    return yield requireAuth()
   }
 }
