@@ -3,10 +3,10 @@ import RootView from "./RootView";
 import NodesRoutes from "./nodes/routes";
 import AuthRoutes from "./auth/routes";
 import MyRoutes from "./my/routes";
-import Resolve from "state/components/Resolve";
+import {Resolve} from "commons/state";
 import {put,select} from "redux-saga/effects";
 import {getNodesList} from "nodes/redux/actions";
-import {getAuth} from "auth/redux/actions";
+import {getAuth} from "commons/auth";
 
 
 export default [{

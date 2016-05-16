@@ -1,5 +1,5 @@
 import {concat, map} from "ramda";
-import {createReducer, update} from "utils";
+import {createReducer, update} from "commons/utils";
 import {NODES_LIST, NODES_LIST_APPEND, NODES_GET, NODES_CLEAR_CHANGED, NODES_SET_CHANGED_FIELDS,NODES_SAVE} from "./constants";
 
 

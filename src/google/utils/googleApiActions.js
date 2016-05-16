@@ -1,5 +1,5 @@
 import { GOOGLE_API } from 'google/constants'
-import { urlInterpolate } from 'utils'
+import { urlInterpolate } from 'commons/utils'
 
 
 const URL = 'https://maps.googleapis.com/maps/api/geocode/json'

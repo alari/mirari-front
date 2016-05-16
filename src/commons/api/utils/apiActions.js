@@ -1,5 +1,5 @@
-import { API } from 'api/constants'
-import { urlInterpolate } from 'utils'
+import { API } from 'commons/api/constants'
+import { urlInterpolate } from 'commons/utils'
 
 
 export const createApiAction = (config, TYPES) => {

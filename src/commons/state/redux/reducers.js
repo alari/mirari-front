@@ -3,7 +3,8 @@ import {
   RESOLVE_ROUTE_END,
   RESOLVED_ON_SERVER
 } from './constants'
-import { createReducer } from 'utils'
+import { createReducer } from 'commons/utils'
+import {HISTORY_CHANGE} from 'commons/containers/constants'
 
 export default createReducer({}, {
   [RESOLVED_ON_SERVER]: (state, action) => {
@@ -28,7 +29,7 @@ export default createReducer({}, {
     }
   },
 
-  ['HISTORY_CHANGE']: (state, action) => {
+  [HISTORY_CHANGE]: (state, action) => {
     return {
       ...state,
       query: action.state.location.query,

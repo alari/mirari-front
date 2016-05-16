@@ -1,7 +1,7 @@
 import AddNodeView from "./AddNodeView"
 import {put} from "redux-saga/effects";
 import {clearChanged} from "nodes/redux/actions"
-import Resolve from "state/components/Resolve";
+import {Resolve} from 'commons/state'
 
 export default {
   component: Resolve(AddNodeView),

@@ -4,11 +4,10 @@ import {
     SIGNUP_USER,
     GET_AUTH,
     UPDATE_TOKEN,
-    AUTH_TOKEN_HEADER,
     SET_CREDENTIALS_FIELDS
 } from "./constants";
-import {RESOLVED_ON_SERVER} from "state/redux/constants";
-import {createReducer} from "utils";
+import {RESOLVED_ON_SERVER} from "commons/state/redux/constants";
+import {createReducer} from "commons/utils";
 
 export default createReducer({}, {
   [RESOLVED_ON_SERVER]: (state, action) => {

@@ -6,7 +6,7 @@ import {
     NODES_SET_CHANGED_FIELDS,
     NODES_SAVE
 } from "./constants";
-import {createApiAction} from "api/utils/apiActions";
+import {createApiAction} from "commons/api";
 
 export const getNodesList = ({offset, limit, userId, draft, q, _expand, append = false}) => {
   return createApiAction({

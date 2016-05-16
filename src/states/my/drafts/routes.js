@@ -1,4 +1,4 @@
-import Resolve from "state/components/Resolve";
+import {Resolve} from "commons/state";
 import {put} from "redux-saga/effects";
 import {getNodesList} from "nodes/redux/actions";
 import DraftsView from "./DraftsView"

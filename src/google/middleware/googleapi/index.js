@@ -1,5 +1,5 @@
 import { GOOGLE_API } from 'google/constants'
-import request from 'api/services/request'
+import {request} from 'commons/api'
 import {
   createRequestAction,
   createSuccessAction,

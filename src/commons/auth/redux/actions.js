@@ -7,7 +7,7 @@ import {
   SET_CREDENTIALS_FIELDS
 } from './constants';
 
-import { createApiAction } from 'api/utils/apiActions';
+import { createApiAction } from 'commons/api';
 
 export const updateToken = (token) => {
   return {

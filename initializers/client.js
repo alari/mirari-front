@@ -8,7 +8,7 @@ import { syncHistoryWithStore } from 'react-router-redux'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 injectTapEventPlugin()
 
-import Root from 'containers/Root'
+import Root from 'commons/containers/Root'
 
 const preloadedData = window.document.getElementById('initialState').text
 const initialState = preloadedData && JSON.parse(preloadedData) || {}
@@ -25,7 +25,7 @@ ReactDOM.render(
 
 
 if(__DEVTOOLS__){
-  const DevTools = require('containers/DevTools').default;
+  const DevTools = require('commons/containers/DevTools').default;
 
   ReactDOM.render(
     <Provider store={ store }><DevTools /></Provider>,

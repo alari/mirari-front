@@ -1,4 +1,4 @@
-import createActionRequestTypes from 'utils/createActionRequestTypes'
+import createActionRequestTypes from 'commons/utils/createActionRequestTypes'
 
 export const LOGIN_USER = createActionRequestTypes('LOGIN_USER')
 export const SIGNUP_USER = createActionRequestTypes('SIGNUP_USER')

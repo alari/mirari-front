@@ -10,13 +10,13 @@ export const resolvedOnServer = () => {
   }
 }
 
-export const start = () => {
+export const resolveStart = () => {
   return {
     type: RESOLVE_ROUTE_START
   }
 }
 
-export const end = () => {
+export const resolveEnd = () => {
   return {
     type: RESOLVE_ROUTE_END
   }

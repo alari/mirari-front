@@ -1,12 +1,12 @@
-import { API } from 'api/constants'
-import { logout, updateToken } from 'auth/redux/actions'
-import { AUTH_TOKEN_HEADER } from 'auth/constants'
-import request from 'api/services/request'
+import { API } from 'commons/api/constants'
+import { logout, updateToken } from 'commons/auth/redux/actions'
+import { AUTH_TOKEN_HEADER } from 'commons/auth/constants'
+import request from 'commons/api/services/request'
 import {
     createRequestAction,
     createSuccessAction,
     createFailureAction
-} from 'api/utils/apiActions'
+} from 'commons/api/utils/apiActions'
 
 export default (store) => next => action => {
 

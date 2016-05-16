@@ -1,9 +1,9 @@
 import React, {Component, PropTypes} from "react";
 import {Router, match} from "react-router";
 import {Provider} from "react-redux";
-import {HISTORY_CHANGE} from "containers/constants";
+import {HISTORY_CHANGE} from "./constants";
 import routes from "states/routes";
-import {resolveRoutes} from "utils";
+import {resolveRoutes} from "commons/utils";
 
 class Root extends Component {
   componentWillMount() {

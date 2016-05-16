@@ -1,11 +1,10 @@
 import NodeView from './NodeView'
-import Resolve from 'state/components/Resolve'
+import {Resolve} from 'commons/state'
 import { put, select, call,take } from 'redux-saga/effects'
 import { getNode } from 'nodes/redux/actions'
-import { getAuth } from 'auth/redux/actions'
-import {GET_AUTH} from 'auth/redux/constants'
+import { getAuth } from 'commons/auth'
 import {NODES_GET} from 'nodes/redux/constants'
-import {setPageProps} from 'page/redux/actions'
+import {setPageProps} from 'commons/page'
 
 export default {
   component: Resolve(NodeView),

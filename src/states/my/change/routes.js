@@ -1,9 +1,9 @@
 import ChangeNodeView from './ChangeNodeView'
-import Resolve from 'state/components/Resolve'
+import {Resolve} from 'commons/state'
 import { put, select, call,take } from 'redux-saga/effects'
 import { getNode,clearChanged } from 'nodes/redux/actions'
 import {NODES_GET} from 'nodes/redux/constants'
-import {setPageProps} from 'page/redux/actions'
+import {setPageProps} from 'commons/page'
 
 export default {
   component: Resolve(ChangeNodeView),

@@ -3,7 +3,7 @@ import {routerMiddleware} from "react-router-redux";
 import createSagaMiddleware from "redux-saga";
 import {applyMiddleware, compose, createStore} from "redux";
 import sagas from "./sagas";
-import apiMiddleware from "api/middleware/api";
+import {apiMiddleware} from "commons/api";
 import googleApiMiddleware from "google/middleware/googleapi";
 
 const sagaMiddleware = createSagaMiddleware()
@@ -11,7 +11,7 @@ const sagaMiddleware = createSagaMiddleware()
 let DevTools
 
 if (__DEVTOOLS__) {
-  DevTools = require('containers/DevTools').default
+  DevTools = require('commons/containers/DevTools').default
 } else {
   DevTools = null
 }

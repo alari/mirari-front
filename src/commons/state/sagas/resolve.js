@@ -1,18 +1,18 @@
-import { HISTORY_CHANGE } from 'containers/constants'
-import { HISTORY_CHANGE_RESOLVED } from 'state/constants'
+import { HISTORY_CHANGE } from 'commons/containers/constants'
+import { HISTORY_CHANGE_RESOLVED } from '../constants'
 import { takeLatest } from 'redux-saga'
 import { put, select } from 'redux-saga/effects'
-import { start, end } from 'state/redux/actions'
-import resolveRoutes from 'state/utils/resolveRoutes'
+import { resolveStart, resolveEnd } from '../redux/actions'
+import resolveRoutes from '../utils/resolveRoutes'
 
 
 export default function* resolve(){
   yield* takeLatest(HISTORY_CHANGE, function*({ store, state }){
     if(!(yield select(store => store.state.isClientFirstResolve))){
-      yield put(start())
+      yield put(resolveStart())
       yield resolveRoutes(store, state)
     }
-    yield put(end())
+    yield put(resolveEnd())
     yield put({
       type: HISTORY_CHANGE_RESOLVED
     })

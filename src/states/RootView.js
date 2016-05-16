@@ -8,7 +8,7 @@ import {green100, green500, green700} from "material-ui/styles/colors";
 import {connect} from "react-redux";
 import {Link} from "react-router";
 import {push} from "react-router-redux";
-import {logout} from "auth/redux/actions";
+import {logout} from "commons/auth";
 import Helmet from "react-helmet";
 
 const mapStateToProps = (state) => {

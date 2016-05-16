@@ -6,6 +6,8 @@ let App = null
 
 module.exports = function (middlewareConfig){
   return function*(next) {
+
+
     yield* next
 
     if (this.method != 'HEAD' && this.method != 'GET') return
@@ -18,10 +20,10 @@ module.exports = function (middlewareConfig){
       App = require('./init')
     }
 
-    const constants = require('../../src/auth/constants')
+    const constants = require('../../src/commons/auth/constants')
     const token = this.cookies.get(constants.AUTH_TOKEN_HEADER)
 
-    GLOBAL.navigator = {
+    global.navigator = {
       userAgent: this.request.header['user-agent'] || 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.155 Safari/537.36'
     }
 

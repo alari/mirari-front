@@ -2,7 +2,7 @@ import {
   GOOGLE_GEOCODING
 } from './constants'
 
-import { createReducer } from 'utils'
+import { createReducer } from 'commons/utils'
 
 export default createReducer({}, {
   [GOOGLE_GEOCODING.SUCCESS]: (state, action) => {

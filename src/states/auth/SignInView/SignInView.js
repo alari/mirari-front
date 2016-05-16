@@ -2,7 +2,7 @@ import "./styles.css";
 import React from "react";
 import {Link} from "react-router";
 import {connect} from "react-redux";
-import {setCredentials, login} from "auth/redux/actions";
+import {setCredentials, login} from "commons/auth";
 import {Paper, TextField, FlatButton, RaisedButton, LinearProgress} from "material-ui";
 
 const mapStateToProps = (state) => ({

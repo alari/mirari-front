@@ -1,4 +1,4 @@
-import createActionRequestTypes from 'utils/createActionRequestTypes'
+import createActionRequestTypes from 'commons/utils/createActionRequestTypes'
 
 export const NODES_LIST = createActionRequestTypes('NODES_LIST')
 export const NODES_LIST_APPEND = createActionRequestTypes('NODES_LIST_APPEND')

@@ -1,15 +1,15 @@
 import { combineReducers } from 'redux'
 import { routerReducer } from 'react-router-redux'
-import auth from 'auth/redux/reducers'
-import state from 'state/redux/reducers'
+import {authReducer} from 'commons/auth'
+import {resolveReducer} from 'commons/state'
 import nodes from 'nodes/redux/reducers'
-import page from 'page/redux/reducers'
-
+import {pageReducer} from 'commons/page'
 
 export default combineReducers({
-  auth,
-  state,
-  nodes,
-  page,
-  routing: routerReducer
+  auth: authReducer,
+  state: resolveReducer,
+  page: pageReducer,
+  routing: routerReducer,
+
+  nodes
 })
