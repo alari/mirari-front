@@ -1,8 +1,8 @@
-import AddNodeView from "./AddNodeView"
+import ProfileFormView from "./ProfileFormView"
 import {Resolve} from 'commons/state'
 import {requireAuth} from 'commons/auth'
 
 export default {
-  component: AddNodeView,
-  path: 'add-node'
+  component: ProfileFormView,
+  path: 'profile',
 }

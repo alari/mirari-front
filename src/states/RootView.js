@@ -32,6 +32,8 @@ const mapDispatchToProps = {
       push("/"),
   draftsRedirect: () =>
       push("/my/drafts"),
+  profileRedirect: () =>
+      push("/my/profile"),
   newNodeRedirect: () =>
       push("/my/add-node")
 
@@ -44,6 +46,7 @@ const AuthMenu = (props) => {
           <div>
             <MenuItem onClick={props.newNodeRedirect} primaryText="+ Добавить"/>
             <MenuItem onClick={props.draftsRedirect} primaryText="Черновики"/>
+            <MenuItem onClick={props.profileRedirect} primaryText="Профиль"/>
             <MenuItem onClick={props.logout} primaryText="Выход" secondaryText={props.user.name}/>
           </div>
       )
