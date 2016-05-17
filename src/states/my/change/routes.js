@@ -1,7 +1,7 @@
 import ChangeNodeView from './ChangeNodeView'
 import {Resolve} from 'commons/state'
 import { put, select, call,take } from 'redux-saga/effects'
-import { getNode,clearChanged } from 'nodes/redux/actions'
+import { getNode } from 'nodes/redux/actions'
 import {NODES_GET} from 'nodes/redux/constants'
 import {setPageProps} from 'commons/page'
 
@@ -10,7 +10,7 @@ export default {
   path: 'node/:id',
 
   resolve: function* nodeResolve(){
-    const resolve = [yield put(clearChanged())]
+    const resolve = []
     const state = yield select()
     const path = state.routing.locationBeforeTransitions.pathname
 

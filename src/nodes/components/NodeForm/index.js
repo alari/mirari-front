@@ -1,12 +1,13 @@
 import React from "react";
 import {connect} from "react-redux";
 import {Link} from "react-router";
-import {map, keys, propOr, isEmpty} from "ramda";
+import {map, keys, propOr, merge, equals, pickBy} from "ramda";
 import {TextField, RaisedButton, SelectField, MenuItem, Toggle, LinearProgress, FlatButton} from "material-ui";
-import {setChangedFields,saveNode} from "nodes/redux/actions";
+import {saveNode} from "nodes/redux/actions";
+import {decorateWithState} from "commons/utils";
+import {NODES_SAVE} from "nodes/redux/constants"
 
 const mapStateToProps = (state) => ({
-  changed: state.nodes.changed,
   node: state.nodes.node || {
     title: "",
     text: {version: 0, content: ""},
@@ -18,10 +19,11 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  setFields: (data) => setChangedFields(data),
   saveNode: (base, changed) => {
-    changed.kind = propOr(base.kind, "kind")(changed)
-    return saveNode(base,changed)
+    return saveNode(base, {
+      ...changed,
+      kind: propOr(base.kind, "kind")(changed)
+    })
   }
 }
 
@@ -36,17 +38,19 @@ const kinds = {
 
 const NodeForm = (props) => {
 
-  const base = props.node
+  const node = merge(props.node, props.state)
 
-  const changed = props.changed
+  const isNotChanged = equals(node, props.node)
 
   const saveNode = () => {
-    props.saveNode(base, changed)
+    props.saveNode(props.node, props.state).then((e) => {
+      if(e.type === NODES_SAVE.SUCCESS) {
+        props.clearState()
+      }
+    })
   }
 
-  const setField = (field) => (e) => {
-    props.setFields({[field]: e.target.value})
-  }
+  const setField = props.stateFieldChanged
 
   const pickError = (field) => {
     return props.error && props.error.fields && props.error.fields[field] && props.error.fields[field].desc
@@ -59,7 +63,7 @@ const NodeForm = (props) => {
             floatingLabelText="Заголовок"
             fullWidth={true}
             onChange={setField("title")}
-            value={ propOr(base.title, "title")(changed) }
+            value={ node.title }
             errorText={ pickError("title") }
         />
 
@@ -69,19 +73,19 @@ const NodeForm = (props) => {
             fullWidth={true}
             multiLine={true}
             onChange={(e) => {
-              props.setFields({text: {...base.text, content:e.target.value}})
+              props.setState({text: {...node.text, content:e.target.value}})
             }}
             rows={12}
-            value={ changed.text && changed.text.content || base.text.content }
+            value={ node.text.content }
             errorText={ pickError("text.content") || pickError("text.version") }
         />
 
         <div>
           <SelectField
               autoWidth={true}
-              value={propOr(base.kind, "kind")(changed)}
+              value={ node.kind }
               onChange={(event, index, value) => {
-                props.setFields({"kind": value})
+                props.setState({"kind": value})
               }}
               errorText={ pickError("kind") }
           >
@@ -91,15 +95,17 @@ const NodeForm = (props) => {
           <Toggle
               label="Опубликовать"
               labelPosition="right"
-              toggled={ !propOr(base.draft, "draft")(changed) }
+              toggled={ !node.draft }
               onToggle={(e) => {
-              props.setFields({"draft": !propOr(base.draft, "draft")(changed)})
+              props.setState({"draft": !node.draft})
               }}
           />
 
-          { props.progress ? <LinearProgress /> : <RaisedButton label="Сохранить" primary={true} disabled={isEmpty(changed)} onClick={saveNode}/> }
+          { props.progress ? <LinearProgress /> :
+              <RaisedButton label="Сохранить" primary={true} disabled={isNotChanged} onClick={saveNode}/> }
 
-          { base.id && <Link to={"/nodes/"+base.id}><FlatButton label="На страницу" linkButton={true} secondary={true} /></Link> }
+          { node.id &&
+          <Link to={"/nodes/"+node.id}><FlatButton label="На страницу" linkButton={true} secondary={true}/></Link> }
 
         </div>
 
@@ -107,4 +113,4 @@ const NodeForm = (props) => {
   )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NodeForm)
+export default connect(mapStateToProps, mapDispatchToProps)(decorateWithState(NodeForm))

@@ -40,7 +40,6 @@
     "dotenv": "^2.0.0",
     "environmental": "^1.2.1",
     "es6-promise": "^3.2.1",
-    "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.8.5",
     "google-map-react": "^0.12.1",
     "history": "2.1.1",
@@ -56,13 +55,6 @@
     "koa-useragent": "^0.1.4",
     "material-ui": "^0.15.0",
     "moment": "^2.13.0",
-    "postcss-bem": "^0.4.1",
-    "postcss-custom-media": "^5.0.1",
-    "postcss-custom-properties": "^5.0.1",
-    "postcss-import": "^8.1.2",
-    "postcss-loader": "^0.9.1",
-    "postcss-mixins": "^4.0.1",
-    "postcss-nested": "^1.0.0",
     "qs": "^6.2.0",
     "query-string": "^4.1.0",
     "ramda": "^0.21.0",
@@ -85,6 +77,7 @@
     "yargs": "^4.7.1"
   },
   "devDependencies": {
+    "extract-text-webpack-plugin": "^1.0.1",
     "chai": "^3.5.0",
     "chai-as-promised": "^5.3.0",
     "connect-history-api-fallback": "^1.2.0",
@@ -103,6 +96,13 @@
     "redux-devtools-log-monitor": "^1.0.11",
     "redux-mock-store": "1.0.2",
     "sinon": "^1.17.4",
-    "sinon-chai": "^2.8.0"
+    "sinon-chai": "^2.8.0",
+    "postcss-bem": "^0.4.1",
+    "postcss-custom-media": "^5.0.1",
+    "postcss-custom-properties": "^5.0.1",
+    "postcss-import": "^8.1.2",
+    "postcss-loader": "^0.9.1",
+    "postcss-mixins": "^4.0.1",
+    "postcss-nested": "^1.0.0"
   }
 }

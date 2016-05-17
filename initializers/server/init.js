@@ -24,7 +24,7 @@ export const matchRoute = function(request, token){
   const store = configureStore({
     auth: {
       headers: {
-        'accept-language': request.header['accept-language'],
+        'accept-language': request.header['accept-language'] || "en",
         'user-agent': 'node-superagent ' + request.header['user-agent']
       },
       token: token

@@ -1,6 +1,6 @@
 import {concat, map} from "ramda";
 import {createReducer, update} from "commons/utils";
-import {NODES_LIST, NODES_LIST_APPEND, NODES_GET, NODES_CLEAR_CHANGED, NODES_SET_CHANGED_FIELDS,NODES_SAVE} from "./constants";
+import {NODES_LIST, NODES_LIST_APPEND, NODES_GET, NODES_SAVE} from "./constants";
 
 
 const updateNodeInStore = (state, id, handler) => {
@@ -59,26 +59,6 @@ export default createReducer({}, {
     }
   },
 
-  [NODES_CLEAR_CHANGED]: (state, action) => {
-    return {
-      ...state,
-      node: action.create ? null : state.node,
-      changed: {},
-      error: null,
-      progress: false
-    }
-  },
-
-  [NODES_SET_CHANGED_FIELDS]: (state, action) => {
-    return {
-      ...state,
-      changed: {
-        ...state.changed,
-        ...action.fields
-      }
-    }
-  },
-
   [NODES_SAVE.REQUEST]: (state, action) => {
     return {
       ...updateNodeInStore(state, action.nodeId, (user) => {
@@ -94,7 +74,6 @@ export default createReducer({}, {
       ...(updateNodeInStore(state, action.nodeId, (node) => {
         return update.commit(node, action.result.body)
       })),
-      changed: {},
       error: null,
       progress: false
     }

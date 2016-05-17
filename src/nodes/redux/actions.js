@@ -2,8 +2,6 @@ import {
     NODES_LIST, 
     NODES_LIST_APPEND,
     NODES_GET, 
-    NODES_CLEAR_CHANGED,
-    NODES_SET_CHANGED_FIELDS,
     NODES_SAVE
 } from "./constants";
 import {createApiAction} from "commons/api";
@@ -29,20 +27,6 @@ export const getNode = (id, {_expand}) => {
     queryParams: {id, _expand},
     method: 'GET'
   }, NODES_GET)
-}
-
-export const clearChanged = (create=false) => {
-  return {
-    type: NODES_CLEAR_CHANGED,
-    create
-  }
-}
-
-export const setChangedFields = (fields) => {
-  return {
-    type: NODES_SET_CHANGED_FIELDS,
-    fields
-  }
 }
 
 export const saveNode = (base, changed) => {

@@ -3,8 +3,7 @@ import {
   SIGNUP_USER,
   LOGOUT_USER,
   GET_AUTH,
-  UPDATE_TOKEN,
-  SET_CREDENTIALS_FIELDS
+  UPDATE_TOKEN
 } from './constants';
 
 import { createApiAction } from 'commons/api';
@@ -21,13 +20,6 @@ export const getAuth = () => {
     url: '/auth?_expand=user'
   }, GET_AUTH);
 };
-
-export const setCredentials = (credentials) => {
-  return {
-    type: SET_CREDENTIALS_FIELDS,
-    credentials
-  }
-}
 
 export const login = (email, password, redirect) => {
   return createApiAction({

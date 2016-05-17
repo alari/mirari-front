@@ -1,29 +1,27 @@
 import React from "react";
 import {Link} from "react-router";
 import {connect} from "react-redux";
-import {setCredentials, signup} from "commons/auth";
+import {signup} from "commons/auth";
 import {Paper, TextField, FlatButton, RaisedButton, LinearProgress} from "material-ui";
+
+import {decorateWithState} from "commons/utils"
 
 const mapStateToProps = (state) => ({
   query: state.state.query,
   error: state.auth._error,
-  progress: state.auth._progress,
-  credentials: state.auth.credentials || {}
+  progress: state.auth._progress
 })
 
 const mapDispatchToProps = {
-    signup: ({email, password}, redirect) => signup(email, password, redirect),
-    setCredentials: (crds) => setCredentials(crds)
+    signup: ({email, password}, redirect) => signup(email, password, redirect)
 }
 
 const SignUpView = (props) => {
-  const onChange = (fieldName) => (e) => {
-    props.setCredentials({[fieldName]: e.target.value})
-  }
+  const onChange = props.stateFieldChanged
 
   const signup = (e) => {
     e.preventDefault()
-    props.signup(props.credentials, props.query.next)
+    props.signup(props.state, props.query.next)
   }
 
   const pickError = (field) => {
@@ -35,7 +33,7 @@ const SignUpView = (props) => {
       <TextField
           errorText={ pickError("email") }
           onChange={ onChange('email') }
-          defaultValue={ props.credentials['email'] }
+          value={ props.state['email'] || "" }
           hintText="E-mail"
           fullWidth={true}
           type="email"/>
@@ -44,7 +42,7 @@ const SignUpView = (props) => {
       <TextField
           errorText={ pickError("password") }
           onChange={ onChange('password') }
-          defaultValue={ props.credentials['password'] }
+          value={ props.state['password'] || "" }
           hintText="Пароль"
           fullWidth={true}
           type="password"/>
@@ -66,4 +64,4 @@ const SignUpView = (props) => {
   </form>
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignUpView)
+export default connect(mapStateToProps, mapDispatchToProps)(decorateWithState(SignUpView))

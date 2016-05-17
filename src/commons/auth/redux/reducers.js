@@ -3,8 +3,7 @@ import {
     LOGOUT_USER,
     SIGNUP_USER,
     GET_AUTH,
-    UPDATE_TOKEN,
-    SET_CREDENTIALS_FIELDS
+    UPDATE_TOKEN
 } from "./constants";
 import {RESOLVED_ON_SERVER} from "commons/state/redux/constants";
 import {createReducer} from "commons/utils";
@@ -24,16 +23,6 @@ export default createReducer({}, {
     };
   },
 
-  [SET_CREDENTIALS_FIELDS]: (state, action) => {
-    return {
-      ...state,
-      credentials: {
-        ...state.credentials,
-        ...action.credentials
-      }
-    }
-  },
-
   [LOGIN_USER.REQUEST]: (state, action) => {
     return {
       ...state,
@@ -47,8 +36,7 @@ export default createReducer({}, {
       ...state,
       ...action.result.body,
       _error: null,
-      _progress: false,
-      credentials: {}
+      _progress: false
     }
   },
 
@@ -79,8 +67,7 @@ export default createReducer({}, {
     ...state,
     ...action.result.body,
     _error: null,
-    _progress: false,
-    credentials: {}
+    _progress: false
   }),
 
   [SIGNUP_USER.FAILURE]: (state, action) => ({

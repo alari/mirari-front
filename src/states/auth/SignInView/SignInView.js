@@ -2,28 +2,25 @@ import "./styles.css";
 import React from "react";
 import {Link} from "react-router";
 import {connect} from "react-redux";
-import {setCredentials, login} from "commons/auth";
+import {login} from "commons/auth";
 import {Paper, TextField, FlatButton, RaisedButton, LinearProgress} from "material-ui";
+import {decorateWithState} from "commons/utils";
 
 const mapStateToProps = (state) => ({
   query: state.state.query,
   error: state.auth._error,
-  progress: state.auth._progress,
-  credentials: state.auth.credentials || {}
+  progress: state.auth._progress
 })
 
 const mapDispatchToProps = {
-    login: ({email, password}, redirectLocation) => login(email, password, redirectLocation),
-    setCredentials: (crds) => setCredentials(crds)
-  }
+  login: ({email, password}, redirectLocation) => login(email, password, redirectLocation)
+}
 
 const SignInView = (props) => {
-  const onChange = (fieldName) => (e) => {
-    props.setCredentials({[fieldName]: e.target.value})
-  }
+  const onChange = props.stateFieldChanged
 
   const login = (e) => {
-    props.login(props.credentials, props.query.next)
+    props.login(props.state, props.query.next)
   }
 
   const pickError = (field) => {
@@ -36,7 +33,7 @@ const SignInView = (props) => {
           <TextField
               errorText={ pickError("email") }
               onChange={ onChange('email') }
-              defaultValue={ props.credentials['email'] }
+              value={ props.state['email'] || "" }
               hintText="E-mail"
               fullWidth={true}
               type="email"/>
@@ -45,7 +42,7 @@ const SignInView = (props) => {
           <TextField
               errorText={ pickError("password") }
               onChange={ onChange('password') }
-              defaultValue={ props.credentials['password'] }
+              value={ props.state['password'] || "" }
               hintText="Пароль"
               fullWidth={true}
               type="password"/>
@@ -57,9 +54,9 @@ const SignInView = (props) => {
         { props.progress ? <LinearProgress /> : <div>
           <Link to="/auth/up">
             <FlatButton
-              linkButton={true}
-              label="Регистрация"
-              secondary={true}
+                linkButton={true}
+                label="Регистрация"
+                secondary={true}
             />
           </Link>
           <RaisedButton label="Войти" primary={ true } onClick={ login }/>
@@ -68,4 +65,4 @@ const SignInView = (props) => {
   )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignInView)
+export default connect(mapStateToProps, mapDispatchToProps)(decorateWithState(SignInView))

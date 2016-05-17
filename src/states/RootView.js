@@ -14,7 +14,9 @@ import Helmet from "react-helmet";
 const mapStateToProps = (state) => {
   return {
     title: state.page.title,
-    meta: (state.page.meta || []).concat([]),
+    meta: (state.page.meta || []).concat([
+      {name:"viewport", content:"width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"}
+    ]),
     user: state.auth.user
   }
 }
