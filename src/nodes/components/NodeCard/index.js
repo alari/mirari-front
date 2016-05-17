@@ -9,7 +9,7 @@ export default (props) => {
     <CardHeader
         title={<Link to={"/nodes/"+node.id} style={{color:'#333'}}>{ node.title }</Link>}
         subtitle={<span>{node.user.name}{ node.firstPublished && <span>, <i>{moment(node.firstPublished).fromNow()}</i></span> } </span>}
-        avatar={node.user.avatarUrl}
+        avatar={node.user.imageId ? ("/api/images/"+node.user.imageId + "?q=80&w=80&h=80&m=cover") : node.user.avatarUrl}
     />
   </Card>)
 }

@@ -4,6 +4,7 @@ import {Paper, TextField, FlatButton, RaisedButton, LinearProgress} from "materi
 import {connect} from "react-redux";
 import {merge,equals} from 'ramda'
 import {saveUser} from 'users/redux/actions'
+import {FileInput} from 'commons/files/components'
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,
@@ -42,6 +43,10 @@ const ProfileFormView = (props) => {
         floatingLabelText="Фамилия"
         fullWidth={true}
         type="text"/>
+
+    <FileInput label="Загрузить картинку аватарки" onUpload={(i) => props.setState({imageId: i.id})}/>
+
+    {(user.imageId || user.avatarUrl) && <img src={user.imageId ? ("/api/images/"+user.imageId) : user.avatarUrl}/>}
 
     { props.progress ? <LinearProgress /> :
         <RaisedButton label="Сохранить" primary={true} disabled={isNotChanged} type="submit"/> }
