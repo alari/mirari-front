@@ -26,7 +26,7 @@ const ProfileFormView = (props) => {
 
   const isNotChanged = equals(user, props.user)
   
-  return (<form onSubmit={(e) => {e.preventDefault(); props.saveUser(user.id, props.state)}}>
+  return (<div><form onSubmit={(e) => {e.preventDefault(); props.saveUser(user.id, props.state)}}>
     <TextField
         errorText={ pickError("firstName") }
         onChange={ props.stateFieldChanged('firstName') }
@@ -50,7 +50,13 @@ const ProfileFormView = (props) => {
 
     { props.progress ? <LinearProgress /> :
         <RaisedButton label="Сохранить" primary={true} disabled={isNotChanged} type="submit"/> }
-  </form>)
+  </form>
+
+    <hr/>
+
+    <a href={"https://telegram.me/MirariBot?start=" + user.id} target="_blank">Привязать телеграм-аккаунт</a>
+
+  </div>)
   
 }
 
