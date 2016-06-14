@@ -8,3 +8,4 @@ public
 .idea_modules
 *.iml
 src/commons
+envs/development.sh
