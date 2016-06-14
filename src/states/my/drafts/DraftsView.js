@@ -1,10 +1,13 @@
 import React from "react";
 import {connect} from "react-redux";
 import {Link} from "react-router";
-import {map} from 'ramda'
-import { getNodesList } from 'nodes/redux/actions'
-import Pagination from "pagination/components/Pagination";
-import NodeCard from "nodes/components/NodeCard"
+import {map} from "ramda";
+import {getNodesList} from "nodes/redux/actions";
+import NodeCard from "nodes/components/NodeCard";
+import {TriptychContent} from "commons/triptych";
+import LoadMore from "commons/pagination/components/LoadMore";
+import Button from "commons/button";
+import AddIcon from "material-ui/svg-icons/content/add";
 
 const mapStateToProps = (state) => ({
   nodes: state.nodes.list
@@ -15,24 +18,22 @@ const mapDispatchToProps = {
       getNodesList({...p, draft: true, _expand: "values*user"})
 }
 
-const DraftsView = (props) => {
+const DraftsView = ({nodes, setPage}) => {
+
+  const haveMore = nodes.values.length < nodes.total
+
+  const loadMore = () => setPage({append: true, limit: nodes.limit, offset: nodes.offset + nodes.limit})
 
   return (
-      <div>
+      <TriptychContent header={{
+      title:"Черновики",
+      buttonChild: <Button color="default" icon={<AddIcon />} mobile size="sm" title="Добавить" url="/my/add-node" />,}}>
 
-        <h1>Черновики</h1>
+        { map((n) => <NodeCard node={n} key={n.id}/>, nodes.values) }
 
-        { map((n) => <NodeCard node={n} key={n.id}/>, props.nodes.values) }
+        <LoadMore action={loadMore} haveMore={haveMore}/>
 
-        <Pagination
-            setPage={ props.setPage }
-            limit={props.nodes.limit}
-            offset={props.nodes.offset}
-            total={props.nodes.total}
-            itemsLength={props.nodes.values.length}
-        />
-        
-      </div>
+      </TriptychContent>
   )
 }
 

@@ -1,10 +1,11 @@
-import {Resolve} from "commons/resolve";
+import {Resolve,resolveSagaStart} from "commons/resolve";
 import {put} from "redux-saga/effects";
 import {getNodesList} from "nodes/redux/actions";
 import DraftsView from "./DraftsView"
+import {TriptychMainWrapper} from 'commons/triptych'
 
 export default {
-  component: Resolve(DraftsView, 'resolveDrafts'),
+  component: TriptychMainWrapper(Resolve(DraftsView, 'resolveDrafts'), '/my/drafts'),
   path: 'drafts',
 
   resolve: function* resolveDrafts() {

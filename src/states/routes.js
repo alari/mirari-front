@@ -7,14 +7,14 @@ import {Resolve,resolveSagaStart} from "commons/resolve";
 import {put,select} from "redux-saga/effects";
 import {getNodesList} from "nodes/redux/actions";
 import {getAuth} from "commons/auth";
-
+import {TriptychMainWrapper} from 'commons/triptych'
 
 export default [{
   component: RootView,
   path: '/',
 
   indexRoute: {
-    component: Resolve(HomeView, 'resolveHome'),
+    component: TriptychMainWrapper(Resolve(HomeView, 'resolveHome'), '/'),
 
     resolve: function* resolveHome() {
       yield put(resolveSagaStart('resolveHome'))

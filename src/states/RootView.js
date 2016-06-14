@@ -10,68 +10,45 @@ import {Link} from "react-router";
 import {push} from "react-router-redux";
 import {logout} from "commons/auth";
 import Helmet from "react-helmet";
+import {Triptych} from "commons/triptych";
 
-const mapStateToProps = (state) => {
-  return {
-    title: state.page.title,
-    meta: (state.page.meta || []).concat([
-      {name:"viewport", content:"width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"}
-    ]),
-    user: state.auth.user
-  }
-}
+const mapStateToProps = (state) => ({
+  title: state.page.title,
+  meta: (state.page.meta || []).concat([
+    {name: "viewport", content: "width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"}
+  ]),
+  user: state.auth.user
+})
 
 const mapDispatchToProps = {
   logout: () =>
       logout(),
-  signIn: () =>
-      push("/auth/in"),
-  signUp: () =>
-      push("/auth/up"),
-  rootRedirect: () =>
-      push("/"),
-  draftsRedirect: () =>
-      push("/my/drafts"),
-  profileRedirect: () =>
-      push("/my/profile"),
-  newNodeRedirect: () =>
-      push("/my/add-node")
-
+  redirectToRoot: () =>
+      push("/")
 }
 
-const AuthMenu = (props) => {
-  const content = () => {
-    if (!!props.user) {
-      return (
-          <div>
-            <MenuItem onClick={props.newNodeRedirect} primaryText="+ Добавить"/>
-            <MenuItem onClick={props.draftsRedirect} primaryText="Черновики"/>
-            <MenuItem onClick={props.profileRedirect} primaryText="Профиль"/>
-            <MenuItem onClick={props.logout} primaryText="Выход" secondaryText={props.user.name}/>
-          </div>
-      )
-    } else {
-      return (
-          <div>
-            <MenuItem onClick={props.signIn} primaryText="Войти"/>
-            <MenuItem onClick={props.signUp} primaryText="Регистрация"/>
-          </div>
-      )
-    }
-  }
+const NavList = ({children}) =>
+    <ul className="NavList">
+      {children}
+    </ul>;
 
-  return (<IconMenu
-      iconButtonElement={
-          <IconButton><NavigationMoreVert /></IconButton>
-        }
-      targetOrigin={{horizontal: 'right', vertical: 'top'}}
-      anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-  >
+const NavListItem = ({title, url}) =>
+    <li className="NavList-item">
+      <Link className="NavList-link" to={url}>{title}</Link>
+    </li>;
 
-    {content()}
-
-
-  </IconMenu>)
+const AuthMenu = ({user}) => {
+  return (!!user) ? (
+      <NavList>
+        <NavListItem url="/my/drafts" title="Черновики"/>
+        <NavListItem url="/my/profile" title="Профиль"/>
+      </NavList>
+  ) : (
+      <NavList>
+        <NavListItem url="/auth/in" title="Войти"/>
+        <NavListItem url="/auth/up" title="Регистрация"/>
+      </NavList>
+  )
 }
 
 const RootView = (props) => {
@@ -83,7 +60,14 @@ const RootView = (props) => {
     primary3Color: green100,
   }
     })}>
-        <div>
+        <Triptych
+            projectTitle="Мирари"
+            onLogout={() => {
+                props.logout()
+                props.redirectToRoot()
+              }}
+            leftPanel={<AuthMenu {...props}/>}
+        >
           <Helmet
               title={props.title}
               defaultTitle="Мирари"
@@ -93,17 +77,10 @@ const RootView = (props) => {
                 ]}
               meta={props.meta}
           />
-          <AppBar
-              showMenuIconButton={false}
-              title="М."
-              iconElementRight={<AuthMenu {...props}/>}
-              onTitleTouchTap={props.rootRedirect}
-          />
 
-          <Paper style={{maxWidth:"812px",margin:"auto"}}>
-            { props.children }
-          </Paper>
-        </div>
+          { props.children }
+
+        </Triptych>
       </MuiThemeProvider>
   )
 }

@@ -3,8 +3,7 @@ import {Link} from "react-router";
 import {Card,CardHeader} from "material-ui"
 import moment from 'moment'
 
-export default (props) => {
-  const node = props.node
+export default ({node}) => {
   return (node && <Card>
     <CardHeader
         title={<Link to={"/nodes/"+node.id} style={{color:'#333'}}>{ node.title }</Link>}
