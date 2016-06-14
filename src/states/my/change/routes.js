@@ -1,25 +1,24 @@
 import ChangeNodeView from './ChangeNodeView'
-import {Resolve} from 'commons/resolve'
+import {Resolve,resolveSagaStart} from 'commons/resolve'
 import { put, select, call,take } from 'redux-saga/effects'
 import { getNode } from 'nodes/redux/actions'
 import {NODES_GET} from 'nodes/redux/constants'
 import {setPageProps} from 'commons/page'
 
 export default {
-  component: Resolve(ChangeNodeView),
-  path: 'node/:id',
+  component: Resolve(ChangeNodeView,'nodeResolve'),
+  path: 'node/:nodeId',
 
   resolve: function* nodeResolve(){
+    yield put(resolveSagaStart('nodeResolve'))
+
     const resolve = []
-    const state = yield select()
-    const path = state.routing.locationBeforeTransitions.pathname
+    const nodeId = yield select((s) => s.resolve.params.nodeId)
 
-    const id = path.match(/\/([\w\d-]+)$/)[1]
+    const { node } = yield select((s) => s.nodes)
 
-    const { nodes: { node }} = state
-
-    if(!(node && node.id === id)) {
-      resolve.push(yield put(getNode(id, {_expand:"text,user"})))
+    if(!(node && node.id === nodeId)) {
+      resolve.push(yield put(getNode(nodeId, {_expand:"text,user"})))
       resolve.push(yield call(function*(){
         const title = yield select((s) => s.nodes.node.title)
         yield put(setPageProps({title}))

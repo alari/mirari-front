@@ -4,10 +4,11 @@ import {getNodesList} from "nodes/redux/actions";
 import DraftsView from "./DraftsView"
 
 export default {
-  component: Resolve(DraftsView),
+  component: Resolve(DraftsView, 'resolveDrafts'),
   path: 'drafts',
 
-  resolve: function* resolveHome() {
+  resolve: function* resolveDrafts() {
+    yield put(resolveSagaStart('resolveDrafts'))
     return yield [
       put(getNodesList({limit: 13, draft: true, _expand: "values*user"}))
     ]

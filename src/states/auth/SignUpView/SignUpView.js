@@ -7,7 +7,7 @@ import {Paper, TextField, FlatButton, RaisedButton, LinearProgress} from "materi
 import {decorateWithState} from "commons/utils"
 
 const mapStateToProps = (state) => ({
-  query: state.state.query,
+  query: state.resolve.query,
   error: state.auth._error,
   progress: state.auth._progress
 })
