@@ -1,5 +1,5 @@
 import ChangeNodeView from './ChangeNodeView'
-import {Resolve} from 'commons/state'
+import {Resolve} from 'commons/resolve'
 import { put, select, call,take } from 'redux-saga/effects'
 import { getNode } from 'nodes/redux/actions'
 import {NODES_GET} from 'nodes/redux/constants'

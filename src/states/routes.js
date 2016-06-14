@@ -3,7 +3,7 @@ import RootView from "./RootView";
 import NodesRoutes from "./nodes/routes";
 import AuthRoutes from "./auth/routes";
 import MyRoutes from "./my/routes";
-import {Resolve} from "commons/state";
+import {Resolve} from "commons/resolve";
 import {put,select} from "redux-saga/effects";
 import {getNodesList} from "nodes/redux/actions";
 import {getAuth} from "commons/auth";
