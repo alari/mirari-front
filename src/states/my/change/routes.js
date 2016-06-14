@@ -4,9 +4,10 @@ import { put, select, call,take } from 'redux-saga/effects'
 import { getNode } from 'nodes/redux/actions'
 import {NODES_GET} from 'nodes/redux/constants'
 import {setPageProps} from 'commons/page'
+import {TriptychMainWrapper} from 'commons/triptych'
 
 export default {
-  component: Resolve(ChangeNodeView,'nodeResolve'),
+  component: TriptychMainWrapper(Resolve(ChangeNodeView,'nodeResolve')),
   path: 'node/:nodeId',
 
   resolve: function* nodeResolve(){

@@ -1,6 +1,7 @@
 import ProfileFormView from "./ProfileFormView"
+import {TriptychMainWrapper} from 'commons/triptych'
 
 export default {
-  component: ProfileFormView,
+  component: TriptychMainWrapper(ProfileFormView),
   path: 'profile'
 }

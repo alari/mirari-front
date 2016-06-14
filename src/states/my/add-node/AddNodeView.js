@@ -1,19 +1,20 @@
 import React from "react";
 import {connect} from "react-redux";
 import {Link} from "react-router";
-import {map} from 'ramda'
-import NodeForm from "nodes/components/NodeForm"
+import {map} from "ramda";
+import NodeForm from "nodes/components/NodeForm";
+import {TriptychContent} from "commons/triptych";
 
-const mapStateToProps = (state) => ({
-  
-})
+const mapStateToProps = (state) => ({})
 
 const mapDispatchToProps = {}
 
 const AddNodeView = (props) => {
 
   return (
-     <NodeForm />
+      <TriptychContent>
+        <NodeForm />
+      </TriptychContent>
   )
 }
 

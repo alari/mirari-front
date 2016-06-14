@@ -5,6 +5,7 @@ import {connect} from "react-redux";
 import {merge,equals} from 'ramda'
 import {saveUser} from 'users/redux/actions'
 import {FileInput} from 'commons/files/components'
+import {TriptychContent} from "commons/triptych";
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,
@@ -26,7 +27,7 @@ const ProfileFormView = (props) => {
 
   const isNotChanged = equals(user, props.user)
   
-  return (<div><form onSubmit={(e) => {e.preventDefault(); props.saveUser(user.id, props.state)}}>
+  return (<TriptychContent header={{title:"Настройки профиля"}}><form onSubmit={(e) => {e.preventDefault(); props.saveUser(user.id, props.state)}}>
     <TextField
         errorText={ pickError("firstName") }
         onChange={ props.stateFieldChanged('firstName') }
@@ -56,7 +57,7 @@ const ProfileFormView = (props) => {
 
     <a href={"https://telegram.me/MirariBot?start=" + user.id} target="_blank">Привязать телеграм-аккаунт</a>
 
-  </div>)
+  </TriptychContent>)
   
 }
 
