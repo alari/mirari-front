@@ -8,7 +8,7 @@ import {decorateWithState} from "commons/utils";
 import {NODES_SAVE} from "nodes/redux/constants"
 
 const mapStateToProps = (state) => ({
-  node: state.nodes.node || {
+  node: (state.nodes.node && state.nodes.node.id === state.resolve.params.nodeId) ? state.nodes.node : {
     title: "",
     text: {version: 0, content: ""},
     draft: true,

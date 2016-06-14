@@ -7,14 +7,16 @@ import {Resolve,resolveSagaStart} from "commons/resolve";
 import {put,select} from "redux-saga/effects";
 import {getNodesList} from "nodes/redux/actions";
 import {getAuth} from "commons/auth";
-import {TriptychMainWrapper} from 'commons/triptych'
+import {TriptychFullWrapper} from 'commons/triptych'
+import React from 'react'
+import NodeAddButton from "nodes/components/NodeAddButton"
 
 export default [{
   component: RootView,
   path: '/',
 
   indexRoute: {
-    component: TriptychMainWrapper(Resolve(HomeView, 'resolveHome'), '/'),
+    component: TriptychFullWrapper(Resolve(HomeView, 'resolveHome'), '/', {button: <NodeAddButton/>}),
 
     resolve: function* resolveHome() {
       yield put(resolveSagaStart('resolveHome'))

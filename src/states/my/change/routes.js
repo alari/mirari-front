@@ -1,13 +1,13 @@
-import ChangeNodeView from './ChangeNodeView'
 import {Resolve,resolveSagaStart} from 'commons/resolve'
 import { put, select, call,take } from 'redux-saga/effects'
 import { getNode } from 'nodes/redux/actions'
 import {NODES_GET} from 'nodes/redux/constants'
 import {setPageProps} from 'commons/page'
-import {TriptychMainWrapper} from 'commons/triptych'
+import {TriptychFullWrapper} from 'commons/triptych'
+import NodeForm from "nodes/components/NodeForm"
 
 export default {
-  component: TriptychMainWrapper(Resolve(ChangeNodeView,'nodeResolve')),
+  component: TriptychFullWrapper(Resolve(NodeForm,'nodeResolve'), "/my/node/:nodeId"),
   path: 'node/:nodeId',
 
   resolve: function* nodeResolve(){

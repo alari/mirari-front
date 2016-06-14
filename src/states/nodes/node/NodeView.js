@@ -5,7 +5,6 @@ import {Toolbar, ToolbarGroup, ToolbarTitle, ToolbarSeparator} from "material-ui
 import moment from "moment";
 import NodeAction from "nodes/components/NodeAction"
 import NodeText from "nodes/components/NodeText"
-import {TriptychContent} from "commons/triptych";
 
 const mapStateToProps = (state) => ({
   node: state.nodes.node
@@ -13,13 +12,9 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {}
 
-const NodeView = (props) => {
-  const node = props.node
-
+const NodeView = ({node}) => {
   return (
-      <TriptychContent header={{
-      title: node.title
-      }}>
+      <div>
         { node && <article style={{padding:"15px"}}>
           
           <NodeText node={node}/>
@@ -35,7 +30,7 @@ const NodeView = (props) => {
           </ToolbarGroup>
         </Toolbar>
 
-      </TriptychContent>
+      </div>
   )
 }
 

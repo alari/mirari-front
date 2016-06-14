@@ -5,10 +5,10 @@ import { getNode } from 'nodes/redux/actions'
 import { getAuth } from 'commons/auth'
 import {NODES_GET} from 'nodes/redux/constants'
 import {setPageProps} from 'commons/page'
-import {TriptychMainWrapper} from 'commons/triptych'
+import {TriptychFullWrapper} from 'commons/triptych'
 
 export default {
-  component: TriptychMainWrapper(Resolve(NodeView, 'nodeResolve'), '/nodes/:nodeId'),
+  component: TriptychFullWrapper(Resolve(NodeView, 'nodeResolve'), '/nodes/:nodeId'),
   path: ':nodeId',
 
   resolve: function* nodeResolve(){
