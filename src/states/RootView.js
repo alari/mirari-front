@@ -66,6 +66,7 @@ const RootView = (props) => {
                 props.logout()
                 props.redirectToRoot()
               }}
+            isLoggedIn={!!props.user}
             leftPanel={<AuthMenu {...props}/>}
         >
           <Helmet
