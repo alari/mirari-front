@@ -3,6 +3,7 @@ import {Link} from "react-router";
 import {connect} from "react-redux";
 import {signup} from "commons/auth";
 import {Paper, TextField, FlatButton, RaisedButton, LinearProgress} from "material-ui";
+import {push} from "react-router-redux"
 
 import {decorateWithState} from "commons/utils"
 
@@ -13,7 +14,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-    signup: ({email, password}, redirect) => signup(email, password, redirect)
+    signup: (data, redirect) => signup(data, redirect),
+    push: (url) => push(url)
 }
 
 const SignUpView = (props) => {
@@ -21,14 +23,16 @@ const SignUpView = (props) => {
 
   const signup = (e) => {
     e.preventDefault()
-    props.signup(props.state, props.query.next)
+    props.signup(props.state, props.query.next).then((ok) => {
+      props.push("/")
+    })
   }
 
   const pickError = (field) => {
     return props.error && props.error.fields && props.error.fields[field]
   }
 
-  return <form onSubmit={(e) => {e.preventDefault(); signup()}}>
+  return <form onSubmit={signup}>
     <div>
       <TextField
           errorText={ pickError("email") }

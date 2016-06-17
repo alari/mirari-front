@@ -19,7 +19,7 @@ const mapDispatchToProps = {
 const SignInView = (props) => {
   const onChange = props.stateFieldChanged
 
-  const login = (e) => {
+  const login = () => {
     props.login(props.state, props.query.next)
   }
 
