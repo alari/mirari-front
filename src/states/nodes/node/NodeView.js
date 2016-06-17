@@ -15,8 +15,8 @@ const mapDispatchToProps = {}
 const NodeView = ({node}) => {
   return (
       <div>
-        { node && <article style={{padding:"15px"}}>
-          
+        { node && <article>
+
           <NodeText node={node}/>
         </article>}
 
