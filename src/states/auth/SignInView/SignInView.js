@@ -59,6 +59,13 @@ const SignInView = (props) => {
                 secondary={true}
             />
           </Link>
+          <Link to="/auth/recovery">
+            <FlatButton
+                linkButton={true}
+                label="Восстановление"
+                secondary={true}
+            />
+          </Link>
           <RaisedButton label="Войти" primary={ true } onClick={ login }/>
         </div>}
       </form>
