@@ -5,35 +5,45 @@ import {connect} from "react-redux";
 import {login} from "commons/auth";
 import {Paper, TextField, FlatButton, RaisedButton, LinearProgress} from "material-ui";
 import {decorateWithState} from "commons/utils";
+import {push} from "react-router-redux"
 
 const mapStateToProps = (state) => ({
-  query: state.resolve.query,
-  error: state.auth._error,
-  progress: state.auth._progress
+  next: state.resolve.query.next
 })
 
 const mapDispatchToProps = {
-  login: ({email, password}, redirectLocation) => login(email, password, redirectLocation)
+  login: ({email, password}) => login(email, password),
+  redirect: (url) => push(url)
 }
 
-const SignInView = (props) => {
-  const onChange = props.stateFieldChanged
+const SignInView = ({state: {error, email = "", password = "", inProgress = false}, setState, stateFieldChanged, next, login, redirect}) => {
 
-  const login = () => {
-    props.login(props.state, props.query.next)
+  const action = () => {
+    setState({
+      error: null,
+      inProgress: true
+    })
+    login({email, password}).then(({error = false}) => {
+      if(!!error) {
+        setState({
+          inProgress: false,
+          error
+        })
+      } else {
+        redirect(next || "/")
+      }
+    })
   }
 
-  const pickError = (field) => {
-    return props.error && props.error.fields && props.error.fields[field]
-  }
+  const pickError = (field) => error && error.fields && error.fields[field]
 
   return (
-      <form onSubmit={(e) => {e.preventDefault(); login()}}>
+      <form onSubmit={(e) => {e.preventDefault(); action()}}>
         <div>
           <TextField
               errorText={ pickError("email") }
-              onChange={ onChange('email') }
-              value={ props.state['email'] || "" }
+              onChange={ stateFieldChanged('email') }
+              value={ email }
               hintText="E-mail"
               fullWidth={true}
               type="email"/>
@@ -41,17 +51,17 @@ const SignInView = (props) => {
         <div>
           <TextField
               errorText={ pickError("password") }
-              onChange={ onChange('password') }
-              value={ props.state['password'] || "" }
+              onChange={ stateFieldChanged('password') }
+              value={ password }
               hintText="Пароль"
               fullWidth={true}
               type="password"/>
         </div>
-        { props.error && <div>
-          [{ props.error && props.error.desc }]
+        { error && <div style={{color:'red'}}>
+          [{ error && error.desc }]
         </div> }
 
-        { props.progress ? <LinearProgress /> : <div>
+        { inProgress ? <LinearProgress /> : <div>
           <Link to="/auth/up">
             <FlatButton
                 linkButton={true}
@@ -66,7 +76,7 @@ const SignInView = (props) => {
                 secondary={true}
             />
           </Link>
-          <RaisedButton label="Войти" primary={ true } onClick={ login }/>
+          <RaisedButton label="Войти" primary={ true } disabled={!password || !email} onClick={ action }/>
         </div>}
       </form>
   )

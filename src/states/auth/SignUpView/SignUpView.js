@@ -8,36 +8,42 @@ import {push} from "react-router-redux"
 import {decorateWithState} from "commons/utils"
 
 const mapStateToProps = (state) => ({
-  query: state.resolve.query,
-  error: state.auth._error,
-  progress: state.auth._progress
+  next: state.resolve.query.next
 })
 
 const mapDispatchToProps = {
-    signup: (data, redirect) => signup(data, redirect),
-    push: (url) => push(url)
+    signup: (data) => signup(data),
+    redirect: (url) => push(url)
 }
 
-const SignUpView = (props) => {
-  const onChange = props.stateFieldChanged
+const SignUpView = ({state: {error, email = "", password = "", inProgress = false}, setState, stateFieldChanged, next, signup, redirect}) => {
 
-  const signup = (e) => {
+  const action = (e) => {
     e.preventDefault()
-    props.signup(props.state, props.query.next).then((ok) => {
-      props.push("/")
+    setState({
+      error: false,
+      inProgress: true
+    })
+    signup({email, password}).then(({error = false}) => {
+      if(!!error) {
+        setState({
+          inProgress: false,
+          error
+        })
+      } else {
+        redirect(next || "/")
+      }
     })
   }
 
-  const pickError = (field) => {
-    return props.error && props.error.fields && props.error.fields[field]
-  }
+  const pickError = (field) => error && error.fields && error.fields[field]
 
-  return <form onSubmit={signup}>
+  return <form onSubmit={action}>
     <div>
       <TextField
           errorText={ pickError("email") }
-          onChange={ onChange('email') }
-          value={ props.state['email'] || "" }
+          onChange={ stateFieldChanged('email') }
+          value={ email }
           hintText="E-mail"
           fullWidth={true}
           type="email"/>
@@ -45,17 +51,17 @@ const SignUpView = (props) => {
     <div>
       <TextField
           errorText={ pickError("password") }
-          onChange={ onChange('password') }
-          value={ props.state['password'] || "" }
+          onChange={ stateFieldChanged('password') }
+          value={ password }
           hintText="Пароль"
           fullWidth={true}
           type="password"/>
     </div>
-    { props.error && <div>
-      [{ props.error && props.error.desc }]
+    { error && <div style={{color:'red'}}>
+      [{ error && error.desc }]
     </div> }
 
-    { props.progress ? <LinearProgress /> : <div>
+    { inProgress ? <LinearProgress /> : <div>
       <Link to="/auth/in">
         <FlatButton
             linkButton={true}
@@ -63,7 +69,7 @@ const SignUpView = (props) => {
             secondary={true}
         />
       </Link>
-      <RaisedButton label="Зарегистрироваться" primary={ true } onClick={ signup }/>
+      <RaisedButton label="Зарегистрироваться" primary={ true } disabled={!email || !password} onClick={ action }/>
     </div>}
   </form>
 }
