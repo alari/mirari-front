@@ -24,10 +24,10 @@ const SignInView = ({state: {error, email = "", password = "", inProgress = fals
       inProgress: true
     })
     login({email, password}).then(({error = false}) => {
-      if(!!error) {
+      if(!!error && error.body) {
         setState({
           inProgress: false,
-          error
+          error: error.body
         })
       } else {
         redirect(next || "/")

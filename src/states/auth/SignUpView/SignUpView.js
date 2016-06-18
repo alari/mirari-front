@@ -25,10 +25,10 @@ const SignUpView = ({state: {error, email = "", password = "", inProgress = fals
       inProgress: true
     })
     signup({email, password}).then(({error = false}) => {
-      if(!!error) {
+      if(!!error && error.body) {
         setState({
           inProgress: false,
-          error
+          error: error.body
         })
       } else {
         redirect(next || "/")
