@@ -11,7 +11,7 @@ const mapStateToProps = (state) => ({
   node: (state.nodes.node && state.nodes.node.id === state.resolve.params.nodeId) ? state.nodes.node : {
     title: "",
     text: {version: 0, content: ""},
-    draft: true,
+    layer: "Draft",
     kind: "Post"
   },
   progress: state.nodes.progress,
@@ -92,14 +92,14 @@ const NodeForm = (props) => {
             { map((k) => <MenuItem key={k} primaryText={kinds[k]} value={k}/>, keys(kinds)) }
           </SelectField>
 
-          <Toggle
+          { node.layer !== "Note" && <Toggle
               label="Опубликовать"
               labelPosition="right"
-              toggled={ !node.draft }
+              toggled={ node.layer === "Pub" }
               onToggle={(e) => {
-              props.setState({"draft": !node.draft})
+              props.setState({"layer": node.layer === "Pub" ? "Draft" : "Pub"})
               }}
-          />
+          />}
 
           { props.progress ? <LinearProgress /> :
               <RaisedButton label="Сохранить" primary={true} disabled={isNotChanged} onClick={saveNode}/> }

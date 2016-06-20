@@ -12,7 +12,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   setPage: (p)=>
-      getNodesList({...p, draft: true, _expand: "values*user"})
+      getNodesList({...p, layer: "Draft", _expand: "values*user"})
 }
 
 const DraftsView = ({nodes, setPage}) => {

@@ -13,7 +13,7 @@ export default {
   resolve: function* resolveDrafts() {
     yield put(resolveSagaStart('resolveDrafts'))
     return yield [
-      put(getNodesList({limit: 13, draft: true, _expand: "values*user"}))
+      put(getNodesList({limit: 13, layer: "Draft", _expand: "values*user"}))
     ]
   },
 

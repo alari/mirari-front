@@ -6,7 +6,7 @@ import {
 } from "./constants";
 import {createApiAction} from "commons/api";
 
-export const getNodesList = ({offset, limit, userId, draft, q, _expand, append = false}) => {
+export const getNodesList = ({offset, limit, userId, layer, q, _expand, append = false}) => {
   return createApiAction({
     url: '/nodes',
     method: 'GET',
@@ -14,7 +14,7 @@ export const getNodesList = ({offset, limit, userId, draft, q, _expand, append =
       offset,
       limit,
       userId,
-      draft,
+      layer,
       q,
       _expand
     }
