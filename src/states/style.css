@@ -1,9 +1,11 @@
 :root {
   --base-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   --base-font-size: 16px;
-  --base-line-height: 24px;
+  --base-line-height: 1.6;
 
   --base-text-color: #333;
+
+  --base-margin-step: 16px;
 }
 
 html, body {
@@ -28,7 +30,7 @@ h3,
 h4,
 h5,
 h6 {
-  margin: 0 0 16px;
+  margin: 0 0 var(--base-margin-step);
   font-weight: 400;
   font-family: var(--base-font-family);
 }
@@ -65,7 +67,15 @@ h6 {
 
 p {
   margin-top: 0;
-  margin-bottom: 16px;
+  margin-bottom: var(--base-margin-step);
+}
+
+hr {
+  height: 2px;
+  padding: 0;
+  margin: var(--base-margin-step) 0;
+  background-color: #e7e7e7;
+  border: 0 none;
 }
 
 @component NavList {
@@ -80,7 +90,7 @@ p {
 
     @descendent link {
         display: block;
-        padding: 16px 24px;
+        padding: var(--base-margin-step) 24px;
         font-size: 14px;
         color: rgba(0, 0, 0, 0.870588);
         line-height: 16px;

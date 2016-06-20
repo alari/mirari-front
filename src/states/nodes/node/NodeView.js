@@ -1,3 +1,4 @@
+import "./styles.css";
 import React from "react";
 import {Link} from "react-router";
 import {connect} from "react-redux";
@@ -12,25 +13,29 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {}
 
-const NodeView = ({node}) => {
+const ArticleFooterItem = ({ content, itemProp }) => {
   return (
-      <div>
-        { node && <article>
+    <div className="ArticleFooter-item" itemProp={itemProp}>{content}</div>
+  )
+}
+
+const NodeView = ({ node }) => {
+  return (
+      <section itemScope itemType="http://schema.org/Article">
+        { node && <article itemProp="articleBody">
 
           <NodeText node={node}/>
         </article>}
 
-        <Toolbar>
-          <ToolbarGroup>
-            <ToolbarTitle text={node.user.name}/>
-            {node.firstPublished && <ToolbarTitle text={moment(node.firstPublished).fromNow()}/>}
-            <NodeAction node={node}><Link to={"/my/node/" + node.id}>РЕДАКТИРОВАТЬ</Link></NodeAction>
-            <ToolbarSeparator />
-            <ToolbarTitle text={(node && node.views) + " просмотров"}/>
-          </ToolbarGroup>
-        </Toolbar>
-
-      </div>
+        <div className="ArticleFooter">
+          <ArticleFooterItem content={"Автор: " + node.user.name} itemProp="author" />
+          {node.firstPublished &&
+            <ArticleFooterItem content={moment(node.firstPublished).fromNow()} />
+          }
+          <ArticleFooterItem content={<NodeAction node={node}><Link to={"/my/node/" + node.id}>РЕДАКТИРОВАТЬ</Link></NodeAction>} />
+          <ArticleFooterItem content={(node && node.views) + " просмотров"} />
+        </div>
+      </section>
   )
 }
 
