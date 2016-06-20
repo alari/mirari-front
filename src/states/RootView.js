@@ -41,6 +41,7 @@ const AuthMenu = ({user}) => {
   return (!!user) ? (
       <NavList>
         <NavListItem url="/my/drafts" title="Черновики"/>
+        <NavListItem url="/my/notes" title="Заметки"/>
         <NavListItem url="/my/profile" title="Профиль"/>
       </NavList>
   ) : (

@@ -1,4 +1,5 @@
 import DraftsRoutes from "./drafts/routes";
+import NotesRoutes from "./notes/routes";
 import AddNodeRoutes from "./add-node/routes";
 import ChangeNodeRoutes from "./change/routes";
 import ProfileRoutes from "./profile/routes";
@@ -8,6 +9,7 @@ export default {
   path: 'my',
 
   childRoutes: [
+    NotesRoutes,
     DraftsRoutes,
     AddNodeRoutes,
     ChangeNodeRoutes,

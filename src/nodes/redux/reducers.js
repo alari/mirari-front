@@ -70,10 +70,14 @@ export default createReducer({}, {
   },
 
   [NODES_SAVE.SUCCESS]: (state, action) => {
+    const updated = updateNodeInStore(state, action.nodeId, (node) => {
+      return update.commit(node, action.result.body)
+    })
+    if(action.result.status === 201) {
+      updated.list.values.unshift(action.result.body)
+    }
     return {
-      ...(updateNodeInStore(state, action.nodeId, (node) => {
-        return update.commit(node, action.result.body)
-      })),
+      ...updated,
       error: null,
       progress: false
     }

@@ -5,7 +5,7 @@ import {push} from "react-router-redux";
 
 export default function*() {
   yield* takeLatest([NODES_SAVE.SUCCESS], function*(action) {
-    if (!action.nodeId && action.result.body.id) {
+    if (!action.nodeId && action.result.body.id && action.result.body.layer !== 'Note') {
       yield put(push("/my/node/" + action.result.body.id))
     }
   })

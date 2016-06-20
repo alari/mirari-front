@@ -5,7 +5,7 @@ import {map, keys, propOr, merge, equals, pickBy} from "ramda";
 import {TextField, RaisedButton, SelectField, MenuItem, Toggle, LinearProgress, FlatButton} from "material-ui";
 import {saveNode} from "nodes/redux/actions";
 import {decorateWithState} from "commons/utils";
-import {NODES_SAVE} from "nodes/redux/constants"
+import {NODES_SAVE} from "nodes/redux/constants";
 
 const mapStateToProps = (state) => ({
   node: (state.nodes.node && state.nodes.node.id === state.resolve.params.nodeId) ? state.nodes.node : {
@@ -44,7 +44,7 @@ const NodeForm = (props) => {
 
   const saveNode = () => {
     props.saveNode(props.node, props.state).then((e) => {
-      if(e.type === NODES_SAVE.SUCCESS) {
+      if (e.type === NODES_SAVE.SUCCESS) {
         props.clearState()
       }
     })
@@ -57,59 +57,59 @@ const NodeForm = (props) => {
   }
 
   return (
-      <form onSubmit={saveNode}>
-        <TextField
-            hintText="Заголовок"
-            floatingLabelText="Заголовок"
-            fullWidth={true}
-            onChange={setField("title")}
-            value={ node.title }
-            errorText={ pickError("title") }
-        />
+    <form onSubmit={saveNode}>
+      <TextField
+        hintText="Заголовок"
+        floatingLabelText="Заголовок"
+        fullWidth={true}
+        onChange={setField("title")}
+        value={ node.title }
+        errorText={ pickError("title") }
+      />
 
-        <TextField
-            hintText="Основной текст"
-            floatingLabelText="Основной текст"
-            fullWidth={true}
-            multiLine={true}
-            onChange={(e) => {
+      <TextField
+        hintText="Основной текст"
+        floatingLabelText="Основной текст"
+        fullWidth={true}
+        multiLine={true}
+        onChange={(e) => {
               props.setState({text: {...node.text, content:e.target.value}})
             }}
-            rows={12}
-            value={ node.text.content }
-            errorText={ pickError("text.content") || pickError("text.version") }
-        />
+        rows={12}
+        value={ node.text.content }
+        errorText={ pickError("text.content") || pickError("text.version") }
+      />
 
-        <div>
-          <SelectField
-              autoWidth={true}
-              value={ node.kind }
-              onChange={(event, index, value) => {
+      <div>
+        { node.layer !== "Note" && <SelectField
+          autoWidth={true}
+          value={ node.kind }
+          onChange={(event, index, value) => {
                 props.setState({"kind": value})
               }}
-              errorText={ pickError("kind") }
-          >
-            { map((k) => <MenuItem key={k} primaryText={kinds[k]} value={k}/>, keys(kinds)) }
-          </SelectField>
+          errorText={ pickError("kind") }
+        >
+          { map((k) => <MenuItem key={k} primaryText={kinds[k]} value={k}/>, keys(kinds)) }
+        </SelectField>}
 
-          { node.layer !== "Note" && <Toggle
-              label="Опубликовать"
-              labelPosition="right"
-              toggled={ node.layer === "Pub" }
-              onToggle={(e) => {
+        { node.layer !== "Note" && <Toggle
+          label="Опубликовать"
+          labelPosition="right"
+          toggled={ node.layer === "Pub" }
+          onToggle={(e) => {
               props.setState({"layer": node.layer === "Pub" ? "Draft" : "Pub"})
               }}
-          />}
+        />}
 
-          { props.progress ? <LinearProgress /> :
-              <RaisedButton label="Сохранить" primary={true} disabled={isNotChanged} onClick={saveNode}/> }
+        { props.progress ? <LinearProgress /> :
+          <RaisedButton label="Сохранить" primary={true} disabled={isNotChanged} onClick={saveNode}/> }
 
-          { node.id &&
-          <Link to={"/nodes/"+node.id}><FlatButton label="На страницу" linkButton={true} secondary={true}/></Link> }
+        { node.id && node.layer !== 'Note' &&
+        <Link to={"/nodes/"+node.id}><FlatButton label="На страницу" linkButton={true} secondary={true}/></Link> }
 
-        </div>
+      </div>
 
-      </form>
+    </form>
   )
 }
 
