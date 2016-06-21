@@ -1,6 +1,10 @@
-import {concat, map} from "ramda";
+import {concat, map, filter} from "ramda";
 import {createReducer, update} from "commons/utils";
-import {NODES_LIST, NODES_LIST_APPEND, NODES_GET, NODES_SAVE} from "./constants";
+import {
+  NODES_LIST,
+  NODES_GET,
+  NODES_SAVE,
+  NODES_DELETE} from "./constants";
 
 
 const updateNodeInStore = (state, id, handler) => {
@@ -37,12 +41,7 @@ const updateNodeInStore = (state, id, handler) => {
 export default createReducer({}, {
   [NODES_LIST.SUCCESS]: (state, action) => ({
     ...state,
-    list: action.result.body
-  }),
-
-  [NODES_LIST_APPEND.SUCCESS]: (state, action) => ({
-    ...state,
-    list: {...action.result.body, values: concat(state.list.values || [], action.result.body.values)}
+    list: action.append ? {...action.result.body, values: concat(state.list.values || [], action.result.body.values)} : action.result.body
   }),
 
   [NODES_GET.REQUEST]: (state, action) => {
@@ -63,9 +62,7 @@ export default createReducer({}, {
     return {
       ...updateNodeInStore(state, action.nodeId, (user) => {
         return update.set(user, action.params)
-      }),
-      error: null,
-      progress: true
+      })
     }
   },
 
@@ -77,9 +74,7 @@ export default createReducer({}, {
       updated.list.values.unshift(action.result.body)
     }
     return {
-      ...updated,
-      error: null,
-      progress: false
+      ...updated
     }
   },
 
@@ -87,10 +82,17 @@ export default createReducer({}, {
     return {
       ...updateNodeInStore(state, action.nodeId, (node) => {
         return update.revert(node)
-      }),
-      error: action.error.body,
-      progress: false
+      })
     }
-  }
+  },
+
+  [NODES_DELETE.SUCCESS]: (state, action) => ({
+    ...state,
+    node: (state.node && state.node.id === action.queryParams.id) ? null : state.node,
+    list: (state.list && state.list.values) ? {
+      ...state.list,
+      values: filter(n => n.id !== action.queryParams.id, state.list.values)
+    } : state.list
+  })
 
 })
