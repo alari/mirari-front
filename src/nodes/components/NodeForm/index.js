@@ -131,7 +131,7 @@ const NodeForm = ({node, state: {inProgress = false, deleting = false, error, ..
         { actualNode.id && !inProgress && <FlatButton icon={<ActionDelete/>} label={deleting && "Удалить"} secondary={true} onClick={ () => deleting ? actionDelete() : setState({deleting: true}) } /> }
 
         { actualNode.id && actualNode.layer !== 'Note' &&
-        <Link to={"/nodes/"+actualNode.id}><FlatButton label="На страницу" linkButton={true} secondary={true}/></Link> }
+        <FlatButton label="На страницу" onClick={() => redirect("/nodes/"+actualNode.id)} secondary={true}/>}
 
       </div>
 
