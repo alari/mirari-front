@@ -44,27 +44,18 @@ export default createReducer({}, {
     list: action.append ? {...action.result.body, values: concat(state.list.values || [], action.result.body.values)} : action.result.body
   }),
 
-  [NODES_GET.REQUEST]: (state, action) => {
-    return {
+  [NODES_GET.REQUEST]: (state, action) => ({
       ...state,
       node: null
-    }
-  },
+    }),
 
-  [NODES_GET.SUCCESS]: (state, action) => {
-    return {
+  [NODES_GET.SUCCESS]: (state, action) => ({
       ...state,
       node: action.result.body
-    }
-  },
+    }),
 
-  [NODES_SAVE.REQUEST]: (state, action) => {
-    return {
-      ...updateNodeInStore(state, action.nodeId, (user) => {
-        return update.set(user, action.params)
-      })
-    }
-  },
+  [NODES_SAVE.REQUEST]: (state, action) =>
+    updateNodeInStore(state, action.nodeId, (node) => update.set(node, action.params)),
 
   [NODES_SAVE.SUCCESS]: (state, action) => {
     const updated = updateNodeInStore(state, action.nodeId, (node) => {
@@ -73,18 +64,11 @@ export default createReducer({}, {
     if(action.result.status === 201) {
       updated.list.values.unshift(action.result.body)
     }
-    return {
-      ...updated
-    }
+    return updated
   },
 
-  [NODES_SAVE.FAILURE]: (state, action) => {
-    return {
-      ...updateNodeInStore(state, action.nodeId, (node) => {
-        return update.revert(node)
-      })
-    }
-  },
+  [NODES_SAVE.FAILURE]: (state, action) =>
+    updateNodeInStore(state, action.nodeId, (node) => update.revert(node)),
 
   [NODES_DELETE.SUCCESS]: (state, action) => ({
     ...state,
