@@ -8,7 +8,7 @@ import moment from 'moment';
 
 export default ({node}) => {
   return (node &&
-    <Card>
+    <Card itemScope itemType="http://schema.org/Article">
       <CardItem>
         <Avatar
           color={ colors.deepOrange300 }
@@ -18,10 +18,10 @@ export default ({node}) => {
       </CardItem>
       <CardItem>
         <CardRows>
-          <Link to={"/nodes/"+node.id} style={{color:'#333'}}>{ node.title }</Link>
+          <Link to={"/nodes/"+node.id} className="Card-titleLink" itemProp="url">{ node.title }</Link>
         </CardRows>
         <CardRows>
-          <CardRow>{node.user.name}</CardRow>
+          <CardRow itemProp="author">{node.user.name}</CardRow>
           <CardRow>
             { node.firstPublished && <span>, <i>{moment(node.firstPublished).fromNow()}</i></span> }
           </CardRow>
