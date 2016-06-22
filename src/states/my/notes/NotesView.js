@@ -99,7 +99,12 @@ const NotesView = ({nodes, setPage, nodeId}) => {
 
         <NoteForm/>
 
-        { map((n) => <Card key={n.id} isActive={n.id === nodeId}><Link to={"/my/notes/"+n.id}>{n.title || "***"}, {moment(n.lastUpdated).fromNow()}</Link></Card>, nodes.values) }
+        { map((n) =>
+          <Card key={n.id} isActive={n.id === nodeId}>
+            <CardItem>
+              <Link to={"/my/notes/"+n.id}>{n.title || "***"}, {moment(n.lastUpdated).fromNow()}</Link>
+            </CardItem>
+          </Card>, nodes.values) }
 
         <LoadMore action={loadMore} haveMore={haveMore}/>
 
