@@ -20,16 +20,15 @@ export default ({node}) => {
         </div>
         <div className="Article-headerContent">
           <div itemProp="author">{node.user.name}</div>
-          { node.firstPublished && <span>, <em>{moment(node.firstPublished).fromNow()}</em></span> }
+          { node.firstPublished &&
+            <div>, <span itemProp="datePublished">{moment(node.firstPublished).fromNow()}</span></div>
+          }
         </div>
       </div>
       <div className="Article-body">
         <h2 className="Article-title">
           <Link to={"/nodes/"+node.id} className="Article-titleLink" itemProp="url">{ node.title }</Link>
         </h2>
-        <p>
-          Млечный Путь ничтожно представляет собой первоначальный спектральный класс. Солнечное затмение представляет собой эллиптический параллакс. Скоpость кометы в пеpигелии вероятна. Туманность Андромеды отражает pадиотелескоп Максвелла.
-        </p>
       </div>
 
     </article>
