@@ -1,0 +1,39 @@
+@component Article {
+  display: block;
+  max-width: 700px;
+  margin: 0 auto 24px;
+  padding: 24px;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,.04);
+  border: 1px solid rgba(0,0,0,.09);
+  border-radius: 3px;
+
+  @descendent meta {
+
+  }
+
+  @descendent header {
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    color: #757575;
+    font-size: 14px;
+  }
+
+  @descendent headerAvatar {
+    margin-right: 16px;
+  }
+
+  @descendent body {}
+  @descendent title {
+
+  }
+  @descendent titleLink {
+    color: #212121;
+    text-decoration: none;
+
+    &:visited {
+      color: #757575;
+    }
+  }
+}

@@ -74,7 +74,7 @@ const RootView = (props) => {
               title={props.title}
               defaultTitle="Мирари"
               link={[
-                {rel:"stylesheet",href:"https://fonts.googleapis.com/css?family=Roboto:400,300,500&subset=latin,cyrillic",type:"text/css"},
+                {rel:"stylesheet",href:"https://fonts.googleapis.com/css?family=Roboto|Roboto+Slab:400,700&subset=cyrillic",type:"text/css"},
                 {rel:"stylesheet",href:"/bundle.css",type:"text/css",media:"screen,projection"}
                 ]}
               meta={props.meta}

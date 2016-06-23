@@ -1,11 +1,27 @@
 :root {
   --base-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
   --base-font-size: 16px;
   --base-line-height: 1.6;
 
   --base-text-color: #333;
 
+  --base-link-color: #2196F3;
+  --hover-link-color: #64B5F6;
+  --visited-link-color: #3F51B5;
+
   --base-margin-step: 16px;
+
+
+  --base-font-size: 22;
+  --base-line-height: 1.5;
+  --leading: calc(var(--base-line-height) * 1rem);
+
+  --scale: 1.2;
+
+
+  --theme-IronHasky-text-font-family: 'Roboto', "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --theme-IronHasky-head-font-family: 'Roboto Slab', "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 html, body {
@@ -18,10 +34,11 @@ html {
 }
 
 body {
-  font-size: var(--base-font-size);
   font-family: var(--base-font-family);
-  line-height: var(--base-line-height);
   color: var(--base-text-color);
+
+  font-size: var(--base-font-size) / 16 * 100%;
+  line-height: var(--leading);
 }
 
 h1,
@@ -30,52 +47,113 @@ h3,
 h4,
 h5,
 h6 {
-  margin: 0 0 var(--base-margin-step);
   font-weight: 400;
   font-family: var(--base-font-family);
+
+  margin-top: 0;
+  margin-bottom: var(--leading);
+  line-height: var(--leading);
 }
 
 h1 {
-  font-size: 2em;
-  line-height: 1.25;
+  font-size: 2 * var(--scale) * 1rem;
+  line-height: 2 * var(--leading);
+  margin-bottom: calc(2 * var(--leading));
 }
 
 h2 {
-  font-size: 1.5em;
-  line-height: 1.334;
+  font-size: calc(1.5 * var(--scale) * 1rem);
+  line-height: calc(1.5 * var(--leading));
+  margin-bottom: calc(1.5 * var(--leading));
 }
 
 h3 {
-  font-size: 1.25em;
-  line-height: 1.4;
+  font-size: calc(1 * var(--scale) * 1rem);
 }
 
 h4 {
-  font-size: 1em;
-  line-height: 1.5;
+  font-size: calc(var(--scale) / 2 * 1rem);
 }
 
 h5 {
-  font-size: 1em;
-  line-height: 1.715;
+  font-size: calc(var(--scale) / 3 * 1rem);
 }
 
 h6 {
-  font-size: .75em;
+  font-size: calc(var(--scale) / 4 * 1rem);
   color: #777;
 }
 
 p {
   margin-top: 0;
-  margin-bottom: var(--base-margin-step);
+  margin-bottom: var(--leading);
+  line-height: var(--leading);
 }
 
 hr {
   height: 2px;
   padding: 0;
-  margin: var(--base-margin-step) 0;
+  margin: var(--leading) 0;
   background-color: #e7e7e7;
   border: 0 none;
+}
+
+ul,
+ol {
+    margin-top: var(--leading);
+    margin-bottom: var(--leading);
+}
+ul li,
+ol li {
+    line-height: var(--leading);
+}
+ul ul,
+ol ul,
+ul ol,
+ol ol {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+blockquote {
+    line-height: var(--leading);
+    margin-top: var(--leading);
+    margin-bottom: var(--leading);
+}
+
+pre, xmp, plaintext, listing {
+  margin-top: 0;
+  margin-bottom: var(--leading);
+  padding: var(--leading);
+  line-height: var(--leading);
+  font-family: monospace;
+  font-family: var(--base-font-family);
+  background-color: #F5F5F5;
+}
+
+a {
+  color: var(--base-link-color);
+
+  &:hover {
+    color: var(--hover-link-color);
+  }
+
+  &:visited {
+    color: var(--visited-link-color);
+  }
+}
+
+.Theme-IronHasky {
+  font-family: var(--theme-IronHasky-text-font-family);
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--theme-IronHasky-head-font-family);
+    font-weight: 700;
+  }
 }
 
 @component NavList {
