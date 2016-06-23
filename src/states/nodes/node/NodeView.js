@@ -29,8 +29,8 @@ const NodeView = ({ node }) => {
 
         <div className="ArticleFooter">
           <ArticleFooterItem content={"Автор: " + node.user.name} itemProp="author" />
-          {node.firstPublished &&
-            <ArticleFooterItem content={moment(node.firstPublished).fromNow()} />
+          {node.published &&
+            <ArticleFooterItem content={moment(node.published).fromNow()} />
           }
           <ArticleFooterItem content={<NodeAction node={node}><Link to={"/my/node/" + node.id}>РЕДАКТИРОВАТЬ</Link></NodeAction>} />
           <ArticleFooterItem content={(node && node.views) + " просмотров"} />

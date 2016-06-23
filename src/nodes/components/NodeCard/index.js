@@ -20,8 +20,8 @@ export default ({node}) => {
         </div>
         <div className="Article-headerContent">
           <div itemProp="author">{node.user.name}</div>
-          { node.firstPublished &&
-            <div>, <span itemProp="datePublished">{moment(node.firstPublished).fromNow()}</span></div>
+          { node.published &&
+            <div itemProp="datePublished">{moment(node.published).fromNow()}</div>
           }
         </div>
       </div>
