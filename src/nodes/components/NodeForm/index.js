@@ -12,6 +12,7 @@ import {push} from "react-router-redux"
 const mapStateToProps = (state) => ({
   node: (state.nodes.node && state.nodes.node.id === state.resolve.params.nodeId) ? state.nodes.node : {
     title: "",
+    description: "",
     text: {version: 0, content: ""},
     layer: "Draft",
     kind: "Post"
@@ -103,6 +104,17 @@ const NodeForm = ({node, state: {inProgress = false, deleting = false, error, ..
         value={ actualNode.text.content }
         errorText={ pickError("text.content") || pickError("text.version") }
       />
+
+      { actualNode.layer !== "Note" && <TextField
+        hintText="Аннотация (для соцсетей и лент)"
+        floatingLabelText="Аннотация"
+        fullWidth={true}
+        multiLine={true}
+        onChange={(e) => setState({description: e.target.value.substring(0, 256)})}
+        rows={3}
+        value={ actualNode.description }
+        errorText={ pickError("description") }
+      /> }
 
       <div>
         { actualNode.layer !== "Note" && <SelectField

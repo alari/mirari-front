@@ -29,6 +29,7 @@ export default ({node}) => {
         <h2 className="Article-title">
           <Link to={"/nodes/"+node.id} className="Article-titleLink" itemProp="url">{ node.title }</Link>
         </h2>
+        { node.description && <div>{ node.description }</div> }
       </div>
 
     </article>
