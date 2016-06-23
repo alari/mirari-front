@@ -170,8 +170,15 @@ a {
         display: block;
         padding: var(--base-margin-step) 24px;
         font-size: 14px;
-        color: rgba(0, 0, 0, 0.870588);
+        color: var(--base-text-color);
         line-height: 16px;
         text-decoration: none;
+
+        &:hover {
+          color: var(--base-text-color);
+        }
+        &:visited {
+          color: var(--base-text-color);
+        }
     }
 }
