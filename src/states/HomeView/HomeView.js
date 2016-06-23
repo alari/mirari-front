@@ -14,16 +14,15 @@ const mapDispatchToProps = {
   setPage: (p)=> getNodesList({...p, _expand: "values*user"})
 }
 
-const HomeView = ({nodes, setPage}) => {
+const HomeView = ({nodes: {values = [], total = 0, limit, offset} = {}, setPage}) => {
+  const haveMore = values.length < total
 
-  const haveMore = nodes.values.length < nodes.total
-
-  const loadMore = () => setPage({append: true, limit: nodes.limit, offset: nodes.offset + nodes.limit})
+  const loadMore = () => setPage({append: true, limit, offset: offset + limit})
 
   return (
       <div>
 
-        { map((n) => <NodeCard node={n} key={n.id}/>, nodes.values) }
+        { map((n) => <NodeCard node={n} key={n.id}/>, values) }
 
         <LoadMore action={loadMore} haveMore={haveMore}/>
 

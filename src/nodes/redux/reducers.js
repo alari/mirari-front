@@ -1,6 +1,10 @@
-import {concat, map} from "ramda";
+import {concat, map, filter} from "ramda";
 import {createReducer, update} from "commons/utils";
-import {NODES_LIST, NODES_LIST_APPEND, NODES_GET, NODES_SAVE} from "./constants";
+import {
+  NODES_LIST,
+  NODES_GET,
+  NODES_SAVE,
+  NODES_DELETE} from "./constants";
 
 
 const updateNodeInStore = (state, id, handler) => {
@@ -37,37 +41,21 @@ const updateNodeInStore = (state, id, handler) => {
 export default createReducer({}, {
   [NODES_LIST.SUCCESS]: (state, action) => ({
     ...state,
-    list: action.result.body
+    list: action.append ? {...action.result.body, values: concat(state.list.values || [], action.result.body.values)} : action.result.body
   }),
 
-  [NODES_LIST_APPEND.SUCCESS]: (state, action) => ({
-    ...state,
-    list: {...action.result.body, values: concat(state.list.values || [], action.result.body.values)}
-  }),
-
-  [NODES_GET.REQUEST]: (state, action) => {
-    return {
+  [NODES_GET.REQUEST]: (state, action) => ({
       ...state,
       node: null
-    }
-  },
+    }),
 
-  [NODES_GET.SUCCESS]: (state, action) => {
-    return {
+  [NODES_GET.SUCCESS]: (state, action) => ({
       ...state,
       node: action.result.body
-    }
-  },
+    }),
 
-  [NODES_SAVE.REQUEST]: (state, action) => {
-    return {
-      ...updateNodeInStore(state, action.nodeId, (user) => {
-        return update.set(user, action.params)
-      }),
-      error: null,
-      progress: true
-    }
-  },
+  [NODES_SAVE.REQUEST]: (state, action) =>
+    updateNodeInStore(state, action.nodeId, (node) => update.set(node, action.params)),
 
   [NODES_SAVE.SUCCESS]: (state, action) => {
     const updated = updateNodeInStore(state, action.nodeId, (node) => {
@@ -76,21 +64,19 @@ export default createReducer({}, {
     if(action.result.status === 201) {
       updated.list.values.unshift(action.result.body)
     }
-    return {
-      ...updated,
-      error: null,
-      progress: false
-    }
+    return updated
   },
 
-  [NODES_SAVE.FAILURE]: (state, action) => {
-    return {
-      ...updateNodeInStore(state, action.nodeId, (node) => {
-        return update.revert(node)
-      }),
-      error: action.error.body,
-      progress: false
-    }
-  }
+  [NODES_SAVE.FAILURE]: (state, action) =>
+    updateNodeInStore(state, action.nodeId, (node) => update.revert(node)),
+
+  [NODES_DELETE.SUCCESS]: (state, action) => ({
+    ...state,
+    node: (state.node && state.node.id === action.queryParams.id) ? null : state.node,
+    list: (state.list && state.list.values) ? {
+      ...state.list,
+      values: filter(n => n.id !== action.queryParams.id, state.list.values)
+    } : state.list
+  })
 
 })

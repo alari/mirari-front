@@ -12,7 +12,8 @@ import {LinearProgress, RaisedButton, FlatButton, TextField} from "material-ui"
 
 const mapStateToProps = (state) => ({
   nodes: state.nodes.list,
-  nodeId: state.resolve.params.nodeId
+  nodeId: state.resolve.params.nodeId,
+  q: state.resolve.query.q || ""
 })
 
 const mapDispatchToProps = {
@@ -88,16 +89,16 @@ const NoteForm = connect(null, {
   saveNode: (data) => saveNode({}, data)
 })(decorateWithState(NoteFormView, {initialState: NoteFormInitial}))
 
-const NotesView = ({nodes, setPage, nodeId}) => {
+const NotesView = ({nodes, setPage, nodeId, q}) => {
 
   const haveMore = nodes.values.length < nodes.total
 
-  const loadMore = () => setPage({append: true, limit: nodes.limit, offset: nodes.offset + nodes.limit})
+  const loadMore = () => setPage({q, append: true, limit: nodes.limit, offset: nodes.offset + nodes.limit})
 
   return (
       <div>
 
-        <NoteForm/>
+        {!q && <NoteForm/>}
 
         { map((n) =>
           <Card key={n.id} isActive={n.id === nodeId}>
