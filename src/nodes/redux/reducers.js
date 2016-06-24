@@ -1,10 +1,12 @@
-import {concat, map, filter} from "ramda";
+import {concat, map, filter, groupBy, lensProp, set, view} from "ramda";
 import {createReducer, update} from "commons/utils";
 import {
   NODES_LIST,
   NODES_GET,
   NODES_SAVE,
-  NODES_DELETE} from "./constants";
+  NODES_DELETE,
+  NODES_COMMENT
+} from "./constants";
 
 
 const updateNodeInStore = (state, id, handler) => {
@@ -38,6 +40,33 @@ const updateNodeInStore = (state, id, handler) => {
   return state
 }
 
+const prepareComments = (comments) => {
+  const byReplyId = groupBy(c => c.replyTo || "node", comments.values)
+  map(c => c.children = byReplyId[c.id] || [] , comments.values)
+  return byReplyId.node
+}
+
+const addComment = (comments, add) => {
+  add.children = []
+  if(!add.replyTo) {
+    comments.push(add)
+    return comments
+  } else {
+    let i = 0
+    while(i < comments.length) {
+      const c = comments[i]
+      if(c.id === add.replyTo) {
+        c.children.push(add)
+        break
+      } else {
+        addComment(c.children, add)
+      }
+      i+=1
+    }
+    return comments
+  }
+}
+
 export default createReducer({}, {
   [NODES_LIST.SUCCESS]: (state, action) => ({
     ...state,
@@ -51,7 +80,8 @@ export default createReducer({}, {
 
   [NODES_GET.SUCCESS]: (state, action) => ({
       ...state,
-      node: action.result.body
+      node: action.result.body,
+    comments: prepareComments(action.result.body.comments)
     }),
 
   [NODES_SAVE.REQUEST]: (state, action) =>
@@ -69,6 +99,18 @@ export default createReducer({}, {
 
   [NODES_SAVE.FAILURE]: (state, action) =>
     updateNodeInStore(state, action.nodeId, (node) => update.revert(node)),
+
+  [NODES_COMMENT.SUCCESS]: (state, action) => ({
+    ...state,
+     node: {
+       ...state.node,
+       comments: {
+         total: state.node.comments.total + 1,
+         values: concat(state.node.comments.values, action.result.body)
+       }
+     },
+    comments: addComment(state.comments, action.result.body)
+  }),
 
   [NODES_DELETE.SUCCESS]: (state, action) => ({
     ...state,

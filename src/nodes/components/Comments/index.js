@@ -1,20 +1,31 @@
 import "./styles.css";
 
 import React from "react";
-import {Link} from "react-router";
-import {Avatar} from "material-ui";
-import {colors} from "material-ui/styles";
-
-import moment from 'moment';
+import {connect} from "react-redux"
 
 import CommentForm from "nodes/components/CommentForm";
-import CommentItem from "nodes/components/CommentItem";
+import Comment from "nodes/components/Comment";
+import {map} from "ramda"
 
-export default ({node}) => {
-  return (node &&
-    <div className="Comments">
-      <CommentItem />
-      <CommentForm />
-    </div>
+const mapStateToProps = (state) => ({
+  node: state.nodes.node,
+  comments: state.nodes.comments
+})
+
+const mapDispatchToProps = {
+}
+
+const CommentsView = ({node, comments}) => {
+  return (
+      <div className="Comments">
+        { comments && map(
+          (c) => <Comment key={c.id} comment={c} nodeId={node.id}/>,
+          comments || []
+        ) }
+
+        <CommentForm nodeId={node.id}/>
+      </div>
   )
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(CommentsView)
