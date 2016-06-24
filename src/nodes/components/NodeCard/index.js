@@ -21,7 +21,7 @@ export default ({node}) => {
         <div className="Article-headerContent">
           <div itemProp="author">{node.user.name}</div>
           { node.published &&
-            <time dateTime="{node.published}" itemProp="datePublished">{moment(node.published).fromNow()}</time>
+            <time dateTime={moment(node.published).format()} itemProp="datePublished">{moment(node.published).fromNow()}</time>
           }
         </div>
       </div>
