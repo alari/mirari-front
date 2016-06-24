@@ -20,9 +20,18 @@ export default [{
 
     resolve: function* resolveHome() {
       yield put(resolveSagaStart('resolveHome'))
+      const offset = yield select(s => s.resolve.query.offset)
       return yield [
-        put(getNodesList({limit: 13, _expand: "values*user"}))
+        put(getNodesList({offset, limit: 13, _expand: "values*user"}))
       ]
+    },
+
+    pageProps: function*() {
+      const {offset,limit,total} = yield select(s => s.nodes.list)
+      const link = []
+      if(offset > 0) link.push({rel:"prev", href:"/" + (offset - limit > 0 ? ("?offset="+offset) : "")})
+      if(offset+limit <= total) link.push({rel:"next", href: "/?offset="+(offset+limit)})
+      return {link}
     }
   },
 

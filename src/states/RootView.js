@@ -17,6 +17,10 @@ const mapStateToProps = (state) => ({
   meta: (state.page.meta || []).concat([
     {name: "viewport", content: "width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"}
   ]),
+  link: (state.page.link || []).concat([
+    {rel:"stylesheet",href:"https://fonts.googleapis.com/css?family=Roboto|Roboto+Slab:400,700&subset=cyrillic",type:"text/css"},
+    {rel:"stylesheet",href:"/bundle.css",type:"text/css",media:"screen,projection"}
+  ]),
   user: state.auth.user
 })
 
@@ -73,10 +77,7 @@ const RootView = (props) => {
           <Helmet
               title={props.title}
               defaultTitle="Мирари"
-              link={[
-                {rel:"stylesheet",href:"https://fonts.googleapis.com/css?family=Roboto|Roboto+Slab:400,700&subset=cyrillic",type:"text/css"},
-                {rel:"stylesheet",href:"/bundle.css",type:"text/css",media:"screen,projection"}
-                ]}
+              link={props.link}
               meta={props.meta}
           />
 

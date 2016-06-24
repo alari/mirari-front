@@ -15,7 +15,7 @@ const mapDispatchToProps = {
 }
 
 const HomeView = ({nodes: {values = [], total = 0, limit, offset} = {}, setPage}) => {
-  const haveMore = values.length < total
+  const haveMore = (offset + limit) < total
 
   const loadMore = () => setPage({append: true, limit, offset: offset + limit})
 
