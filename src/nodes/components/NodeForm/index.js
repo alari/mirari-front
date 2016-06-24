@@ -110,7 +110,7 @@ const NodeForm = ({node, state: {inProgress = false, deleting = false, error, ..
         floatingLabelText="Аннотация"
         fullWidth={true}
         multiLine={true}
-        onChange={(e) => setState({description: e.target.value.substring(0, 256)})}
+        onChange={(e) => setState({description: e.target.value.substring(0, 300)})}
         rows={3}
         value={ actualNode.description }
         errorText={ pickError("description") }
