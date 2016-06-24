@@ -1,0 +1,29 @@
+@component CommentItem {
+  margin: 0 0 24px 24px;
+  padding: 24px 0;
+
+  @descendent header {
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    color: #757575;
+    font-size: 14px;
+    line-height: 1.3;
+  }
+
+  @descendent headerAvatar {
+    margin-right: 16px;
+  }
+
+  @descendent body {}
+  @descendent title {}
+
+  @descendent titleLink {
+    color: #212121;
+    text-decoration: none;
+
+    &:visited {
+      color: #757575;
+    }
+  }
+}
