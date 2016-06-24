@@ -21,7 +21,7 @@ export default ({node}) => {
         <div className="Article-headerContent">
           <div itemProp="author">{node.user.name}</div>
           { node.published &&
-            <div itemProp="datePublished">{moment(node.published).fromNow()}</div>
+            <time dateTime="{node.published}" itemProp="datePublished">{moment(node.published).fromNow()}</time>
           }
         </div>
       </div>
@@ -29,7 +29,7 @@ export default ({node}) => {
         <h2 className="Article-title">
           <Link to={"/nodes/"+node.id} className="Article-titleLink" itemProp="url">{ node.title }</Link>
         </h2>
-        { node.description && <div>{ node.description }</div> }
+        { node.description && <p itemProp="description">{ node.description }</p> }
       </div>
 
     </article>
