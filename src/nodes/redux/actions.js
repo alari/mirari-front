@@ -72,3 +72,8 @@ export const removeNodeComment = (nodeId, commentId) => createApiAction({
   routeParams: {nodeId, commentId},
   method: 'DELETE'
 }, NODE_COMMENT_REMOVE)
+
+export const nodeCommentRemoved = (nodeId, commentId) => ({
+  type: NODE_COMMENT_REMOVE.SUCCESS,
+  routeParams: {nodeId, commentId}
+})

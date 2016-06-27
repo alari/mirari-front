@@ -1,4 +1,4 @@
-import {concat, map, filter, groupBy, find} from "ramda";
+import {concat, map, filter, groupBy, find, sortBy} from "ramda";
 import {createReducer, update} from "commons/utils";
 import {NODES_LIST, NODES_GET, NODES_SAVE, NODES_DELETE, NODES_COMMENT, NODE_COMMENT_GET} from "./constants";
 
@@ -44,14 +44,14 @@ const addComment = (comments, add) => {
   add.children = []
   if (!comments) comments = []
   if (!add.replyTo) {
-    find(h => h.id === add.id, comments) || comments.push(add)
+    comments.push(add)
     return comments
   } else {
     let i = 0
     while (i < comments.length) {
       const c = comments[i]
       if (c.id === add.replyTo) {
-        find(h => h.id === add.id, c.children) || c.children.push(add)
+        c.children.push(add)
         break
       } else {
         addComment(c.children, add)
@@ -61,6 +61,32 @@ const addComment = (comments, add) => {
     return comments
   }
 }
+
+const removeComment = (comments, id, parent) => {
+  if (!comments) comments = []
+  let i = 0
+  while(i < comments.length) {
+    const c = comments[i]
+    if(c.id === id) {
+      return sortBy(n => n.dateCreated, concat(map(h => h.replyTo = parent && parent.id, c.children), filter(h => h.id !== id, comments)))
+    } else {
+      c.children = removeComment(c.children, id, c)
+    }
+  }
+  return comments
+}
+
+const addCommentReducer = (state, action) => (state.node && state.node.comments && !find(n => n.id === action.result.body.id, state.node.comments.values)) ? ({
+  ...state,
+  node: {
+    ...state.node,
+    comments: {
+      total: state.node.comments.total + 1,
+      values: concat(state.node.comments.values, action.result.body)
+    }
+  },
+  comments: addComment(state.comments, action.result.body)
+}) : state ;
 
 export default createReducer({}, {
   [NODES_LIST.SUCCESS]: (state, action) => ({
@@ -98,39 +124,18 @@ export default createReducer({}, {
   [NODES_SAVE.FAILURE]: (state, action) =>
     updateNodeInStore(state, action.nodeId, (node) => update.revert(node)),
 
-  // TODO: unify
-  [NODES_COMMENT.SUCCESS]: (state, action) => ({
-    ...state,
-    node: {
-      ...state.node,
-      comments: {
-        total: state.node.comments.total + 1,
-        values: concat(state.node.comments.values, action.result.body)
-      }
-    },
-    comments: addComment(state.comments, action.result.body)
-  }),
+  [NODES_COMMENT.SUCCESS]: addCommentReducer,
 
-  // TODO: unify
-  [NODE_COMMENT_GET.SUCCESS]: (state, action) => ({
-    ...state,
-    node: {
-      ...state.node,
-      comments: {
-        total: state.node.comments.total + 1,
-        values: concat(state.node.comments.values, action.result.body)
-      }
-    },
-    comments: addComment(state.comments, action.result.body)
-  }),
+  [NODE_COMMENT_GET.SUCCESS]: addCommentReducer,
 
   [NODES_DELETE.SUCCESS]: (state, action) => ({
     ...state,
-    node: (state.node && state.node.id === action.routeParams.id) ? null : state.node,
+    node: (state.node && state.node.id === action.routeParams.nodeId) ? null : state.node,
     list: (state.list && state.list.values) ? {
       ...state.list,
-      values: filter(n => n.id !== action.routeParams.id, state.list.values)
-    } : state.list
+      values: filter(n => n.id !== action.routeParams.commentId, state.list.values)
+    } : state.list,
+    comments: removeComment(state.comments, action.routeParams.commentId)
   })
 
 })
