@@ -46,6 +46,7 @@ const CommentForm = ({state: { content = "", error, inProgress = false }, setSta
         hintText="Комментарий"
         floatingLabelText="Комментарий"
         fullWidth={true}
+        multiLine={true}
         onChange={stateFieldChanged("content")}
         value={ content }
         errorText={ pickError("content") }

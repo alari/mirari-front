@@ -1,6 +1,24 @@
 @component CommentItem {
+  position: relative;
   margin: 0 0 24px 24px;
-  padding: 24px 0;
+  padding: 24px 0 0;
+
+  @descendent container {
+    .is-moderate & {
+      user-select: none;
+      pointer-events: none;
+      opacity: .35;
+    }
+  }
+
+  @descendent notice {
+    position: absolute;
+    top: 28px;
+    right: 0;
+    padding: 2px 12px;
+    background-color: #FFD54F;
+    font-size: 14px;
+  }
 
   @descendent header {
     margin-bottom: 8px;
