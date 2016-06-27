@@ -1,4 +1,4 @@
-import {NODES_LIST, NODES_GET, NODES_SAVE, NODES_DELETE, NODES_COMMENT} from "./constants";
+import {NODES_LIST, NODES_GET, NODES_SAVE, NODES_DELETE, NODES_COMMENT, NODE_SSE_COMMENT} from "./constants";
 import {createApiAction} from "commons/api";
 
 export const getNodesList = ({offset, limit, userId, layer, q, _expand, append = false}) => {
@@ -51,3 +51,9 @@ export const commentNode = (id, data) => createApiAction({
   method: 'POST',
   data
 }, NODES_COMMENT)
+
+export const sseNodeComment = (id, data) => ({
+  type: NODE_SSE_COMMENT,
+  nodeId: id,
+  data
+})
