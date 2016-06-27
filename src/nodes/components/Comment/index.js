@@ -28,7 +28,6 @@ const CommentView = ({state: {replying = false}, setState, comment, nodeId}) => 
 
   return (
     <div className="CommentItem">
-      <ModerateNotice />
       <div className="CommentItem-container">
         <div className="CommentItem-header">
           <div className="CommentItem-headerAvatar">
