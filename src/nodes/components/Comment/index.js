@@ -7,6 +7,7 @@ import {colors} from "material-ui/styles";
 import ReplyIcon from 'material-ui/svg-icons/content/reply';
 import Button from 'commons/button';
 import {map} from "ramda"
+import Markdown from "../Markdown"
 
 import moment from 'moment';
 import {decorateWithState} from "commons/utils"
@@ -45,7 +46,7 @@ const CommentView = ({state: {replying = false}, setState, comment, nodeId}) => 
           </div>
         </div>
         <div className="CommentItem-body">
-          { comment.content && <p>{ comment.content }</p> }
+          <Markdown content={comment.content} />
         </div>
         { replying ? <CommentForm replyTo={comment.id} onSaved={replySaved} nodeId={nodeId} /> : <div className="CommentItem-footer">
           <Button
