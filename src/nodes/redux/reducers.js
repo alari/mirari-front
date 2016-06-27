@@ -82,7 +82,7 @@ export default createReducer({}, {
   [NODES_GET.SUCCESS]: (state, action) => ({
       ...state,
       node: action.result.body,
-    comments: prepareComments(action.result.body.comments)
+    comments: action.result.body.comments && prepareComments(action.result.body.comments)
     }),
 
   [NODES_SAVE.REQUEST]: (state, action) =>
@@ -92,7 +92,7 @@ export default createReducer({}, {
     const updated = updateNodeInStore(state, action.nodeId, (node) => {
       return update.commit(node, action.result.body)
     })
-    if(action.result.status === 201) {
+    if(action.result.status === 201 && updated.list && updated.list.values) {
       updated.list.values.unshift(action.result.body)
     }
     return updated
