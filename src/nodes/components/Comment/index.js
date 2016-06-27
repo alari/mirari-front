@@ -26,6 +26,9 @@ const CommentView = ({state: {replying = false}, setState, comment, nodeId}) => 
     setState({replying: false})
   }
 
+  const replyCancelled = () => {
+    setState({replying: false})
+  }
 
   return (
     <div className="CommentItem">
@@ -48,7 +51,7 @@ const CommentView = ({state: {replying = false}, setState, comment, nodeId}) => 
         <div className="CommentItem-body">
           <Markdown content={comment.content} />
         </div>
-        { replying ? <CommentForm replyTo={comment.id} onSaved={replySaved} nodeId={nodeId} /> : <div className="CommentItem-footer">
+        { replying ? <CommentForm replyTo={comment.id} onSaved={replySaved} onCancel={replyCancelled} nodeId={nodeId} /> : <div className="CommentItem-footer">
           <Button
             title="Ответить"
             size="sm"

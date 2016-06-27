@@ -1,7 +1,7 @@
 import "./styles.css";
 import React from "react";
 import {Link} from "react-router";
-import {TextField, LinearProgress, RaisedButton} from "material-ui";
+import {TextField, LinearProgress, RaisedButton, FlatButton} from "material-ui";
 import {connect} from "react-redux";
 import {commentNode} from "nodes/redux/actions";
 import {decorateWithState} from "commons/utils";
@@ -16,9 +16,7 @@ const mapDispatchToProps = {
 }
 
 const CommentForm = ({
-  state: {content = "", error, inProgress = false}, setState, stateFieldChanged, nodeId, actionComment, replyTo, userId, pathname, onSaved = () => {
-}
-}) => {
+  state: {content = "", error, inProgress = false}, setState, stateFieldChanged, nodeId, actionComment, replyTo, userId, pathname, onSaved = () => "", onCancel}) => {
 
   const pickError = (field) => error && error.fields && error.fields[field] && error.fields[field].desc
 
@@ -58,6 +56,7 @@ const CommentForm = ({
       { inProgress ? <LinearProgress/> : <div>
 
         <RaisedButton label="Сохранить" primary={true} disabled={!content} onClick={action}/>
+        { onCancel && <FlatButton label="Отменить" onClick={onCancel}/>}
 
       </div> }
 
