@@ -1,21 +1,24 @@
 import "./styles.css";
-
 import React from "react";
 import {Link} from "react-router";
 import {TextField, LinearProgress, RaisedButton} from "material-ui";
-import {connect} from "react-redux"
-
-import {commentNode} from "nodes/redux/actions"
-import {decorateWithState} from "commons/utils"
+import {connect} from "react-redux";
+import {commentNode} from "nodes/redux/actions";
+import {decorateWithState} from "commons/utils";
 
 const mapStateToProps = (state) => ({
+  pathname: state.resolve.pathname,
+  userId: state.auth.userId
 })
 
 const mapDispatchToProps = {
   actionComment: (id, data) => commentNode(id, data)
 }
 
-const CommentForm = ({state: { content = "", error, inProgress = false }, setState, stateFieldChanged, nodeId, actionComment, replyTo, onSaved = () => {}}) => {
+const CommentForm = ({
+  state: {content = "", error, inProgress = false}, setState, stateFieldChanged, nodeId, actionComment, replyTo, userId, pathname, onSaved = () => {
+}
+}) => {
 
   const pickError = (field) => error && error.fields && error.fields[field] && error.fields[field].desc
 
@@ -25,7 +28,7 @@ const CommentForm = ({state: { content = "", error, inProgress = false }, setSta
       error: null
     })
     actionComment(nodeId, {content, replyTo}).then(({error = false, result}) => {
-      if(error) {
+      if (error) {
         setState({
           inProgress: false,
           error: error.body
@@ -41,7 +44,7 @@ const CommentForm = ({state: { content = "", error, inProgress = false }, setSta
   }
 
   return (
-    <div className="CommentForm">
+    userId ? <div className="CommentForm">
       <TextField
         hintText="Комментарий"
         floatingLabelText="Комментарий"
@@ -58,6 +61,9 @@ const CommentForm = ({state: { content = "", error, inProgress = false }, setSta
 
       </div> }
 
+    </div> : <div>
+      Вы не авторизованы. <Link to={"/auth/in?next="+pathname}>войдите</Link> или <Link to={"/auth/up?next="+pathname}>зарегистрируйтесь</Link>,
+      чтобы комментировать
     </div>
   )
 }
