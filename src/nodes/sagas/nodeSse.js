@@ -1,7 +1,7 @@
 import {takeLatest} from "redux-saga";
 import {put, call} from "redux-saga/effects";
 import {NODE_ENTER, NODES_DELETE} from "nodes/redux/constants";
-import {sseNodeComment} from "nodes/redux/actions"
+import {getNodeComment} from "nodes/redux/actions"
 
 function createSource(nodeId, url) {
 
@@ -10,9 +10,16 @@ function createSource(nodeId, url) {
 
   source.addEventListener("COMMENT_ADDED", (event) => {
     if(deferred) {
-      deferred.resolve(sseNodeComment(nodeId, JSON.parse(event.data)))
+      deferred.resolve(getNodeComment(nodeId, JSON.parse(event.data).commentId))
       deferred = null
     }
+  })
+
+  source.addEventListener("COMMENT_REMOVED", (event) => {
+    // if(deferred) {
+    //   deferred.resolve(getNodeComment(nodeId, JSON.parse(event.data).commentId))
+    //   deferred = null
+    // }
   })
 
   return {
@@ -33,7 +40,6 @@ function createSource(nodeId, url) {
 export default function*() {
   if(typeof window !== 'undefined' && window.EventSource) {
     yield* takeLatest([NODE_ENTER], function*({nodeId}) {
-      console.log("noticed enter", nodeId)
       let source = null
       try {
         source = createSource(nodeId, (document.origin === "http://localhost:3000" ? "http://localhost:9000" : "") + `/api/nodes/${nodeId}/sse`)

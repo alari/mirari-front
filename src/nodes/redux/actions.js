@@ -1,4 +1,12 @@
-import {NODES_LIST, NODES_GET, NODES_SAVE, NODES_DELETE, NODES_COMMENT, NODE_SSE_COMMENT} from "./constants";
+import {
+  NODES_LIST,
+  NODES_GET,
+  NODES_SAVE,
+  NODES_DELETE,
+  NODES_COMMENT,
+  NODE_COMMENT_GET,
+  NODE_COMMENT_REMOVE
+} from "./constants";
 import {createApiAction} from "commons/api";
 
 export const getNodesList = ({offset, limit, userId, layer, q, _expand, append = false}) => {
@@ -52,8 +60,15 @@ export const commentNode = (id, data) => createApiAction({
   data
 }, NODES_COMMENT)
 
-export const sseNodeComment = (id, data) => ({
-  type: NODE_SSE_COMMENT,
-  nodeId: id,
-  data
-})
+export const getNodeComment = (nodeId, commentId) =>
+  createApiAction({
+    url: '/nodes/:nodeId/comments/:commentId',
+    routeParams: {nodeId, commentId},
+    queryParams: {_expand: "user"}
+  }, NODE_COMMENT_GET)
+
+export const removeNodeComment = (nodeId, commentId) => createApiAction({
+  url: '/nodes/:nodeId/comments/:commentId',
+  routeParams: {nodeId, commentId},
+  method: 'DELETE'
+}, NODE_COMMENT_REMOVE)

@@ -1,6 +1,6 @@
 import {concat, map, filter, groupBy, find} from "ramda";
 import {createReducer, update} from "commons/utils";
-import {NODES_LIST, NODES_GET, NODES_SAVE, NODES_DELETE, NODES_COMMENT, NODE_SSE_COMMENT} from "./constants";
+import {NODES_LIST, NODES_GET, NODES_SAVE, NODES_DELETE, NODES_COMMENT, NODE_COMMENT_GET} from "./constants";
 
 
 const updateNodeInStore = (state, id, handler) => {
@@ -98,6 +98,7 @@ export default createReducer({}, {
   [NODES_SAVE.FAILURE]: (state, action) =>
     updateNodeInStore(state, action.nodeId, (node) => update.revert(node)),
 
+  // TODO: unify
   [NODES_COMMENT.SUCCESS]: (state, action) => ({
     ...state,
     node: {
@@ -110,16 +111,17 @@ export default createReducer({}, {
     comments: addComment(state.comments, action.result.body)
   }),
 
-  [NODE_SSE_COMMENT]: (state, action) => ({
+  // TODO: unify
+  [NODE_COMMENT_GET.SUCCESS]: (state, action) => ({
     ...state,
     node: {
       ...state.node,
-      comments: state.node.id !== action.nodeId ? state.node.comments : {
+      comments: {
         total: state.node.comments.total + 1,
-        values: concat(state.node.comments.values, action.data)
+        values: concat(state.node.comments.values, action.result.body)
       }
     },
-    comments: addComment(state.comments, action.data)
+    comments: addComment(state.comments, action.result.body)
   }),
 
   [NODES_DELETE.SUCCESS]: (state, action) => ({
