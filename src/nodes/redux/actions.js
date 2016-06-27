@@ -20,7 +20,8 @@ export const getNodesList = ({offset, limit, userId, layer, q, _expand, append =
 export const getNode = (id, {_expand}) => {
   return createApiAction({
     url: '/nodes/:id',
-    queryParams: {id, _expand},
+    routeParams: {id},
+    queryParams: {_expand},
     method: 'GET'
   }, NODES_GET)
 }
@@ -39,13 +40,14 @@ export const saveNode = (base, changed) => {
 
 export const deleteNode = (id) => createApiAction({
   url: '/nodes/:id',
-  queryParams: {id},
+  routeParams: {id},
   method: 'DELETE'
 }, NODES_DELETE)
 
 export const commentNode = (id, data) => createApiAction({
   url: '/nodes/:id/comments',
-  queryParams: {id, _expand: "user"},
+  routeParams: {id},
+  queryParams: {_expand: "user"},
   method: 'POST',
   data
 }, NODES_COMMENT)

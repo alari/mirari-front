@@ -1,4 +1,4 @@
-import {concat, map, filter, groupBy, lensProp, set, view} from "ramda";
+import {concat, map, filter, groupBy, find} from "ramda";
 import {createReducer, update} from "commons/utils";
 import {
   NODES_LIST,
@@ -48,6 +48,7 @@ const prepareComments = (comments) => {
 
 const addComment = (comments, add) => {
   add.children = []
+  if(!comments) comments = []
   if(!add.replyTo) {
     comments.push(add)
     return comments
@@ -56,7 +57,7 @@ const addComment = (comments, add) => {
     while(i < comments.length) {
       const c = comments[i]
       if(c.id === add.replyTo) {
-        c.children.push(add)
+        find(h => h.id === add.id) || c.children.push(add)
         break
       } else {
         addComment(c.children, add)
@@ -114,10 +115,10 @@ export default createReducer({}, {
 
   [NODES_DELETE.SUCCESS]: (state, action) => ({
     ...state,
-    node: (state.node && state.node.id === action.queryParams.id) ? null : state.node,
+    node: (state.node && state.node.id === action.routeParams.id) ? null : state.node,
     list: (state.list && state.list.values) ? {
       ...state.list,
-      values: filter(n => n.id !== action.queryParams.id, state.list.values)
+      values: filter(n => n.id !== action.routeParams.id, state.list.values)
     } : state.list
   })
 
