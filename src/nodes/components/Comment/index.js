@@ -2,7 +2,7 @@ import "./styles.css";
 
 import React from "react";
 import {Link} from "react-router";
-import {Avatar, RaisedButton} from "material-ui";
+import {Avatar} from "material-ui";
 import {colors} from "material-ui/styles";
 import ReplyIcon from 'material-ui/svg-icons/content/reply';
 import Button from 'commons/button';
@@ -48,7 +48,14 @@ const CommentView = ({state: {replying = false}, setState, comment, nodeId}) => 
           { comment.content && <p>{ comment.content }</p> }
         </div>
         { replying ? <CommentForm replyTo={comment.id} onSaved={replySaved} nodeId={nodeId} /> : <div className="CommentItem-footer">
-          <RaisedButton label="Ответить" icon={<ReplyIcon />} onClick={reply} />
+          <Button
+            title="Ответить"
+            size="sm"
+            color="success"
+            mobile={true}
+            icon={<ReplyIcon />}
+            onClick={reply}
+          />
         </div> }
 
         <div>

@@ -13,6 +13,6 @@ const mapDispatchToProps = {
 }
 
 const NodeEditButton = ({node, userId, roles}) =>
-  (node && userId && node.userId === userId) ? <Button color="default" icon={<EditIcon />} mobile size="sm" title="Править" url={"/nodes/"+node.id+"/edit"} /> : null
+  (node && userId && node.userId === userId) ? <Button color="default" icon={<EditIcon />} mobile size="m" title="Править" url={"/nodes/"+node.id+"/edit"} /> : null
 
 export default connect(mapStateToProps, mapDispatchToProps)(NodeEditButton)
