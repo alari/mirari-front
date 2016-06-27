@@ -44,7 +44,7 @@ const CommentView = ({state: {replying = false}, setState, comment, nodeId}) => 
           <div className="CommentItem-headerContent">
             <div>{comment.user.name}</div>
             <time dateTime={moment(comment.dateCreated).format()} itemProp="datePublished">
-              {moment(comment.dateCreated).fromNow()}
+              <a href={"#" + comment.id} id={comment.id}>{moment(comment.dateCreated).fromNow()}</a>
             </time>
           </div>
         </div>
