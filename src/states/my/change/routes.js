@@ -7,11 +7,11 @@ import NodeForm from "nodes/components/NodeForm";
 import nodePageProps from "nodes/utils/nodePageProps";
 
 export default {
-  component: TriptychFullWrapper(Resolve(NodeForm, 'nodeResolve'), "/my/node/:nodeId"),
+  component: TriptychFullWrapper(Resolve(NodeForm, 'myNodeResolve'), "/my/node/:nodeId"),
   path: 'node/:nodeId',
 
   resolve: function* nodeResolve() {
-    yield put(resolveSagaStart('nodeResolve'))
+    yield put(resolveSagaStart('myNodeResolve'))
 
     const resolve = []
     const nodeId = yield select((s) => s.resolve.params.nodeId)
