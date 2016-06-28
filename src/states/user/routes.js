@@ -17,7 +17,14 @@ export default {
   pageProps: function*() {
     const u = yield select(s => s.users.user)
     return {
-      title: u.name
+      title: u.name,
+      meta: [
+        {property:"og:url", content:"/"+(u.username || u.id)},
+        {property:"og:type", content:"profile"},
+        {property:"og:title", content:u.name},
+        {property:"og:image", content:u.imageId ? ("/api/images/"+u.imageId+"?q=80") : u.avatarUrl},
+        {property:"og:description", content: "Страница автора на Мирари"},
+      ]
     }
   }
 }
