@@ -2,7 +2,9 @@ import "./styles.css";
 
 import React from "react";
 import {Link} from "react-router";
-import {Avatar} from "material-ui";
+import {Avatar, IconMenu, MenuItem} from "material-ui";
+import IconButton from 'material-ui/IconButton/IconButton';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import {colors} from "material-ui/styles";
 import ReplyIcon from 'material-ui/svg-icons/content/reply';
 import Button from 'commons/button';
@@ -60,6 +62,17 @@ const CommentView = ({state: {replying = false}, setState, comment, nodeId, clas
             icon={<ReplyIcon />}
             onClick={reply}
           />
+
+          <div className="CommentItem-footerDivider" />
+
+          <IconMenu
+            iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+            anchorOrigin={{horizontal: 'left', vertical: 'top'}}
+            targetOrigin={{horizontal: 'left', vertical: 'top'}}
+          >
+            <MenuItem primaryText="Редактировать" />
+            <MenuItem primaryText="Удалить" />
+          </IconMenu>
         </div> }
       </div>
       <div className="SubComments">

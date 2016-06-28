@@ -50,6 +50,14 @@
       color: #757575;
     }
   }
+
+  @descendent footer {
+    display: flex;
+    align-items: center;
+  }
+  @descendent footerDivider {
+    flex: 1;
+  }
 }
 
 @component SubComments {
