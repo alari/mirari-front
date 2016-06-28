@@ -34,49 +34,22 @@ const updateNodeInStore = (state, id, handler) => {
   return state
 }
 
-const prepareComments = (comments) => {
-  const byReplyId = groupBy(c => c.replyTo || "node", comments.values)
-  map(c => c.children = byReplyId[c.id] || [], comments.values)
-  return byReplyId.node
-}
-
-const addComment = (comments, add) => {
-  add.children = []
-  if (!comments) comments = []
-  if (!add.replyTo) {
-    comments.push(add)
-    return comments
-  } else {
-    let i = 0
-    while (i < comments.length) {
-      const c = comments[i]
-      if (c.id === add.replyTo) {
-        c.children.push(add)
-        c.uglyHash = c.id
-        break
-      } else {
-        addComment(c.children, add)
+const prepareComments = (list) => {
+  const byReplyId = groupBy(c => c.replyTo || "root", list)
+  const roots = byReplyId.root
+  return map(c => {
+    let replyTo
+    let children = []
+    let queue = [c.id]
+    while(!!(replyTo = queue.pop())) {
+      if(!!byReplyId[replyTo]) {
+         children = children.concat(byReplyId[replyTo])
+         queue = queue.concat(map(r => r.id, byReplyId[replyTo]))
       }
-      i += 1
     }
-    return comments
-  }
-}
-
-const removeComment = (comments, id, parent) => {
-  if (!comments) comments = []
-  let i = 0
-  while(i < comments.length) {
-    const c = comments[i]
-    if(c.id === id) {
-      comments = sortBy(n => n.dateCreated, concat(map(h => h.replyTo = (parent && parent.id), c.children), filter(h => h.id !== id, comments)))
-      break
-    } else if(c.children && c.children.length > 0) {
-      c.children = removeComment(c.children, id, c)
-    }
-    i += 1
-  }
-  return comments
+    c.children = sortBy(r => r.dateCreated, children)
+    return c
+  }, roots)
 }
 
 const addCommentReducer = (state, action) => (state.node && state.node.comments && !find(n => n.id === action.result.body.id, state.node.comments.values)) ? ({
@@ -88,7 +61,7 @@ const addCommentReducer = (state, action) => (state.node && state.node.comments 
       values: concat(state.node.comments.values, action.result.body)
     }
   },
-  comments: addComment(state.comments, action.result.body)
+  comments: prepareComments(concat(state.node.comments.values, action.result.body))
 }) : state ;
 
 export default createReducer({}, {
@@ -108,7 +81,7 @@ export default createReducer({}, {
   [NODES_GET.SUCCESS]: (state, action) => ({
     ...state,
     node: action.result.body,
-    comments: action.result.body.comments && prepareComments(action.result.body.comments)
+    comments: action.result.body.comments && prepareComments(action.result.body.comments.values)
   }),
 
   [NODES_SAVE.REQUEST]: (state, action) =>
@@ -131,10 +104,23 @@ export default createReducer({}, {
 
   [NODE_COMMENT_GET.SUCCESS]: addCommentReducer,
 
-  [NODE_COMMENT_REMOVE.SUCCESS]: (state, action) => ({
-    ...state,
-    comments: removeComment(state.comments, action.routeParams.commentId)
-  }),
+  [NODE_COMMENT_REMOVE.SUCCESS]: (state, action) => {
+    const commentId = action.routeParams.commentId
+    if(state.node && state.node.comments && !!find(n => n.id === commentId, state.node.comments.values)) {
+      const updatedComments = filter(c => c.id !== commentId, state.node.comments.values)
+      return {
+        ...state,
+        node: {
+          ...state.node,
+          comments: {
+            total: state.node.comments.total - 1,
+            values: updatedComments
+          }
+        },
+        comments: prepareComments(updatedComments)
+      }
+    } else return state
+  },
 
   [NODES_DELETE.SUCCESS]: (state, action) => ({
     ...state,

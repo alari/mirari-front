@@ -31,14 +31,14 @@ const mapDispatchToProps = {
 const OnReviewNotice = () =>
   <div className="CommentItem-notice">На модерации</div>;
 
-const CommentView = ({state: {replying = false}, setState, comment, nodeId, userId, nodeUserId, actionRemove}) => {
+const CommentView = ({state: {replying = false, v = 0}, setState, comment, nodeId, userId, nodeUserId, actionRemove, updated}) => {
 
   const reply = () => {
     setState({replying: true})
   }
 
   const remove = () => {
-    actionRemove(nodeId, comment.id)
+    actionRemove(nodeId, comment.id).then(updated)
   }
 
   const replySaved = () => {
@@ -48,6 +48,8 @@ const CommentView = ({state: {replying = false}, setState, comment, nodeId, user
   const replyCancelled = () => {
     setState({replying: false})
   }
+
+  const childUpdated = () => setState({v: v+1})
 
   return (
     <div className="CommentItem">
@@ -64,6 +66,7 @@ const CommentView = ({state: {replying = false}, setState, comment, nodeId, user
             <div>{comment.user.name}</div>
             <time dateTime={moment(comment.dateCreated).format()} itemProp="datePublished">
               <a href={"#" + comment.id} id={comment.id}>{moment(comment.dateCreated).fromNow()}</a>
+              {comment.replyTo && <span>&gt; <a href={"#" + comment.replyTo}>в ответ</a></span> }
             </time>
           </div>
         </div>
@@ -82,19 +85,19 @@ const CommentView = ({state: {replying = false}, setState, comment, nodeId, user
 
           <div className="CommentItem-footerDivider" />
 
-          <IconMenu
+          { (comment.userId === userId || comment.userId === nodeUserId) && <IconMenu
             iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
             anchorOrigin={{horizontal: 'left', vertical: 'top'}}
             targetOrigin={{horizontal: 'left', vertical: 'top'}}
           >
-            <MenuItem primaryText="Редактировать" />
-            <MenuItem primaryText="Удалить" />
-          </IconMenu>
+            { comment.userId === userId && <MenuItem primaryText="Редактировать" />}
+            <MenuItem primaryText="Удалить" onClick={remove} />
+          </IconMenu> }
         </div> }
       </div>
-      <div className="SubComments">
-        { map(c => <Comment key={c.id} comment={c} nodeId={nodeId} />, comment.children) }
-      </div>
+      { comment.hasOwnProperty("children") && <div className="SubComments">
+        { map(c => <Comment key={c.id} comment={c} nodeId={nodeId} updated={childUpdated} />, comment.children) }
+      </div>}
     </div>
   )
 }
