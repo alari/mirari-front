@@ -1,7 +1,8 @@
 import {concat, map} from "ramda";
 import {createReducer, update} from "commons/utils";
 import {
-    USERS_SAVE
+    USERS_SAVE,
+USER_GET
 } from "./constants";
 
 
@@ -66,5 +67,10 @@ export default createReducer({}, {
       _error: action.error.body,
       _progress: false
     }
-  }
+  },
+
+  [USER_GET.SUCCESS]: (state, action) => ({
+    ...state,
+    user: action.result.body
+  })
 })

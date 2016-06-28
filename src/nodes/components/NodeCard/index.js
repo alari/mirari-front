@@ -2,8 +2,8 @@ import "./styles.css";
 
 import React from "react";
 import {Link} from "react-router";
-import {Avatar} from "material-ui";
-import {colors} from "material-ui/styles";
+import UserImage from "users/components/UserImage"
+import UserLink from "users/components/UserLink"
 
 import moment from 'moment';
 
@@ -12,14 +12,10 @@ export default ({node}) => {
     <article className="Article" itemScope itemType="http://schema.org/Article">
       <div className="Article-header">
         <div className="Article-headerAvatar">
-          <Avatar
-            color={ colors.deepOrange300 }
-            backgroundColor={ colors.purple500 }
-            src={node.user.imageId ? ("/api/images/"+node.user.imageId + "?q=80&w=80&h=80&m=cover") : node.user.avatarUrl}
-          />
+          <UserImage user={node.user}/>
         </div>
         <div className="Article-headerContent">
-          <div itemProp="author">{node.user.name}</div>
+          <div itemProp="author"><UserLink user={node.user}/></div>
           { node.published &&
             <time dateTime={moment(node.published).format()} itemProp="datePublished">{moment(node.published).fromNow()}</time>
           }

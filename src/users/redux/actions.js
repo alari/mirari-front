@@ -1,13 +1,20 @@
 import {
-    USERS_SAVE
+    USERS_SAVE,
+USER_GET
 } from "./constants";
 import {createApiAction} from "commons/api";
 
-export const saveUser = (id, data) => {
+export const saveUser = (userId, data) => {
   return createApiAction({
-    url: '/users/:id',
-    routeParams: {id},
+    url: '/users/:userId',
+    routeParams: {userId},
     data,
     method: 'PUT'
   }, USERS_SAVE)
 }
+
+export const getUser = (userId) => createApiAction({
+  url: '/users/:userId',
+  queryParams: {_expand: "image"},
+  routeParams: {userId}
+}, USER_GET)
