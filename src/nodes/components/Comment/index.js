@@ -83,7 +83,7 @@ const CommentView = ({state: {replying = false, v = 0}, setState, comment, nodeI
 
           <div className="CommentItem-footerDivider" />
 
-          { (comment.userId === userId || comment.userId === nodeUserId) && <IconMenu
+          { (comment.userId === userId || userId === nodeUserId) && <IconMenu
             iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
             anchorOrigin={{horizontal: 'left', vertical: 'top'}}
             targetOrigin={{horizontal: 'left', vertical: 'top'}}
