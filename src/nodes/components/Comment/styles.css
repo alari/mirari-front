@@ -1,7 +1,8 @@
 @component CommentItem {
   position: relative;
-  margin: 0 0 24px 0;
+  margin: 10px 0 24px 0;
   padding: 24px 0 0;
+  border-top: 1px solid #f2f2f2;
 
   @descendent container {
     position: relative;

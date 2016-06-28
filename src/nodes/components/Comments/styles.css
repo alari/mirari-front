@@ -1,6 +1,12 @@
 @component Comments {
-  > .CommentItem > .SubComments {
-    margin-left: 48px;
+  > .CommentItem {
+    &:first-child {
+      border-top: none;
+    }
+    
+    > .SubComments {
+      margin-left: 48px;
+    }
   }
 
   p {

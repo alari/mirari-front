@@ -35,10 +35,8 @@ html {
 
 body {
   font-family: var(--base-font-family);
-  color: var(--base-text-color);
-
-  font-size: var(--base-font-size) / 16 * 100%;
   line-height: var(--leading);
+  color: var(--base-text-color);
 }
 
 h1,
