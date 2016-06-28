@@ -10,18 +10,35 @@ import ReplyIcon from 'material-ui/svg-icons/content/reply';
 import Button from 'commons/button';
 import {map} from "ramda"
 import Markdown from "../Markdown"
+import {connect} from "react-redux"
 
 import moment from 'moment';
 import {decorateWithState} from "commons/utils"
 import CommentForm from "nodes/components/CommentForm"
 
-const ModerateNotice = () =>
+import {removeNodeComment} from "nodes/redux/actions"
+
+const mapStateToProps = (state) => ({
+  pathname: state.resolve.pathname,
+  userId: state.auth.userId,
+  nodeUserId: state.nodes.node.userId
+})
+
+const mapDispatchToProps = {
+  actionRemove: (nodeId, commentId) => removeNodeComment(nodeId, commentId)
+}
+
+const OnReviewNotice = () =>
   <div className="CommentItem-notice">На модерации</div>;
 
-const CommentView = ({state: {replying = false}, setState, comment, nodeId, className}) => {
+const CommentView = ({state: {replying = false}, setState, comment, nodeId, userId, nodeUserId, actionRemove}) => {
 
   const reply = () => {
     setState({replying: true})
+  }
+
+  const remove = () => {
+    actionRemove(nodeId, comment.id)
   }
 
   const replySaved = () => {
@@ -82,6 +99,6 @@ const CommentView = ({state: {replying = false}, setState, comment, nodeId, clas
   )
 }
 
-const Comment = decorateWithState(CommentView)
+const Comment = connect(mapStateToProps, mapDispatchToProps)(decorateWithState(CommentView))
 
 export default Comment

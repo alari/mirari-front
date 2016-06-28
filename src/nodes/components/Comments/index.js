@@ -19,7 +19,7 @@ const CommentsView = ({node, comments}) => {
   return (
       <div className="Comments">
         { comments && map(
-          (c) => <Comment key={c.id} comment={c} nodeId={node.id}/>,
+          (c) => c && <Comment key={c.id} comment={c} nodeId={node.id}/>,
           comments || []
         ) }
 

@@ -46,9 +46,9 @@ export const saveNode = (base, changed) => {
   }, NODES_SAVE)
 }
 
-export const deleteNode = (id) => createApiAction({
-  url: '/nodes/:id',
-  routeParams: {id},
+export const deleteNode = (nodeId) => createApiAction({
+  url: '/nodes/:nodeId',
+  routeParams: {nodeId},
   method: 'DELETE'
 }, NODES_DELETE)
 

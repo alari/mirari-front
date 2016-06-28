@@ -1,6 +1,6 @@
 import {concat, map, filter, groupBy, find, sortBy} from "ramda";
 import {createReducer, update} from "commons/utils";
-import {NODES_LIST, NODES_GET, NODES_SAVE, NODES_DELETE, NODES_COMMENT, NODE_COMMENT_GET} from "./constants";
+import {NODES_LIST, NODES_GET, NODES_SAVE, NODES_DELETE, NODES_COMMENT, NODE_COMMENT_GET, NODE_COMMENT_REMOVE} from "./constants";
 
 
 const updateNodeInStore = (state, id, handler) => {
@@ -52,6 +52,7 @@ const addComment = (comments, add) => {
       const c = comments[i]
       if (c.id === add.replyTo) {
         c.children.push(add)
+        c.uglyHash = c.id
         break
       } else {
         addComment(c.children, add)
@@ -68,10 +69,12 @@ const removeComment = (comments, id, parent) => {
   while(i < comments.length) {
     const c = comments[i]
     if(c.id === id) {
-      return sortBy(n => n.dateCreated, concat(map(h => h.replyTo = parent && parent.id, c.children), filter(h => h.id !== id, comments)))
-    } else {
+      comments = sortBy(n => n.dateCreated, concat(map(h => h.replyTo = (parent && parent.id), c.children), filter(h => h.id !== id, comments)))
+      break
+    } else if(c.children && c.children.length > 0) {
       c.children = removeComment(c.children, id, c)
     }
+    i += 1
   }
   return comments
 }
@@ -128,14 +131,18 @@ export default createReducer({}, {
 
   [NODE_COMMENT_GET.SUCCESS]: addCommentReducer,
 
+  [NODE_COMMENT_REMOVE.SUCCESS]: (state, action) => ({
+    ...state,
+    comments: removeComment(state.comments, action.routeParams.commentId)
+  }),
+
   [NODES_DELETE.SUCCESS]: (state, action) => ({
     ...state,
     node: (state.node && state.node.id === action.routeParams.nodeId) ? null : state.node,
     list: (state.list && state.list.values) ? {
       ...state.list,
-      values: filter(n => n.id !== action.routeParams.commentId, state.list.values)
-    } : state.list,
-    comments: removeComment(state.comments, action.routeParams.commentId)
+      values: filter(n => n.id !== action.routeParams.nodeId, state.list.values)
+    } : state.list
   })
 
 })
