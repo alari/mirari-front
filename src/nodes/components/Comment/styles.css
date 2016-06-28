@@ -1,9 +1,12 @@
 @component CommentItem {
   position: relative;
-  margin: 0 0 24px 24px;
+  margin: 0 0 24px 0;
   padding: 24px 0 0;
 
   @descendent container {
+    position: relative;
+    padding-left: 48px;
+
     .is-moderate & {
       user-select: none;
       pointer-events: none;
@@ -30,6 +33,8 @@
   }
 
   @descendent headerAvatar {
+    position: absolute;
+    left: 0;
     margin-right: 16px;
   }
 
@@ -44,4 +49,8 @@
       color: #757575;
     }
   }
+}
+
+@component SubComments {
+
 }

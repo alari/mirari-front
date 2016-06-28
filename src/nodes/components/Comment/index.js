@@ -16,7 +16,7 @@ import CommentForm from "nodes/components/CommentForm"
 const ModerateNotice = () =>
   <div className="CommentItem-notice">На модерации</div>;
 
-const CommentView = ({state: {replying = false}, setState, comment, nodeId}) => {
+const CommentView = ({state: {replying = false}, setState, comment, nodeId, className}) => {
 
   const reply = () => {
     setState({replying: true})
@@ -61,11 +61,9 @@ const CommentView = ({state: {replying = false}, setState, comment, nodeId}) => 
             onClick={reply}
           />
         </div> }
-
-        <div>
-          { map(c => <Comment key={c.id} comment={c} nodeId={nodeId} />, comment.children) }
-        </div>
-
+      </div>
+      <div className="SubComments">
+        { map(c => <Comment key={c.id} comment={c} nodeId={nodeId} />, comment.children) }
       </div>
     </div>
   )
