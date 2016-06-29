@@ -1,0 +1,65 @@
+@component CommentItem {
+  position: relative;
+  margin: 10px 0 24px 0;
+  padding: 24px 0 0;
+  border-top: 1px solid #f2f2f2;
+
+  @descendent container {
+    position: relative;
+    padding-left: 48px;
+
+    .is-moderate & {
+      user-select: none;
+      pointer-events: none;
+      opacity: .35;
+    }
+  }
+
+  @descendent notice {
+    position: absolute;
+    top: 28px;
+    right: 0;
+    padding: 2px 12px;
+    background-color: #FFD54F;
+    font-size: 14px;
+  }
+
+  @descendent header {
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    color: #757575;
+    font-size: 14px;
+    line-height: 1.3;
+  }
+
+  @descendent headerAvatar {
+    position: absolute;
+    left: 0;
+    margin-right: 16px;
+  }
+
+  @descendent body {}
+  @descendent title {}
+
+  @descendent titleLink {
+    color: #212121;
+    text-decoration: none;
+
+    &:visited {
+      color: #757575;
+    }
+  }
+
+  @descendent footer {
+    display: flex;
+    align-items: center;
+  }
+  @descendent footerDivider {
+    flex: 1;
+  }
+}
+
+@component SubComments {
+
+}

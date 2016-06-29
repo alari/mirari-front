@@ -17,14 +17,14 @@ const mapDispatchToProps = {
 
 const DraftsView = ({nodes, setPage}) => {
 
-  const haveMore = nodes.values.length < nodes.total
+  const haveMore = nodes && nodes.values.length < nodes.total
 
   const loadMore = () => setPage({append: true, limit: nodes.limit, offset: nodes.offset + nodes.limit})
 
   return (
       <div>
 
-        { map((n) => <NodeCard node={n} key={n.id}/>, nodes.values) }
+        { nodes && map((n) => <NodeCard node={n} key={n.id}/>, nodes.values) }
 
         <LoadMore action={loadMore} haveMore={haveMore}/>
 

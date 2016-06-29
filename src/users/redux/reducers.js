@@ -1,7 +1,8 @@
 import {concat, map} from "ramda";
 import {createReducer, update} from "commons/utils";
 import {
-    USERS_SAVE
+    USERS_SAVE,
+USER_GET
 } from "./constants";
 
 
@@ -39,7 +40,7 @@ const updateUserInStore = (state, id, handler) => {
 export default createReducer({}, {
   [USERS_SAVE.REQUEST]: (state, action) => {
     return {
-      ...updateUserInStore(state, action.queryParams.id, (user) => {
+      ...updateUserInStore(state, action.routeParams.id, (user) => {
         return update.set(user, action.params)
       }),
       _error: null,
@@ -49,7 +50,7 @@ export default createReducer({}, {
 
   [USERS_SAVE.SUCCESS]: (state, action) => {
     return {
-      ...(updateUserInStore(state, action.queryParams.id, (user) => {
+      ...(updateUserInStore(state, action.routeParams.id, (user) => {
         return update.commit(user, action.result.body)
       })),
       editData: {},
@@ -60,11 +61,16 @@ export default createReducer({}, {
 
   [USERS_SAVE.FAILURE]: (state, action) => {
     return {
-      ...updateUserInStore(state, action.queryParams.id, (user) => {
+      ...updateUserInStore(state, action.routeParams.id, (user) => {
         return update.revert(user)
       }),
       _error: action.error.body,
       _progress: false
     }
-  }
+  },
+
+  [USER_GET.SUCCESS]: (state, action) => ({
+    ...state,
+    user: action.result.body
+  })
 })

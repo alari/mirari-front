@@ -25,8 +25,18 @@ const ProfileFormView = (props) => {
   const user = merge(props.user, props.state)
 
   const isNotChanged = equals(user, props.user)
-  
+
   return (<div><form onSubmit={(e) => {e.preventDefault(); props.saveUser(user.id, props.state)}}>
+
+    <TextField
+      errorText={ pickError("username") }
+      onChange={ (e) => props.setState({username: e.target.value.toLowerCase().replace(/[^-a-z0-9]/g, '')}) }
+      value={ user['username'] || "" }
+      hintText="username"
+      floatingLabelText="username"
+      fullWidth={true}
+      type="text"/>
+
     <TextField
         errorText={ pickError("firstName") }
         onChange={ props.stateFieldChanged('firstName') }
@@ -35,6 +45,7 @@ const ProfileFormView = (props) => {
         floatingLabelText="Имя"
         fullWidth={true}
         type="text"/>
+
     <TextField
         errorText={ pickError("lastName") }
         onChange={ props.stateFieldChanged('lastName') }
@@ -57,7 +68,7 @@ const ProfileFormView = (props) => {
     <a href={"https://telegram.me/MirariBot?start=" + user.id} target="_blank">Привязать телеграм-аккаунт</a>
 
   </div>)
-  
+
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(decorateWithState(ProfileFormView))

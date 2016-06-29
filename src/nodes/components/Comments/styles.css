@@ -1,0 +1,15 @@
+@component Comments {
+  > .CommentItem {
+    &:first-child {
+      border-top: none;
+    }
+    
+    > .SubComments {
+      margin-left: 48px;
+    }
+  }
+
+  p {
+    margin-bottom: calc(0.75 * 1rem);
+  }
+}

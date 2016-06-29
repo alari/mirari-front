@@ -31,7 +31,7 @@ export default {
     }
 
     if (!(node && node.id === nodeId && !!node.user)) {
-      resolve.push(yield put(getNode(nodeId, {_expand: "text,user"})))
+      resolve.push(yield put(getNode(nodeId, {_expand: "text,user,comments{values*user}"})))
     }
 
     return resolve
