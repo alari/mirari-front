@@ -36,7 +36,7 @@ const updateNodeInStore = (state, id, handler) => {
 
 const prepareComments = (list) => {
   const byReplyId = groupBy(c => c.replyTo || "root", list)
-  const roots = byReplyId.root
+  const roots = byReplyId.root || []
   return map(c => {
     let replyTo
     let children = []

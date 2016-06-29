@@ -8,6 +8,7 @@ import {decorateWithState} from "commons/utils";
 import {NODES_SAVE} from "nodes/redux/constants";
 import ActionDelete from "material-ui/svg-icons/action/delete"
 import {push} from "react-router-redux"
+import kinds from "nodes/utils/kinds"
 
 const mapStateToProps = (state) => ({
   node: (state.nodes.node && state.nodes.node.id === state.resolve.params.nodeId) ? state.nodes.node : {
@@ -30,15 +31,6 @@ const mapDispatchToProps = {
   },
   deleteNode: (id) => deleteNode(id),
   redirect: (url) => push(url)
-}
-
-const kinds = {
-  Post: "Пост",
-  Prose: "Проза",
-  Poetry: "Поэзия",
-  Article: "Статья",
-  Label: "Метка",
-  Node: "Нода"
 }
 
 const NodeForm = ({node, state: {inProgress = false, deleting = false, error, ...state}, setState, clearState, stateFieldChanged, deleteNode, saveNode, redirect, pathname, query}) => {
