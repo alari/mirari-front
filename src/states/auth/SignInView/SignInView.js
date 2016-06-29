@@ -1,4 +1,4 @@
-import "./styles.css";
+import "states/auth/styles.css";
 import React from "react";
 import {Link} from "react-router";
 import {connect} from "react-redux";
@@ -38,8 +38,8 @@ const SignInView = ({state: {error, email = "", password = "", inProgress = fals
   const pickError = (field) => error && error.fields && error.fields[field]
 
   return (
-      <form onSubmit={(e) => {e.preventDefault(); action()}}>
-        <div>
+      <form className="AuthForm" onSubmit={(e) => {e.preventDefault(); action()}}>
+        <div className="AuthForm-itemGroup">
           <TextField
               errorText={ pickError("email") }
               onChange={ stateFieldChanged('email') }
@@ -48,7 +48,7 @@ const SignInView = ({state: {error, email = "", password = "", inProgress = fals
               fullWidth={true}
               type="email"/>
         </div>
-        <div>
+        <div className="AuthForm-itemGroup">
           <TextField
               errorText={ pickError("password") }
               onChange={ stateFieldChanged('password') }
@@ -61,22 +61,17 @@ const SignInView = ({state: {error, email = "", password = "", inProgress = fals
           [{ error && error.desc }]
         </div> }
 
-        { inProgress ? <LinearProgress /> : <div>
-          <Link to="/auth/up">
-            <FlatButton
-                linkButton={true}
-                label="Регистрация"
-                secondary={true}
-            />
-          </Link>
-          <Link to="/auth/recovery">
-            <FlatButton
-                linkButton={true}
-                label="Восстановление"
-                secondary={true}
-            />
-          </Link>
-          <RaisedButton label="Войти" primary={ true } disabled={!password || !email} onClick={ action }/>
+        { inProgress ? <LinearProgress /> : <div className="AuthForm-footer">
+          <div className="AuthForm-footerContols">
+            <RaisedButton label="Войти" primary={ true } disabled={!password || !email} onClick={ action }/>
+            <div className="AuthForm-footerDivider" />
+            <Link to="/auth/recovery">Забыли пароль?</Link>
+          </div>
+
+          <div className="AuthForm-footerAside">
+          <div className="AuthForm-footerAside-title">Еще нет аккаунта?</div>
+          <Link to="/auth/up">Зарегистрироваться</Link>
+          </div>
         </div>}
       </form>
   )

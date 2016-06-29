@@ -1,3 +1,4 @@
+import "states/auth/styles.css";
 import React from "react";
 import {Link} from "react-router";
 import {connect} from "react-redux";
@@ -38,8 +39,8 @@ const SignUpView = ({state: {error, email = "", password = "", inProgress = fals
 
   const pickError = (field) => error && error.fields && error.fields[field]
 
-  return <form onSubmit={action}>
-    <div>
+  return <form className="AuthForm" onSubmit={action}>
+    <div className="AuthForm-itemGroup">
       <TextField
           errorText={ pickError("email") }
           onChange={ stateFieldChanged('email') }
@@ -48,7 +49,7 @@ const SignUpView = ({state: {error, email = "", password = "", inProgress = fals
           fullWidth={true}
           type="email"/>
     </div>
-    <div>
+    <div className="AuthForm-itemGroup">
       <TextField
           errorText={ pickError("password") }
           onChange={ stateFieldChanged('password') }
@@ -61,15 +62,12 @@ const SignUpView = ({state: {error, email = "", password = "", inProgress = fals
       [{ error && error.desc }]
     </div> }
 
-    { inProgress ? <LinearProgress /> : <div>
-      <Link to="/auth/in">
-        <FlatButton
-            linkButton={true}
-            label="Вход"
-            secondary={true}
-        />
-      </Link>
-      <RaisedButton label="Зарегистрироваться" primary={ true } disabled={!email || !password} onClick={ action }/>
+    { inProgress ? <LinearProgress /> : <div className="AuthForm-footer">
+      <div className="AuthForm-footerContols">
+        <RaisedButton label="Зарегистрироваться" primary={ true } disabled={!email || !password} onClick={ action }/>
+        <div className="AuthForm-footerDivider" />
+        <Link to="/auth/in">Войти</Link>
+      </div>
     </div>}
   </form>
 }

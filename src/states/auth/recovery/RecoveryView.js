@@ -1,4 +1,5 @@
-import React from 'react'
+import "states/auth/styles.css";
+import React from 'react';
 import {connect} from "react-redux";
 import {decorateWithState} from "commons/utils";
 import {authRecoverPassword} from "commons/auth/redux/actions";
@@ -39,33 +40,39 @@ const RecoveryView = ({state: {newPass = "", newPassProve = "", newPassProveErro
     return error && error.fields && error.fields[field]
   }
 
-  return (done ? <div>Пароль успешно восстановлен. Теперь можете <Link to="/auth/in">войти</Link></div> : <form onSubmit={(e) => e.preventDefault() && action()}>
-    <TextField
-      errorText={ pickError("newPass") }
-      onChange={ stateFieldChanged('newPass') }
-      value={ newPass }
-      hintText="Новый пароль"
-      disabled={isProgress}
-      type="password"
-      fullWidth={true}
-    />
-    <TextField
-      errorText={ newPassProveError && "Пароли не совпадают" }
-      onChange={ stateFieldChanged('newPassProve') }
-      onFocus={ () => newPassProveError && setState({newPassProveError: false}) }
-      onBlur={() => newPass !== newPassProve && setState({newPassProveError: true})}
-      value={ newPassProve }
-      hintText="Повторите пароль"
-      disabled={isProgress || !newPass}
-      type="password"
-      fullWidth={true}
-    />
-    <RaisedButton
-      label="Установить"
-      primary={true}
-      disabled={isProgress || !newPass || newPass !== newPassProve}
-      onClick={action}
-    />
+  return (done ? <div>Пароль успешно восстановлен. Теперь можете <Link to="/auth/in">войти</Link></div> : <form  className="AuthForm" onSubmit={(e) => e.preventDefault() && action()}>
+    <div className="AuthForm-itemGroup">
+      <TextField
+        errorText={ pickError("newPass") }
+        onChange={ stateFieldChanged('newPass') }
+        value={ newPass }
+        hintText="Новый пароль"
+        disabled={isProgress}
+        type="password"
+        fullWidth={true}
+      />
+    </div>
+    <div className="AuthForm-itemGroup">
+      <TextField
+        errorText={ newPassProveError && "Пароли не совпадают" }
+        onChange={ stateFieldChanged('newPassProve') }
+        onFocus={ () => newPassProveError && setState({newPassProveError: false}) }
+        onBlur={() => newPass !== newPassProve && setState({newPassProveError: true})}
+        value={ newPassProve }
+        hintText="Повторите пароль"
+        disabled={isProgress || !newPass}
+        type="password"
+        fullWidth={true}
+      />
+    </div>
+    <div className="AuthForm-footer">
+      <RaisedButton
+        label="Установить"
+        primary={true}
+        disabled={isProgress || !newPass || newPass !== newPassProve}
+        onClick={action}
+      />
+    </div>
     { isProgress && <LinearProgress/> }
     {error && <div style={{color:"red"}}>{error.desc}</div>}
   </form>)

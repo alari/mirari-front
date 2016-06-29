@@ -36,21 +36,25 @@ const StartRecoveryView = ({state: {email = "", done = false, isProgress = false
   }
 
   return (done ? <div>Запрос отправлен. Пожалуйста, проверьте вашу почту ({email})</div> :
-    <form onSubmit={(e) => e.preventDefault() && action()}>
-      <TextField
-        errorText={ pickError("email") }
-        onChange={ stateFieldChanged('email') }
-        value={ email }
-        hintText="E-mail"
-        disabled={isProgress}
-        type="email"
-      />
-      <RaisedButton
-        label="Восстановить"
-        primary={true}
-        disabled={isProgress}
-        onClick={action}
-      />
+    <form className="AuthForm" onSubmit={(e) => e.preventDefault() && action()}>
+      <div className="AuthForm-itemGroup">
+        <TextField
+          errorText={ pickError("email") }
+          onChange={ stateFieldChanged('email') }
+          value={ email }
+          hintText="E-mail"
+          disabled={isProgress}
+          type="email"
+        />
+      </div>
+      <div className="AuthForm-footer">
+        <RaisedButton
+          label="Восстановить"
+          primary={true}
+          disabled={isProgress}
+          onClick={action}
+        />
+      </div>
       { isProgress && <LinearProgress/> }
       {error && <div style={{color:"red"}}>{error.desc}</div>}
     </form>)

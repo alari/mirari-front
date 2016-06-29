@@ -22,6 +22,9 @@
 
   --theme-IronHasky-text-font-family: 'Roboto', "Helvetica Neue", Helvetica, Arial, sans-serif;
   --theme-IronHasky-head-font-family: 'Roboto Slab', "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  --theme-BronzeCollie-text-font-family: 'Open Sans', "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --theme-BronzeCollie-head-font-family: 'Open Sans', "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 html, body {
@@ -150,6 +153,19 @@ a {
   h5,
   h6 {
     font-family: var(--theme-IronHasky-head-font-family);
+    font-weight: 700;
+  }
+}
+.Theme-BronzeCollie {
+  font-family: var(--theme-BronzeCollie-text-font-family);
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--theme-BronzeCollie-head-font-family);
     font-weight: 700;
   }
 }
