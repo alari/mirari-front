@@ -6,6 +6,7 @@ import UserImage from "users/components/UserImage"
 import UserLink from "users/components/UserLink"
 
 import moment from 'moment';
+import kinds from "nodes/utils/kinds"
 
 export default ({node}) => {
   return (node &&
@@ -19,6 +20,10 @@ export default ({node}) => {
           { node.published &&
             <time dateTime={moment(node.published).format()} itemProp="datePublished">{moment(node.published).fromNow()}</time>
           }
+
+          &ndash;
+
+          { kinds[node.kind] }
         </div>
       </div>
       <div className="Article-body">

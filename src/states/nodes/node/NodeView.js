@@ -7,6 +7,9 @@ import moment from "moment";
 import NodeAction from "nodes/components/NodeAction"
 import NodeText from "nodes/components/NodeText"
 
+import kinds from "nodes/utils/kinds"
+import UserLink from "users/components/UserLink"
+
 import Comments from "nodes/components/Comments"
 
 const mapStateToProps = (state) => ({
@@ -30,7 +33,8 @@ const NodeView = ({ node }) => {
         </article>}
 
         <div className="ArticleFooter">
-          <ArticleFooterItem content={"Автор: " + node.user.name} itemProp="author" />
+          <ArticleFooterItem content={<UserLink user={node.user}/>} itemProp="author" />
+          <ArticleFooterItem content={kinds[node.kind]} />
           {node.published &&
             <ArticleFooterItem content={moment(node.published).fromNow()} />
           }
