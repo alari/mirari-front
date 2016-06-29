@@ -1,0 +1,30 @@
+@component AuthForm {
+  margin-right: auto;
+  margin-left: auto;
+  width: 300px;
+
+  @descendent itemGroup {
+    margin-bottom: 20px;
+  }
+
+  @descendent footerContols {
+    display: flex;
+    align-items: center;
+    margin-bottom: 48px;
+  }
+
+  @descendent footerDivider {
+    flex: 1;
+  }
+
+  @descendent footerAside {
+    text-align: center;
+    background-color: #fafafa;
+    padding: 24px;
+
+    @descendent title {
+      margin-bottom: 20px;
+      font-size: calc(1 * 1.2 * 1rem);
+    }
+  }
+}
