@@ -12,6 +12,11 @@ import {logout} from "commons/auth";
 import Helmet from "react-helmet";
 import {Triptych} from "commons/triptych";
 
+import moment from "moment";
+import "moment/locale/ru"
+
+moment.locale('ru')
+
 const mapStateToProps = (state) => ({
   title: state.page.title,
   meta: (state.page.meta || []).concat([
