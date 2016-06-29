@@ -12,7 +12,8 @@ export default {
   resolve: function* userResolve() {
     yield put(resolveSagaStart('userResolve'))
     const userId = yield select(s => s.resolve.params.userId)
-    const user = yield put(getUser(userId))
+    yield put(getUser(userId))
+    const user = yield select(s => s.users.user)
     yield put(getNodesList({userId: user.id}))
   },
 
