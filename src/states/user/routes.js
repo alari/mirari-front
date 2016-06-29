@@ -3,6 +3,7 @@ import {TriptychFullWrapper} from 'commons/triptych'
 import {put, select} from "redux-saga/effects";
 import UserView from "./UserView"
 import {getUser} from "users/redux/actions"
+import {getNodesList} from "nodes/redux/actions";
 
 export default {
   component: TriptychFullWrapper(Resolve(UserView, 'userResolve'), '/:userId'),
@@ -11,7 +12,8 @@ export default {
   resolve: function* userResolve() {
     yield put(resolveSagaStart('userResolve'))
     const userId = yield select(s => s.resolve.params.userId)
-    yield put(getUser(userId))
+    const user = yield put(getUser(userId))
+    yield put(getNodesList({userId: user.id}))
   },
 
   pageProps: function*() {

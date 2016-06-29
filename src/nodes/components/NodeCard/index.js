@@ -18,11 +18,12 @@ export default ({node}) => {
         <div className="Article-headerContent">
           <div itemProp="author"><UserLink user={node.user}/></div>
           { node.published &&
-            <time dateTime={moment(node.published).format()} itemProp="datePublished">{moment(node.published).fromNow()}</time>
+            <span><time dateTime={moment(node.published).format()} itemProp="datePublished">{moment(node.published).fromNow()}</time>
+              &thinsp;
+              &mdash;
+              &thinsp;</span>
           }
-          &thinsp;
-          &mdash;
-          &thinsp;
+
           { kinds[node.kind] }
         </div>
       </div>

@@ -9,7 +9,7 @@ import {
 } from "./constants";
 import {createApiAction} from "commons/api";
 
-export const getNodesList = ({offset, limit, userId, layer, q, _expand, append = false}) => {
+export const getNodesList = ({offset, limit = 13, userId, layer, q, _expand = "values*user", append = false}) => {
   return createApiAction({
     url: '/nodes',
     method: 'GET',

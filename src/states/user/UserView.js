@@ -1,5 +1,7 @@
 import React from 'react'
 import {connect} from "react-redux";
+import NodesFeed from "nodes/components/NodesFeed"
+import UserImage from "users/components/UserImage"
 
 const mapStateToProps = (state) => ({
   user: state.users.user
@@ -8,8 +10,14 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
 }
 
-const UserView = ({user: {imageId, avatarUrl}}) => <div>
-  {(imageId || avatarUrl) && <img style={{margin:'auto'}} src={imageId ? ("/api/images/"+imageId) : avatarUrl}/>}
-</div>
+const UserView = ({user}) => {
+
+ return (<div>
+   <UserImage user={user} />
+
+   <NodesFeed filter={{userId: user.id}} />
+  </div>)
+
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserView)
