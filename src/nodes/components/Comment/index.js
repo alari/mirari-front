@@ -61,11 +61,14 @@ const CommentView = ({state: {replying = false, v = 0}, setState, comment, nodeI
             <UserImage user={comment.user}/>
           </div>
           <div className="CommentItem-headerContent">
-            <div><UserLink user={comment.user}/></div>
-            <time dateTime={moment(comment.dateCreated).format()} itemProp="datePublished">
-              <a href={"#" + comment.id} id={comment.id}>{moment(comment.dateCreated).fromNow()}</a>
-              {comment.replyTo && <span>&gt; <a href={"#" + comment.replyTo}>в ответ</a></span> }
-            </time>
+            <div>
+              <UserLink user={comment.user}/>
+              {comment.replyTo && <span> &gt; <a href={"#" + comment.replyTo}>в ответ</a></span> }
+            </div>
+            <a href={"#" + comment.id} id={comment.id}>
+              <time dateTime={moment(comment.dateCreated).format()} itemProp="datePublished">{moment(comment.dateCreated).fromNow()}
+              </time>
+            </a>
           </div>
         </div>
         <div className="CommentItem-body">
