@@ -34,7 +34,7 @@ const NodeView = ({ node }) => {
           {node.published &&
             <ArticleFooterItem content={moment(node.published).fromNow()} />
           }
-          <ArticleFooterItem content={<NodeAction node={node}><Link to={"/my/node/" + node.id}>РЕДАКТИРОВАТЬ</Link></NodeAction>} />
+          <ArticleFooterItem content={<NodeAction node={node}><Link to={"/my/node/" + node.id}>Редактировать</Link></NodeAction>} />
           <ArticleFooterItem content={(node && node.views) + " просмотров"} />
         </div>
 
