@@ -1,4 +1,5 @@
-import React from 'react'
+import './style.css';
+import React from 'react';
 import {decorateWithState} from "commons/utils";
 import {Paper, TextField, FlatButton, RaisedButton, LinearProgress} from "material-ui";
 import {connect} from "react-redux";
@@ -26,47 +27,55 @@ const ProfileFormView = (props) => {
 
   const isNotChanged = equals(user, props.user)
 
-  return (<div><form onSubmit={(e) => {e.preventDefault(); props.saveUser(user.id, props.state)}}>
+  return (
+    <div className="ProfilePage">
+      <form className="ProfileForm" onSubmit={(e) => {e.preventDefault(); props.saveUser(user.id, props.state)}}>
+        <div className="ProfileForm-avatarGroup">
+          {(user.imageId || user.avatarUrl) &&
+            <div className="ProfileForm-avatarContainer">
+              <img className="ProfileForm-avatar" src={user.imageId ? ("/api/images/"+user.imageId) : user.avatarUrl}/>
+            </div>
+          }
 
-    <TextField
-      errorText={ pickError("username") }
-      onChange={ (e) => props.setState({username: e.target.value.toLowerCase().replace(/[^-a-z0-9]/g, '')}) }
-      value={ user['username'] || "" }
-      hintText="username"
-      floatingLabelText="username"
-      fullWidth={true}
-      type="text"/>
+          <FileInput label="Загрузить аватарку" onUpload={(i) => props.setState({imageId: i.id})}/>
+        </div>
 
-    <TextField
-        errorText={ pickError("firstName") }
-        onChange={ props.stateFieldChanged('firstName') }
-        value={ user['firstName'] || "" }
-        hintText="Имя"
-        floatingLabelText="Имя"
-        fullWidth={true}
-        type="text"/>
+        <TextField
+          errorText={ pickError("username") }
+          onChange={ (e) => props.setState({username: e.target.value.toLowerCase().replace(/[^-a-z0-9]/g, '')}) }
+          value={ user['username'] || "" }
+          hintText="username"
+          floatingLabelText="username"
+          fullWidth={true}
+          type="text"/>
 
-    <TextField
-        errorText={ pickError("lastName") }
-        onChange={ props.stateFieldChanged('lastName') }
-        value={ user['lastName'] || "" }
-        hintText="Фамилия"
-        floatingLabelText="Фамилия"
-        fullWidth={true}
-        type="text"/>
+        <TextField
+            errorText={ pickError("firstName") }
+            onChange={ props.stateFieldChanged('firstName') }
+            value={ user['firstName'] || "" }
+            hintText="Имя"
+            floatingLabelText="Имя"
+            fullWidth={true}
+            type="text"/>
 
-    <FileInput label="Загрузить картинку аватарки" onUpload={(i) => props.setState({imageId: i.id})}/>
+        <TextField
+            errorText={ pickError("lastName") }
+            onChange={ props.stateFieldChanged('lastName') }
+            value={ user['lastName'] || "" }
+            hintText="Фамилия"
+            floatingLabelText="Фамилия"
+            fullWidth={true}
+            type="text"/>
 
-    {(user.imageId || user.avatarUrl) && <img src={user.imageId ? ("/api/images/"+user.imageId) : user.avatarUrl}/>}
 
-    { props.progress ? <LinearProgress /> :
-        <RaisedButton label="Сохранить" primary={true} disabled={isNotChanged} type="submit"/> }
-  </form>
+        { props.progress ? <LinearProgress /> :
+          <RaisedButton label="Сохранить" primary={true} disabled={isNotChanged} type="submit"/> }
+      </form>
 
-    <hr/>
+      <hr/>
 
-    <a href={"https://telegram.me/MirariBot?start=" + user.id} target="_blank">Привязать телеграм-аккаунт</a>
-
+      <p><a href={"https://telegram.me/MirariBot?start=" + user.id} target="_blank">Привязать телеграм-аккаунт</a></p>
+      <p>Это позволит вам писать заметки и отвечать на комментарии через Telegram</p>
   </div>)
 
 }
