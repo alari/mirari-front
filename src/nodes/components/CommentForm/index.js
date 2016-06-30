@@ -60,9 +60,9 @@ const CommentForm = ({
 
       </div> }
 
-    </div> : <div>
-      Вы не авторизованы. <Link to={"/auth/in?next="+pathname}>войдите</Link> или <Link to={"/auth/up?next="+pathname}>зарегистрируйтесь</Link>,
-      чтобы комментировать
+    </div> : <div className="CommentForm-authInfo">
+      Вы не авторизованы. <Link to={"/auth/in?next="+pathname}>Войдите</Link> или <Link to={"/auth/up?next="+pathname}>зарегистрируйтесь</Link>,
+      чтобы комментировать.
     </div>
   )
 }

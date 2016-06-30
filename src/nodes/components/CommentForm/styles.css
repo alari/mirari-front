@@ -1,3 +1,6 @@
 @component CommentForm {
-  margin-left: 24px;
+
+  @descendent authInfo {
+    margin-top: 24px;
+  }
 }
