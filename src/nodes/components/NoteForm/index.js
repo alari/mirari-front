@@ -1,7 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import {Link} from "react-router";
-import {map} from "ramda";
+import {map, take} from "ramda";
 import {getNodesList, saveNode} from "nodes/redux/actions";
 import {Card, CardItem, CardDivider, CardRows, CardRow} from "commons/cards/components";
 import {decorateWithState} from "commons/utils";
@@ -13,13 +13,13 @@ const NoteFormInitial = {
   inProgress: false
 }
 
-const NoteFormView = ({pinToNodeId, state: {title, text, inProgress, error}, setState, stateFieldChanged, saveNode}) => {
+const NoteFormView = ({pinToNodeId, state: {text, inProgress, error}, setState, stateFieldChanged, saveNode}) => {
   const action = () => {
     setState({inProgress: true})
     saveNode({
       layer: "Note",
       kind: "Node",
-      title,
+      title: take(64, text.content),
       text,
       pinToNodeId
     }).then(({error = false}) => {
@@ -38,15 +38,6 @@ const NoteFormView = ({pinToNodeId, state: {title, text, inProgress, error}, set
 
   return (<form onSubmit={action}>
     <TextField
-      hintText="Название"
-      floatingLabelText="Название"
-      fullWidth={true}
-      onChange={stateFieldChanged("title")}
-      value={ title }
-      errorText={ pickError("title") }
-    />
-
-    <TextField
       hintText="Текст"
       floatingLabelText="Текст"
       fullWidth={true}
@@ -61,7 +52,7 @@ const NoteFormView = ({pinToNodeId, state: {title, text, inProgress, error}, set
 
     { inProgress ? <LinearProgress /> :
       <div>
-        <FlatButton label="Сбросить" disabled={!text.content && !title} onClick={() => setState(NoteFormInitial)}/>
+        <FlatButton label="Сбросить" disabled={!text.content} onClick={() => setState(NoteFormInitial)}/>
 
         <RaisedButton label="Сохранить" primary={true} disabled={!text.content} onClick={action}/>
       </div> }
