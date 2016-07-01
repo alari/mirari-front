@@ -3,11 +3,11 @@ import {put, select} from "redux-saga/effects";
 import {getNode} from "nodes/redux/actions";
 import {NODES_GET} from "nodes/redux/constants";
 import {TriptychMainWrapper} from "commons/triptych";
-import NodeForm from "nodes/components/NodeForm";
 import nodePageProps from "nodes/utils/nodePageProps";
+import NodeChange from "./NodeChange"
 
 export default {
-  component: TriptychMainWrapper(Resolve(NodeForm, 'myNodeResolve'), "/my/node/:nodeId"),
+  component: TriptychMainWrapper(Resolve(NodeChange, 'myNodeResolve'), "/my/node/:nodeId"),
   path: 'node/:nodeId',
 
   resolve: function* nodeResolve() {

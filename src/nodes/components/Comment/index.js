@@ -33,7 +33,8 @@ const mapDispatchToProps = {
 const OnReviewNotice = () =>
   <div className="CommentItem-notice">На модерации</div>;
 
-const SendByTelegram = () =>
+// TODO: rename to somewhat like "sentByApp"? (not "send")
+const SentByTelegram = () =>
   <div className="SendByTelegram">
     <span className="SendByTelegram-icon">
       <svg id="telegram-icon" width="14px" height="14px" viewBox="0 0 256 256">
@@ -81,7 +82,7 @@ const CommentView = ({state: {replying = false, v = 0}, setState, comment, nodeI
               <time dateTime={moment(comment.dateCreated).format()} itemProp="datePublished">{moment(comment.dateCreated).fromNow()}
               </time>
             </a>
-            <SendByTelegram />
+            { (comment.byApp === "telegram") && <SentByTelegram /> }
           </div>
         </div>
         <div className="CommentItem-body">
