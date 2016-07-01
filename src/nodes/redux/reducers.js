@@ -1,38 +1,16 @@
-import {concat, map, filter, groupBy, find, sortBy} from "ramda";
+import {concat, map, filter, groupBy, find, sortBy, clone} from "ramda";
 import {createReducer, update} from "commons/utils";
-import {NODES_LIST, NODES_GET, NODES_SAVE, NODES_DELETE, NODES_COMMENT, NODE_COMMENT_GET, NODE_COMMENT_REMOVE} from "./constants";
-
-
-const updateNodeInStore = (state, id, handler) => {
-  let list = state.list
-  let currentNode = state.node
-
-  if (currentNode && currentNode.id === id) {
-    state = {
-      ...state,
-      node: handler(currentNode)
-    }
-  }
-
-  if (list) {
-    list.values = map((node) => {
-      if (node.id === id) {
-        return handler(node)
-      } else {
-        return node
-      }
-    }, list.values)
-
-    state = {
-      ...state,
-      list: {
-        ...list
-      }
-    }
-  }
-
-  return state
-}
+import {
+  NODES_LIST,
+  NODES_GET,
+  NODES_SAVE,
+  NODES_DELETE,
+  NODES_COMMENT,
+  NODE_COMMENT_GET,
+  NODE_COMMENT_REMOVE,
+NODE_PIN,
+NODE_UNPIN
+} from "./constants";
 
 const prepareComments = (list) => {
   const byReplyId = groupBy(c => c.replyTo || "root", list)
@@ -41,10 +19,10 @@ const prepareComments = (list) => {
     let replyTo
     let children = []
     let queue = [c.id]
-    while(!!(replyTo = queue.pop())) {
-      if(!!byReplyId[replyTo]) {
-         children = children.concat(byReplyId[replyTo])
-         queue = queue.concat(map(r => r.id, byReplyId[replyTo]))
+    while (!!(replyTo = queue.pop())) {
+      if (!!byReplyId[replyTo]) {
+        children = children.concat(byReplyId[replyTo])
+        queue = queue.concat(map(r => r.id, byReplyId[replyTo]))
       }
     }
     c.children = sortBy(r => r.dateCreated, children)
@@ -62,20 +40,33 @@ const addCommentReducer = (state, action) => (state.node && state.node.comments 
     }
   },
   comments: prepareComments(concat(state.node.comments.values, action.result.body))
-}) : state ;
+}) : state;
 
 export default createReducer({}, {
-  [NODES_LIST.SUCCESS]: (state, action) => ({
-    ...state,
-    list: action.append ? {
-      ...action.result.body,
-      values: concat(state.list.values || [], action.result.body.values)
-    } : action.result.body
-  }),
+  [NODES_LIST.SUCCESS]: (state, action) => {
+    if (!!action.queryParams.pinnedToId) {
+      return {
+        ...state,
+        pinned: action.append ? {
+          ...action.result.body,
+          values: concat(state.list.values || [], action.result.body.values)
+        } : action.result.body
+      }
+    } else {
+      return {
+        ...state,
+        list: action.append ? {
+          ...action.result.body,
+          values: concat(state.list.values || [], action.result.body.values)
+        } : action.result.body
+      }
+    }
+  },
 
   [NODES_GET.REQUEST]: (state, action) => ({
     ...state,
-    node: null
+    node: null,
+    pinned:null
   }),
 
   [NODES_GET.SUCCESS]: (state, action) => ({
@@ -84,21 +75,19 @@ export default createReducer({}, {
     comments: action.result.body.comments && prepareComments(action.result.body.comments.values)
   }),
 
-  [NODES_SAVE.REQUEST]: (state, action) =>
-    updateNodeInStore(state, action.nodeId, (node) => update.set(node, action.params)),
-
   [NODES_SAVE.SUCCESS]: (state, action) => {
-    const updated = updateNodeInStore(state, action.nodeId, (node) => {
-      return update.commit(node, action.result.body)
-    })
-    if (action.result.status === 201 && updated.list && updated.list.values) {
-      updated.list.values.unshift(action.result.body)
+    const node = action.result.body
+    const updated = clone(state)
+    if(action.params.pinToNodeId && action.params.pinToNodeId === state.node.id) {
+      updated.pinned.values.unshift(node)
+    } else {
+      if (action.result.status === 201 && updated.list && updated.list.values) {
+        updated.list.values.unshift(action.result.body)
+      }
+      updated.node = node
     }
     return updated
   },
-
-  [NODES_SAVE.FAILURE]: (state, action) =>
-    updateNodeInStore(state, action.nodeId, (node) => update.revert(node)),
 
   [NODES_COMMENT.SUCCESS]: addCommentReducer,
 
@@ -106,7 +95,7 @@ export default createReducer({}, {
 
   [NODE_COMMENT_REMOVE.SUCCESS]: (state, action) => {
     const commentId = action.routeParams.commentId
-    if(state.node && state.node.comments && !!find(n => n.id === commentId, state.node.comments.values)) {
+    if (state.node && state.node.comments && !!find(n => n.id === commentId, state.node.comments.values)) {
       const updatedComments = filter(c => c.id !== commentId, state.node.comments.values)
       return {
         ...state,
@@ -129,6 +118,20 @@ export default createReducer({}, {
       ...state.list,
       values: filter(n => n.id !== action.routeParams.nodeId, state.list.values)
     } : state.list
-  })
+  }),
+
+  [NODE_PIN.SUCCESS]: (state, action) => (action.data.targetNodeId === state.node.id) ? {
+    ...state,
+    pinned: {
+      values: state.pinned.values.unshift(action.result.body)
+    }
+  } : state,
+
+  [NODE_UNPIN.SUCCESS]: (state, action) => (action.data.targetNodeId === state.node.id) ? {
+    ...state,
+    pinned: {
+      values: filter(n => n.id !== action.result.body.id, state.pinned.values)
+    }
+  } : state
 
 })

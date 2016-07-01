@@ -5,11 +5,13 @@ import {
   NODES_DELETE,
   NODES_COMMENT,
   NODE_COMMENT_GET,
-  NODE_COMMENT_REMOVE
+  NODE_COMMENT_REMOVE,
+NODE_PIN,
+NODE_UNPIN
 } from "./constants";
 import {createApiAction} from "commons/api";
 
-export const getNodesList = ({offset, limit = 13, userId, layer, q, _expand = "values*user", append = false}) => {
+export const getNodesList = ({offset, limit = 13, userId, layer, q, pinnedToId, _expand = "values*user", append = false}) => {
   return createApiAction({
     url: '/nodes',
     method: 'GET',
@@ -19,6 +21,7 @@ export const getNodesList = ({offset, limit = 13, userId, layer, q, _expand = "v
       userId,
       layer,
       q,
+      pinnedToId,
       _expand
     },
     append
@@ -77,3 +80,21 @@ export const nodeCommentRemoved = (nodeId, commentId) => ({
   type: NODE_COMMENT_REMOVE.SUCCESS,
   routeParams: {nodeId, commentId}
 })
+
+export const nodePin = (nodeId, targetId) => createApiAction({
+  url: '/nodes/:nodeId/actions/pin',
+  routeParams: {nodeId},
+  method: 'POST',
+  data: {
+    targetNodeId: targetId
+  }
+}, NODE_PIN)
+
+export const nodeUnpin = (nodeId, targetId) => createApiAction({
+  url: '/nodes/:nodeId/actions/unpin',
+  routeParams: {nodeId},
+  method: 'POST',
+  data: {
+    targetNodeId: targetId
+  }
+}, NODE_UNPIN)
