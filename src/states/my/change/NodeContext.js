@@ -61,7 +61,7 @@ const NodeContext = ({node, state: {q = "", nodes = []}, setState, loadNodes, pi
         value={ q }
         errorText={ q && list.length === 0 && "Ничего не найдено" }
       />
-      {q && <span onClick={() => setState({q: null})}>Очистить</span>}
+      {q && <span onClick={() => setState({q: ""})}>Очистить</span>}
 
       {map(n => <div key={n.id}>
         <h3>{n.title}</h3>
