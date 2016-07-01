@@ -63,3 +63,17 @@
 @component SubComments {
 
 }
+
+@component SendByTelegram {
+  display: inline-block;
+  vertical-align: middle;
+
+  @descendent icon {
+    display: inline-block;
+    vertical-align: middle;
+  }
+  @descendent text {
+    display: inline-block;
+    vertical-align: middle;
+  }
+}

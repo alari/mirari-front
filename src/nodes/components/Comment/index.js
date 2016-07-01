@@ -11,6 +11,8 @@ import {map} from "ramda"
 import Markdown from "../Markdown"
 import {connect} from "react-redux"
 
+// import TelegramLogo from 'assets/images/icons/telegram_logo.svg';
+
 import moment from 'moment';
 import {decorateWithState} from "commons/utils"
 import CommentForm from "nodes/components/CommentForm"
@@ -32,6 +34,19 @@ const mapDispatchToProps = {
 
 const OnReviewNotice = () =>
   <div className="CommentItem-notice">На модерации</div>;
+
+const SendByTelegram = () =>
+  <div className="SendByTelegram">
+    <span className="SendByTelegram-icon">
+      <svg id="telegram-icon" width="14px" height="14px" viewBox="0 0 256 256">
+        <path style="fill:#2ca5e0;fill-opacity:1;stroke:none" d="m 252.71258,127.90582 c 0,68.61302 -55.62185,124.23487 -124.23487,124.23487 -68.613025,0 -124.2348714,-55.62185 -124.2348714,-124.23487 0,-68.613026 55.6218464,-124.2348732 124.2348714,-124.2348732 68.61302,0 124.23487,55.6218472 124.23487,124.2348732 z" />
+        <path style="fill:#ffffff;fill-opacity:1;stroke:none" d="m 155.91221,156.28613 c 3.82213,-10.4461 17.81729,-50.17266 20.06432,-60.591798 2.54062,-11.780443 -2.77796,-12.930544 -14.87454,-8.979356 -12.09657,3.951189 -43.11909,15.449414 -48.34049,17.302714 -5.2214,1.8533 -30.641435,10.39687 -35.911664,12.9461 -10.764524,5.77386 -5.528019,14.58535 6.505791,19.16062 35.967683,17.26467 25.754703,8.46685 41.812423,40.41274 3.30464,8.16089 11.09674,22.06171 18.5597,11.55404 3.92326,-5.97624 9.17875,-23.5903 12.18446,-31.80506 z" />
+      </svg>
+
+    </span>
+    <span className="SendByTelegram-text">Отправлено через Telegram</span>
+  </div>
+
 
 const CommentView = ({state: {replying = false, v = 0}, setState, comment, nodeId, userId, nodeUserId, actionRemove, updated}) => {
 
@@ -69,6 +84,7 @@ const CommentView = ({state: {replying = false, v = 0}, setState, comment, nodeI
               <time dateTime={moment(comment.dateCreated).format()} itemProp="datePublished">{moment(comment.dateCreated).fromNow()}
               </time>
             </a>
+            <SendByTelegram />
           </div>
         </div>
         <div className="CommentItem-body">
