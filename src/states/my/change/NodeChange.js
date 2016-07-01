@@ -11,6 +11,7 @@ import ActionDelete from "material-ui/svg-icons/action/delete"
 import {push} from "react-router-redux"
 import kinds from "nodes/utils/kinds"
 import Button from "commons/button";
+import NavigationArrowForward from "material-ui/svg-icons/navigation/arrow-forward"
 import NodeContext from "./NodeContext"
 
 const mapStateToProps = (state) => ({
@@ -83,7 +84,7 @@ const NodeChange = ({node, state: {contextOpened = false, inProgress = false, de
 
   return (<TriptychWrapContent><TriptychContent header={{
     title: actualNode.title,
-    button: <Button color="default" mobile size="m" title="Контекст" onClick={toggleContext} />
+    button: <Button color="default" icon={<NavigationArrowForward/>} mobile size="m" title="Контекст" onClick={toggleContext} />
   }}>
 
     <form onSubmit={action}>
