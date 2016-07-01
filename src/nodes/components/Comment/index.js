@@ -77,7 +77,7 @@ const CommentView = ({state: {replying = false, v = 0}, setState, comment, nodeI
               <UserLink user={comment.user}/>
               {comment.replyTo && <span> &gt; <a href={"#" + comment.replyTo}>в ответ</a></span> }
             </div>
-            <a href={"#" + comment.id} id={comment.id}>
+            <a className="CommentItem-date" href={"#" + comment.id} id={comment.id}>
               <time dateTime={moment(comment.dateCreated).format()} itemProp="datePublished">{moment(comment.dateCreated).fromNow()}
               </time>
             </a>
