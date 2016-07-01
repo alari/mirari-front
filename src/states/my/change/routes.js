@@ -2,12 +2,12 @@ import {Resolve, resolveSagaStart} from "commons/resolve";
 import {put, select} from "redux-saga/effects";
 import {getNode} from "nodes/redux/actions";
 import {NODES_GET} from "nodes/redux/constants";
-import {TriptychFullWrapper} from "commons/triptych";
+import {TriptychMainWrapper} from "commons/triptych";
 import NodeForm from "nodes/components/NodeForm";
 import nodePageProps from "nodes/utils/nodePageProps";
 
 export default {
-  component: TriptychFullWrapper(Resolve(NodeForm, 'myNodeResolve'), "/my/node/:nodeId"),
+  component: TriptychMainWrapper(Resolve(NodeForm, 'myNodeResolve'), "/my/node/:nodeId"),
   path: 'node/:nodeId',
 
   resolve: function* nodeResolve() {
