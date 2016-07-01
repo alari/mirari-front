@@ -38,8 +38,8 @@ const NoteFormView = ({pinToNodeId, state: {text, inProgress, error}, setState, 
 
   return (<form onSubmit={action}>
     <TextField
-      hintText="Текст"
-      floatingLabelText="Текст"
+      hintText="Текст заметки"
+      floatingLabelText="Текст заметки"
       fullWidth={true}
       multiLine={true}
       onChange={(e) => {
