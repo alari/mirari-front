@@ -1,7 +1,7 @@
-import React from "react";
-import NodeText from "nodes/components/NodeText";
-import {Tab, Tabs} from "material-ui/Tabs";
-import {TextField} from "material-ui";
+import "./style.css";
+import React from 'react'
+import NodeText from "nodes/components/NodeText"
+import { Tab, Tabs, TextField, RaisedButton } from "material-ui"
 import NoteForm from "nodes/components/NoteForm";
 import {getNodesList, nodePin, nodeUnpin} from "nodes/redux/actions";
 import {connect} from "react-redux";
@@ -63,10 +63,11 @@ const NodeContext = ({node, state: {q = "", nodes = []}, setState, loadNodes, pi
       />
       {q && <span onClick={() => setState({q: ""})}>Очистить</span>}
 
-      {map(n => <div key={n.id}>
-        <h3>{n.title}</h3>
-        <NodeText node={n}/>
-        <Button title={isPinned(n) ? "Открепить" : "Прикрепить"} onClick={pinUnpin}/>
+      {map(n => <div className="NodeContext" key={n.id}>
+        <div className="NodeContext-main"><NodeText node={n}/></div>
+        <div className="NodeContext-controls">
+          <RaisedButton label={isPinned(n) ? "Открепить" : "Прикрепить"} onClick={pinUnpin} />
+        </div>
       </div>, list)}
 
     </Tab> : <Tab label="Заметки">
