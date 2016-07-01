@@ -5,7 +5,7 @@ import { Tab, Tabs, TextField } from "material-ui"
 import NoteForm from "nodes/components/NoteForm";
 import {getNodesList, nodePin, nodeUnpin} from "nodes/redux/actions";
 import {connect} from "react-redux";
-import {map} from "ramda";
+import {map, find} from "ramda";
 import Button from "commons/button";
 import {decorateWithState} from "commons/utils";
 
@@ -26,9 +26,11 @@ const NodeContext = ({node, state: {q = "", nodes = []}, setState, loadNodes, pi
   }
 
   const pinUnpin = (n) => () => {
-    console.log("pinUnpin", isPinned(n))
-    (isPinned(n) ? unpin(n.id, node.id) : pin(n.id, node.id)).then((r) => {
-      console.log(r)
+    (isPinned(n) ? unpin(n.id, node.id) : pin(n.id, node.id)).then(({error = false, result}) => {
+      if(!error) {
+        const u = result.body
+        find(m => m.id === u.id, nodes) && setState({nodes: map(m => m.id === u.id ? {...m, pinnedToNodeIds: u.pinnedToNodeIds} : m, nodes)})
+      }
     })
   }
 
