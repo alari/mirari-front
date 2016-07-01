@@ -24,7 +24,11 @@ const mapStateToProps = (state) => ({
   ]),
   link: (state.page.link || []).concat([
     {rel:"stylesheet",href:"https://fonts.googleapis.com/css?family=Roboto|Roboto+Slab:400,700&subset=cyrillic",type:"text/css"},
-    {rel:"stylesheet",href:"/bundle.css",type:"text/css",media:"screen,projection"}
+    {rel:"stylesheet",href:"/bundle.css",type:"text/css",media:"screen,projection"},
+    {rel:"icon",type:"image/png",sizes:"192x192",href:"/assets/favicon/android-icon-192x192.png"},
+    {rel:"icon",type:"image/png",sizes:"32x32",href:"/assets/favicon/favicon-32x32.png"},
+    {rel:"icon",type:"image/png",sizes:"96x96",href:"/assets/favicon/favicon-96x96.png"},
+    {rel:"icon",type:"image/png",sizes:"16x16",href:"/assets/favicon/favicon-16x16.png"}
   ]),
   user: state.auth.user
 })
