@@ -9,6 +9,7 @@ import React from "react";
 import EditRoutes from "./edit/routes";
 import NodeEditButton from "nodes/components/NodeAction/NodeEditButton";
 import nodePageProps from "nodes/utils/nodePageProps";
+import {push} from "react-router-redux"
 
 export default {
   component: TriptychFullWrapper(Resolve(NodeView, 'nodeResolve'), '/nodes/:nodeId', {button: <NodeEditButton/>}),
@@ -27,11 +28,18 @@ export default {
     const {nodes: {node}, auth: {userId}} = yield select()
 
     if (!userId) {
-      resolve.push(yield put(getAuth()))
+      yield put(getAuth())
     }
 
     if (!(node && node.id === nodeId && !!node.user)) {
-      resolve.push(yield put(getNode(nodeId, {_expand: "text,user,comments{values*user}"})))
+      const v = yield put(getNode(nodeId, {_expand: "text,user,comments{values*user}"}))
+      if(v.error) {
+        if(v.error.status === 401) {
+          yield put(push("/auth/in?next=/nodes/"+nodeId))
+        } else {
+          yield put(push("/"))
+        }
+      }
     }
 
     return resolve

@@ -25,12 +25,11 @@ const ArticleFooterItem = ({ content, itemProp }) => {
 }
 
 const NodeView = ({ node }) => {
-  return (
+  return node && (
       <section className="Article" itemScope itemType="http://schema.org/Article">
-        { node && <article className="Article-body" itemProp="articleBody">
-
+        <article className="Article-body" itemProp="articleBody">
           <NodeText node={node}/>
-        </article>}
+        </article>
 
         <div className="ArticleFooter">
           <ArticleFooterItem content={<UserLink user={node.user}/>} itemProp="author" />
