@@ -1,7 +1,7 @@
 import "./style.css";
 import React from 'react'
 import NodeText from "nodes/components/NodeText"
-import { Tab, Tabs, TextField, RaisedButton } from "material-ui"
+import { Tab, Tabs, TextField } from "material-ui"
 import NoteForm from "nodes/components/NoteForm";
 import {getNodesList, nodePin, nodeUnpin} from "nodes/redux/actions";
 import {connect} from "react-redux";
@@ -66,7 +66,7 @@ const NodeContext = ({node, state: {q = "", nodes = []}, setState, loadNodes, pi
       {map(n => <div className="NodeContext" key={n.id}>
         <div className="NodeContext-main"><NodeText node={n}/></div>
         <div className="NodeContext-controls">
-          <RaisedButton label={isPinned(n) ? "Открепить" : "Прикрепить"} onClick={pinUnpin} />
+          <Button title={isPinned(n) ? "Открепить" : "Прикрепить"} size="m" color="default" onClick={pinUnpin(n)} />
         </div>
       </div>, list)}
 
