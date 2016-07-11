@@ -2,14 +2,7 @@
   padding: 24px 0;
   border-bottom: 1px solid #e7e7e7;
 
-  @descendent main {
-    display: -webkit-box;
-    overflow: hidden;
-    max-height: 143px;
-    text-overflow: ellipsis;
-    -webkit-line-clamp: 6;
-    -webkit-box-orient: vertical;
-
+  @descendent main {    
     margin-bottom: 12px;
   }
 
