@@ -196,3 +196,10 @@ a {
         }
     }
 }
+
+@component AppRightPanel {
+  @media (min-width: 1280px) {
+    position: static!important;
+    width: 500px!important;
+  }
+}
