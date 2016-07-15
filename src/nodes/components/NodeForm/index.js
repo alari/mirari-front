@@ -26,6 +26,10 @@ const mapDispatchToProps = {
   saveNode: (base, changed) => {
     return saveNode(base, {
       ...changed,
+      text: {
+        version: 0,
+        ...changed.text
+      },
       kind: propOr(base.kind, "kind")(changed)
     })
   },
