@@ -1,0 +1,64 @@
+@component MenuButton {
+    position: absolute;
+    top: 22px;
+    left: 20px;
+    z-index: 12;
+    cursor: pointer;
+
+    .is-LeftPanelOpened & {
+      left: 198px;
+    }
+
+    @descendent container {
+      position: relative;
+      margin-top: 8px;
+      width: 26px;
+      height: 26px;
+    }
+
+    @descendent line {
+      display: block;
+      position: absolute;
+      height: 2px;
+      width: 100%;
+      background: #333;
+      border-radius: 2px;
+      opacity: 1;
+      left: 0;
+      transform: rotate(0deg);
+      transition: .25s ease-in-out;
+
+      &:nth-child(1) {
+        top: 0;
+
+        .is-LeftPanelOpened & {
+          top: 8px;
+          width: 0%;
+          left: 50%;
+        }
+      }
+      &:nth-child(2) {
+        top: 8px;
+
+        .is-LeftPanelOpened & {
+          transform: rotate(45deg);
+        }
+      }
+      &:nth-child(3) {
+        top: 8px;
+
+        .is-LeftPanelOpened & {
+          transform: rotate(-45deg);
+        }
+      }
+      &:nth-child(4) {
+        top: 16px;
+
+        .is-LeftPanelOpened & {
+          top: 8px;
+          width: 0%;
+          left: 50%;
+        }
+      }
+    }
+}

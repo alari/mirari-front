@@ -1,5 +1,3 @@
-import './styles.css';
-
 import React from "react";
 import {connect} from "react-redux";
 import {Link} from "react-router";
@@ -76,7 +74,7 @@ const NodeForm = ({node, state: {inProgress = false, deleting = false, error, ..
   }
 
   return (
-    <form className="NodeForm" onSubmit={action}>
+    <form className="Content" onSubmit={action}>
       <TextField
         hintText="Заголовок"
         floatingLabelText="Заголовок"

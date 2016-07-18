@@ -1,5 +1,5 @@
 import React from 'react'
-import {TriptychContent,TriptychWrapContent,TriptychRight} from "commons/triptych"
+import {TriptychContent,TriptychWrapContent,TriptychRight} from "triptych"
 import {connect} from "react-redux";
 import {Link} from "react-router";
 import {map, keys, propOr, merge, equals, pickBy, isEmpty} from "ramda";

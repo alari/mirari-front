@@ -4,7 +4,7 @@ import {put, select} from "redux-saga/effects";
 import {getNode} from "nodes/redux/actions";
 import {getAuth} from "commons/auth";
 import {NODES_GET} from "nodes/redux/constants";
-import {TriptychFullWrapper} from "commons/triptych";
+import {TriptychFullWrapper} from "triptych";
 import React from "react";
 import EditRoutes from "./edit/routes";
 import NodeEditButton from "nodes/components/NodeAction/NodeEditButton";
@@ -12,7 +12,14 @@ import nodePageProps from "nodes/utils/nodePageProps";
 import {push} from "react-router-redux"
 
 export default {
-  component: TriptychFullWrapper(Resolve(NodeView, 'nodeResolve'), '/nodes/:nodeId', {button: <NodeEditButton/>}),
+  component: TriptychFullWrapper(
+    Resolve(NodeView, 'nodeResolve'),
+    '/nodes/:nodeId',
+    {
+      button: <NodeEditButton />,
+      isCenter: true,
+    }
+  ),
   path: ':nodeId',
 
   childRoutes: [

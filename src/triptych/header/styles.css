@@ -1,0 +1,51 @@
+
+@import "commons/styles/variables.css";
+@import "commons/styles/media-queries.css";
+
+@component AppHeader {
+  position: relative;
+  padding: 0;
+  background-color: #fff;
+  z-index: var(--AppHeader-zIndex);
+
+  @descendent container {
+    display: flex;
+    padding-left: 24px;
+    padding-right: 24px;
+
+    @media (--m) {
+      padding-right: 8%;
+      padding-left: 8%;
+    }
+
+    @modifier gray {
+      background-color: #f2f2f2;
+    }
+  }
+
+  @descendent top {
+    padding: 22px 70px 22px 70px;
+    min-height: 60px;
+
+    @media (--m) {
+      padding-right: 8%;
+      padding-left: 8%;
+    }
+
+    @descendent title {
+      margin-top: 0;
+      margin-bottom: 0;
+      flex: 1;
+
+      @modifier center {
+        text-align: center;
+      }
+    }
+  }
+
+  @descendent rightControl {
+    position: absolute;
+    top: 26px;
+    right: 24px;
+  }
+}

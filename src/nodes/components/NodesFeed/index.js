@@ -19,7 +19,7 @@ const NodesFeedView = ({filter = {}, nodes: {values = [], total = 0, limit, offs
   const loadMore = () => setPage({...filter, append: true, limit, offset: offset + limit})
 
   return (
-    <div>
+    <div className="Content">
 
       { map((n) => <NodeCard node={n} key={n.id}/>, values) }
 

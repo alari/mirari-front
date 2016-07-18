@@ -2,7 +2,7 @@ import {Resolve, resolveSagaStart} from "commons/resolve";
 import {put, select} from "redux-saga/effects";
 import {getNodesList, getNode} from "nodes/redux/actions";
 import NotesView from "./NotesView";
-import {TriptychFullWrapper} from "commons/triptych";
+import {TriptychFullWrapper} from "triptych";
 import React from "react";
 import NodeForm from "nodes/components/NodeForm"
 

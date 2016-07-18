@@ -1,3 +1,6 @@
+@import "commons/styles/variables.css";
+@import "commons/styles/media-queries.css";
+
 :root {
   --base-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 
@@ -116,9 +119,46 @@ ol ol {
     margin-bottom: 0;
 }
 blockquote {
-    line-height: var(--leading);
-    margin-top: var(--leading);
-    margin-bottom: var(--leading);
+  position: relative;
+  line-height: var(--leading);
+  margin: var(--leading) 0;
+  padding: 0 40px;
+  color: #757575;
+  font-size: 1.2rem;
+
+  font-family: Georgia, serif;
+  font-style: italic;
+
+  @media (--m) {
+    padding-left: 60px;
+    padding-right: 40px;
+  }
+
+  &:before {
+    display: block;
+    content: "\201C";
+    font-size: 80px;
+    position: absolute;
+    position: absolute;
+    left: -9px;
+    top: 20px;
+    color: #dedede;
+
+    @media (--m) {
+      left: -4px;
+    }
+  }
+
+  cite {
+    color: #999999;
+    font-size: 14px;
+    display: block;
+    margin-top: 5px;
+  }
+
+  p {
+    line-height: 1.8rem;
+  }
 }
 
 pre, xmp, plaintext, listing {
@@ -202,4 +242,10 @@ a {
     position: static!important;
     width: 500px!important;
   }
+}
+
+@component Content {
+  max-width: 700px;
+  margin: 0 auto 24px;
+  padding: 24px 0;
 }

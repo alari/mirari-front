@@ -10,7 +10,7 @@ import {Link} from "react-router";
 import {push} from "react-router-redux";
 import {logout} from "commons/auth";
 import Helmet from "react-helmet";
-import {Triptych} from "commons/triptych";
+import {Triptych} from "triptych";
 
 import moment from "moment";
 import "moment/locale/ru"

@@ -26,7 +26,7 @@ const ArticleFooterItem = ({ content, itemProp }) => {
 
 const NodeView = ({ node }) => {
   return node && (
-      <section className="Article" itemScope itemType="http://schema.org/Article">
+      <section className="Content Article" itemScope itemType="http://schema.org/Article">
         <article className="Article-body" itemProp="articleBody">
           <NodeText node={node}/>
         </article>

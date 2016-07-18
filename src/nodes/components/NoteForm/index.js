@@ -36,31 +36,33 @@ const NoteFormView = ({pinToNodeId, state: {text, inProgress, error}, setState, 
 
   const pickError = (field) => error && error.fields && error.fields[field] && error.fields[field].desc
 
-  return (<form onSubmit={action}>
-    <TextField
-      hintText="Текст заметки"
-      floatingLabelText="Текст заметки"
-      fullWidth={true}
-      multiLine={true}
-      onChange={(e) => {
-              setState({text: {...text, content:e.target.value}})
-            }}
-      rows={4}
-      value={ text.content }
-      errorText={ pickError("text.content") || pickError("text.version") }
-    />
+  return (
+    <form onSubmit={action}>
+      <TextField
+        hintText="Текст заметки"
+        floatingLabelText="Текст заметки"
+        fullWidth={true}
+        multiLine={true}
+        onChange={(e) => {
+                setState({text: {...text, content:e.target.value}})
+              }}
+        rows={4}
+        value={ text.content }
+        errorText={ pickError("text.content") || pickError("text.version") }
+      />
 
-    { inProgress ? <LinearProgress /> :
+      { inProgress ? <LinearProgress /> :
+        <div>
+          <FlatButton label="Сбросить" disabled={!text.content} onClick={() => setState(NoteFormInitial)}/>
+
+          <RaisedButton label="Сохранить" primary={true} disabled={!text.content} onClick={action}/>
+        </div> }
+
       <div>
-        <FlatButton label="Сбросить" disabled={!text.content} onClick={() => setState(NoteFormInitial)}/>
 
-        <RaisedButton label="Сохранить" primary={true} disabled={!text.content} onClick={action}/>
-      </div> }
-
-    <div>
-
-    </div>
-  </form>)
+      </div>
+    </form>
+  )
 }
 
 export default connect(null, {

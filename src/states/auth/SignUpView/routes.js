@@ -1,5 +1,5 @@
 import SignUpView from "./SignUpView";
-import {TriptychFullWrapper} from 'commons/triptych'
+import {TriptychFullWrapper} from 'triptych'
 
 export default {
   component: TriptychFullWrapper(SignUpView),

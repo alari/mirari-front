@@ -1,4 +1,4 @@
-import {TriptychFullWrapper} from 'commons/triptych'
+import {TriptychFullWrapper} from 'triptych'
 import StartRecoveryView from "./StartRecoveryView"
 import RecoveryView from "./RecoveryView"
 import {authCheckPasswordRecovery} from 'commons/auth/redux/actions'
