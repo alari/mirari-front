@@ -1,0 +1,230 @@
+
+@import "commons/styles/variables.css";
+@import "commons/styles/media-queries.css";
+
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+@component Triptych {
+  width: 100%;
+  min-height: 100%;
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: row;
+
+  margin: 0 auto;
+  padding: 0;
+
+  @descendent wrap {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    flex: 1 1 auto;
+    will-change: transform;
+
+    .is-LeftPanelAnimated & {
+      @media (--m) {
+        margin-left: 250px;
+        transition: margin-left 0.3s ease;
+      }
+    }
+    .is-LeftPanelOpened & {
+      @media (--m) {
+        margin-left: 250px;
+      }
+    }
+    .is-LeftPanelHidden & {
+      @media (--m) {
+        margin-left: 0;
+        transition: none;
+      }
+    }
+  }
+  @descendent wrapContent {
+    display: flex;
+    flex-direction: row;
+    min-height: 1px;
+    z-index: 0;
+    flex: 1 1 0%;
+  }
+  @descendent wrapContainer {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    flex-direction: column;
+  }
+}
+
+@component AppLeftPanel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  padding: 0;
+  width: 250px;
+  transform: translateX(-100%);
+  z-index: var(--AppLeftPanel-zIndex);
+
+  background-color: #f2f2f2;
+  box-shadow: rgba(0, 0, 0, 0.156863) 0px 3px 10px, rgba(0, 0, 0, 0.227451) 0px 3px 10px;
+
+  backface-visibility: hidden;
+  will-change: transform;
+
+  .is-LeftPanelAnimated & {
+    animation-iteration-count: 1;
+    animation-duration: 0.3s;
+    animation-timing-function: ease;
+    animation-fill-mode: both;
+    animation-name: LeftPanel-ShowAnimation;
+  }
+
+  .is-LeftPanelOpened & {
+    transform: translateX(0);
+
+    @media (--m) {
+      transform: translateX(0);
+    }
+  }
+
+  .is-LeftPanelHidden & {
+    transform: translateX(-100%);
+
+    @media (--m) {
+      transform: translateX(-100%);
+    }
+  }
+
+
+  @descendent container {
+    margin-bottom: 70px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 250px;
+  }
+  @descendent header {
+    margin: 30px 24px 24px 24px;
+  }
+  @descendent logoLink {
+    display: block;
+    padding: 0;
+    font-size: 18px;
+    color: #444;
+    text-decoration: none;
+
+    &:hover,
+    &:visited {
+      color: #444;
+    }
+  }
+  @descendent footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    padding: 24px;
+    width: 250px;
+    background-color: #f2f2f2;
+  }
+  @descendent footerLink {
+    display: block;
+    color: #444;
+    text-decoration: none;
+    cursor: pointer;
+  }
+}
+@component AppRightPanel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: var(--AppRightPanel-zIndex);
+
+  width: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+
+  background-color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
+  border-radius: 2px;
+
+  animation-iteration-count: 1;
+  animation-duration: 0.3s;
+  animation-timing-function: ease;
+  animation-fill-mode: both;
+  animation-name: RightPanel-ShowAnimation;
+
+  @media (--m) {
+    width: 500px;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: hidden;
+  }
+  @media (--xl) {
+    position: static;
+    margin-left: 24px;
+    width: 500px;
+  }
+  @media (--xxl) {
+    width: 600px;
+  }
+  @media (--xxxl) {
+    width: 800px;
+  }
+
+  @descendent closeBtnContainer {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+  }
+
+  @descendent container {
+    @media (--m) {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      height: 100vh;
+    }
+  }
+  @descendent header {
+    padding: 2px 24px 24px;
+  }
+  @descendent main {
+    padding: 24px;
+
+    @media (--m) {
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      flex: 1;
+    }
+  }
+  @descendent footer {
+    padding: 24px;
+  }
+}
+
+@keyframes LeftPanel-ShowAnimation {
+  from {
+    transform: translate3d(-100%, 0, 0);
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+
+@keyframes RightPanel-ShowAnimation {
+  from {
+    transform: translate3d(100%, 0, 0);
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}

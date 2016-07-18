@@ -2,7 +2,7 @@ import {Resolve, resolveSagaStart} from "commons/resolve";
 import {put, select} from "redux-saga/effects";
 import {getNode} from "nodes/redux/actions";
 import {NODES_GET} from "nodes/redux/constants";
-import {TriptychMainWrapper} from "commons/triptych";
+import {TriptychMainWrapper} from "triptych";
 import nodePageProps from "nodes/utils/nodePageProps";
 import NodeChange from "./NodeChange"
 

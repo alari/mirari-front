@@ -1,7 +1,7 @@
 import {Resolve, resolveSagaStart} from "commons/resolve";
 import {put} from "redux-saga/effects";
 import {getNodesList} from "nodes/redux/actions";
-import {TriptychFullWrapper} from "commons/triptych";
+import {TriptychFullWrapper} from "triptych";
 import NodeAddButton from "nodes/components/NodeAddButton";
 import React from "react";
 

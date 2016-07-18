@@ -1,5 +1,5 @@
 import {Resolve, resolveSagaStart} from "commons/resolve";
-import {TriptychFullWrapper} from 'commons/triptych'
+import {TriptychFullWrapper} from 'triptych'
 import {put, select} from "redux-saga/effects";
 import UserView from "./UserView"
 import {getUser} from "users/redux/actions"

@@ -1,0 +1,17 @@
+
+@import "commons/styles/variables.css";
+@import "commons/styles/media-queries.css";
+
+@component AppMain {
+  flex: 1;
+  padding: 24px;
+  background-color: #fff;
+  border-radius: 2px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+
+  @media (--m) {
+    padding-right: 8%;
+    padding-left: 8%;
+  }
+}

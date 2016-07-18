@@ -1,4 +1,4 @@
-import {TriptychFullWrapper} from 'commons/triptych'
+import {TriptychFullWrapper} from 'triptych'
 import NodeForm from "nodes/components/NodeForm"
 import { put } from 'redux-saga/effects'
 import {setPageProps} from 'commons/page'
