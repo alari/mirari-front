@@ -7,6 +7,7 @@ import UserLink from "users/components/UserLink"
 
 import moment from 'moment';
 import kinds from "nodes/utils/kinds"
+import nodeUrl from "nodes/utils/nodeUrl"
 
 export default ({node}) => {
   return (node &&
@@ -29,7 +30,7 @@ export default ({node}) => {
       </div>
       <div className="Article-body">
         <h2 className="Article-title">
-          <Link to={"/nodes/"+node.id} className="Article-titleLink" itemProp="url">{ node.title }</Link>
+          <Link to={nodeUrl(node)} className="Article-titleLink" itemProp="url">{ node.title }</Link>
         </h2>
         { node.description && <p itemProp="description">{ node.description }</p> }
       </div>

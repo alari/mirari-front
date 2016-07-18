@@ -9,7 +9,8 @@ import {
   NODE_COMMENT_GET,
   NODE_COMMENT_REMOVE,
 NODE_PIN,
-NODE_UNPIN
+NODE_UNPIN,
+NODE_SET_CURRENT
 } from "./constants";
 
 const prepareComments = (list) => {
@@ -132,6 +133,11 @@ export default createReducer({}, {
     pinned: {
       values: filter(n => n.id !== action.result.body.id, state.pinned.values)
     }
-  } : state
+  } : state,
+
+  [NODE_SET_CURRENT]: (state, action) => ({
+    ...state,
+    node: action.node
+  })
 
 })

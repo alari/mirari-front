@@ -1,22 +1,24 @@
 import {Resolve, resolveSagaStart} from "commons/resolve";
-import {TriptychFullWrapper} from 'commons/triptych'
+import {TriptychMainWrapper} from 'triptych'
 import {put, select} from "redux-saga/effects";
-import UserView from "../users/UserView"
+import AliasView from "./AliasView"
 import {setCurrentUser} from "users/redux/actions"
-import {getNodesList} from "nodes/redux/actions";
+import {getNodesList,nodeSetCurrent} from "nodes/redux/actions";
 import {getAlias} from "Aliases/redux/actions"
 import nodePageProps from "nodes/utils/nodePageProps"
 import userPageProps from "users/utils/userPageProps"
 
+import nodeEditRoutes from "../nodes/node/edit/routes"
+
 export default {
-  component: TriptychFullWrapper(Resolve(UserView, 'aliasResolve'), '/:alias'),
+  component: TriptychMainWrapper(Resolve(AliasView, 'aliasResolve'), '/:alias'),
   path: ':alias',
 
   resolve: function* aliasResolve() {
     yield put(resolveSagaStart('aliasResolve'))
 
     const aliasId = yield select(s => s.resolve.params.alias)
-    yield put(getAlias(aliasId, "user,node"))
+    yield put(getAlias(aliasId, "user,node{text,user,comments{values*user}}"))
 
     const {user, node} = yield select(s => s.aliases.current)
 
@@ -25,11 +27,19 @@ export default {
         put(setCurrentUser(user)),
         put(getNodesList({userId: user.id}))
       ]
+    } else if(!!node) {
+      yield [
+        put(nodeSetCurrent(node))
+      ]
     }
   },
 
   pageProps: function*() {
     const {user,node} = yield select(s => s.aliases.current)
     return user ? userPageProps(user) : nodePageProps(node)
-  }
+  },
+
+  childRoutes: [
+    nodeEditRoutes
+  ]
 }

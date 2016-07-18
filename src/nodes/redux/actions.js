@@ -7,7 +7,8 @@ import {
   NODE_COMMENT_GET,
   NODE_COMMENT_REMOVE,
 NODE_PIN,
-NODE_UNPIN
+NODE_UNPIN,
+NODE_SET_CURRENT
 } from "./constants";
 import {createApiAction} from "commons/api";
 
@@ -98,3 +99,8 @@ export const nodeUnpin = (nodeId, targetId) => createApiAction({
     targetNodeId: targetId
   }
 }, NODE_UNPIN)
+
+export const nodeSetCurrent = (node) => ({
+  type: NODE_SET_CURRENT,
+  node
+})

@@ -13,3 +13,4 @@ export const NODE_PIN = createActionRequestTypes("NODE_PIN")
 export const NODE_UNPIN = createActionRequestTypes("NODE_UNPIN")
 
 export const NODE_ENTER = "NODE_ENTER"
+export const NODE_SET_CURRENT = "NODE_SET_CURRENT"
