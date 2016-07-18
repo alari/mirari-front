@@ -27,7 +27,7 @@ const NotesView = ({nodes, setPage, nodeId, q}) => {
   const loadMore = () => setPage({q, append: true, limit: nodes.limit, offset: nodes.offset + nodes.limit})
 
   return (
-    <div>
+    <div className="Content">
 
       {!q && <NoteForm/>}
 
