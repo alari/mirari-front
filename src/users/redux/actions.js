@@ -1,6 +1,7 @@
 import {
     USERS_SAVE,
-USER_GET
+USER_GET,
+USER_SET_CURRENT
 } from "./constants";
 import {createApiAction} from "commons/api";
 
@@ -18,3 +19,8 @@ export const getUser = (userId) => createApiAction({
   queryParams: {_expand: "image"},
   routeParams: {userId}
 }, USER_GET)
+
+export const setCurrentUser = (user) => ({
+  type: USER_SET_CURRENT,
+    user
+})

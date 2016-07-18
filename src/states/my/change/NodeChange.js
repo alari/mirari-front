@@ -37,7 +37,7 @@ const mapDispatchToProps = {
   redirect: (url) => push(url)
 }
 
-const NodeChange = ({node, state: {contextOpened = false, inProgress = false, deleting = false, error, ...state}, setState, clearState, stateFieldChanged, deleteNode, saveNode, redirect, pathname, query}) => {
+const NodeChange = ({node, state: {contextOpened = true, inProgress = false, deleting = false, error, ...state}, setState, clearState, stateFieldChanged, deleteNode, saveNode, redirect, pathname, query}) => {
 
   const actualNode = merge(node, state)
 
@@ -57,7 +57,8 @@ const NodeChange = ({node, state: {contextOpened = false, inProgress = false, de
         })
       } else {
         clearState({
-          inProgress: false
+          inProgress: false,
+          contextOpened
         })
       }
     })
@@ -140,6 +141,16 @@ const NodeChange = ({node, state: {contextOpened = false, inProgress = false, de
           onToggle={(e) => {
               setState({"layer": actualNode.layer === "Pub" ? "Draft" : "Pub"})
               }}
+        />}
+
+        { actualNode.layer !== "Note" && <TextField
+          label="Адрес"
+          hintText="Адрес, https://mirari.ru/..."
+          floatingLabelText={"Адрес, https://mirari.ru/"+(actualNode.alias || "...")}
+          fullWidth={true}
+          onChange={stateFieldChanged("alias")}
+          value={ actualNode.alias || "" }
+          errorText={ pickError("alias") }
         />}
 
         { inProgress ? <LinearProgress /> :

@@ -3,7 +3,8 @@ import RootView from "./RootView";
 import NodesRoutes from "./nodes/routes";
 import AuthRoutes from "./auth/routes";
 import MyRoutes from "./my/routes";
-import UserRoutes from "./user/routes"
+import AliasRoutes from "./alias/routes"
+import UsersRoutes from "./users/routes"
 import {Resolve,resolveSagaStart} from "commons/resolve";
 import {put,select} from "redux-saga/effects";
 import {getNodesList} from "nodes/redux/actions";
@@ -48,8 +49,9 @@ export default [{
     NodesRoutes,
     AuthRoutes,
     MyRoutes,
+    UsersRoutes,
 
-    UserRoutes
+    AliasRoutes
   ]
 }
 ]

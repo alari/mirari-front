@@ -6,6 +6,7 @@ import nodes from 'nodes/redux/reducers'
 import {pageReducer} from 'commons/page'
 import filesReducer from 'commons/files/redux/reducers'
 import users from 'users/redux/reducers'
+import aliases from 'aliases/redux/reducers'
 
 export default combineReducers({
   auth: authReducer,
@@ -15,5 +16,6 @@ export default combineReducers({
   files: filesReducer,
 
   nodes,
-  users
+  users,
+  aliases
 })

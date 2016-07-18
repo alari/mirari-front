@@ -131,6 +131,16 @@ const NodeForm = ({node, state: {inProgress = false, deleting = false, error, ..
               }}
         />}
 
+        { actualNode.layer !== "Note" && <TextField
+          label="Адрес"
+          hintText="Адрес, https://mirari.ru/..."
+          floatingLabelText={"Адрес, https://mirari.ru/"+(actualNode.alias || "...")}
+          fullWidth={true}
+          onChange={stateFieldChanged("alias")}
+          value={ actualNode.alias || "" }
+          errorText={ pickError("alias") }
+        />}
+
         { inProgress ? <LinearProgress /> :
           <RaisedButton label="Сохранить" primary={true} disabled={isNotChanged} onClick={action}/> }
 
