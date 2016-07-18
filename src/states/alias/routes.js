@@ -4,7 +4,7 @@ import {put, select} from "redux-saga/effects";
 import AliasView from "./AliasView"
 import {setCurrentUser} from "users/redux/actions"
 import {getNodesList,nodeSetCurrent} from "nodes/redux/actions";
-import {getAlias} from "Aliases/redux/actions"
+import {getAlias} from "aliases/redux/actions"
 import nodePageProps from "nodes/utils/nodePageProps"
 import userPageProps from "users/utils/userPageProps"
 
