@@ -15,16 +15,18 @@ const mapDispatchToProps = {}
 
 const AliasView = ({alias, children}) => {
   return (
-    <TriptychWrapContent><TriptychContent header={{
-  isCenter: true,
-    button: alias.node && <NodeEditButton />
-  }}>
+    <TriptychWrapContent>
+      <TriptychContent header={{
+        title: (alias.node && alias.node.title) || (alias.user && alias.user.name),
+        isCenter: true,
+        button: alias.node && <NodeEditButton />
+      }}>
 
-      {
-        (alias.user && <UserView/>) || (alias.node && <NodeView/>) || "404"
-      }
+        {
+          (alias.user && <UserView/>) || (alias.node && <NodeView/>) || "404"
+        }
 
-    </TriptychContent>
+      </TriptychContent>
 
       {children && <TriptychRight>{children}</TriptychRight>}
 
