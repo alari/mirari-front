@@ -1,5 +1,6 @@
 @component Article {
   display: block;
+  margin-bottom: 72px;
 
   @descendent header {
     margin-bottom: 8px;

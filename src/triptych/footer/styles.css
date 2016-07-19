@@ -1,0 +1,34 @@
+
+@import "commons/styles/variables.css";
+@import "commons/styles/media-queries.css";
+
+@component AppFooter {
+  padding: 40px 24px 0;
+  font-size: 0.8rem;
+
+  @descendent container {
+    max-width: 700px;
+    margin: 0 auto;
+
+    display: flex;
+  }
+
+  @descendent item {
+    margin-left: 20px;
+
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+
+  @descendent itemLink {
+    color: #868686;
+
+    &:visited {
+      color: #868686;
+    }
+    &:hover {
+      color: #9c9c9c;
+    }
+  }
+}

@@ -127,7 +127,6 @@ blockquote {
   font-size: 1.2rem;
 
   font-family: Georgia, serif;
-  font-style: italic;
 
   @media (--m) {
     padding-left: 60px;

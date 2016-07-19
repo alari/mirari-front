@@ -1,10 +1,12 @@
-import "./styles.css";
-import React from "react";
-import {connect} from "react-redux";
+import './styles.css';
+import React from 'react';
 
-export const Main = ({children}) =>
+import AppFooter from 'triptych/footer';
+
+export const Main = ({ children }) =>
   <div className="AppMain">
-    { children }
+    {children}
+    <AppFooter />
   </div>;
 
 export default Main;
