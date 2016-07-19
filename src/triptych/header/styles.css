@@ -7,6 +7,7 @@
   padding: 0;
   background-color: #fff;
   z-index: var(--AppHeader-zIndex);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
 
   @descendent container {
     display: flex;
@@ -24,8 +25,8 @@
   }
 
   @descendent top {
-    padding: 22px 70px 22px 70px;
-    min-height: 60px;
+    padding: 10px 70px;
+    min-height: 56px;
 
     @media (--m) {
       padding-right: 8%;
@@ -37,6 +38,8 @@
       margin-bottom: 0;
       flex: 1;
 
+      font-size: 1.5rem);
+
       @modifier center {
         text-align: center;
       }
@@ -45,7 +48,7 @@
 
   @descendent rightControl {
     position: absolute;
-    top: 26px;
+    top: 12px;
     right: 24px;
   }
 }

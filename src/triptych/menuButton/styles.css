@@ -1,6 +1,6 @@
 @component MenuButton {
     position: absolute;
-    top: 22px;
+    top: 10px;
     left: 20px;
     z-index: 12;
     cursor: pointer;
