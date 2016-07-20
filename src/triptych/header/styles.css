@@ -37,8 +37,8 @@
       margin-top: 0;
       margin-bottom: 0;
       flex: 1;
-
-      font-size: 1.5rem);
+      line-height: 2rem;
+      font-size: 1.5rem;
 
       @modifier center {
         text-align: center;
