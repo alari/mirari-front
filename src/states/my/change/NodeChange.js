@@ -120,7 +120,7 @@ const NodeChange = ({node, seriesList, createSeries, getNodesList, state: {conte
     button: <Button color="default" icon={<NavigationArrowForward/>} mobile size="m" title="Контекст" onClick={toggleContext} />
   }}>
 
-    <form onSubmit={action}>
+    <form className="Content" onSubmit={action}>
       <TextField
         hintText="Заголовок"
         floatingLabelText="Заголовок"
