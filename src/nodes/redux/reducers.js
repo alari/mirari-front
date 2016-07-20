@@ -137,7 +137,8 @@ export default createReducer({}, {
 
   [NODE_SET_CURRENT]: (state, action) => ({
     ...state,
-    node: action.node
+    node: action.node,
+    comments: prepareComments(action.node.comments.values)
   })
 
 })

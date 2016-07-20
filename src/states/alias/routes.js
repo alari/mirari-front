@@ -7,6 +7,7 @@ import {getNodesList,nodeSetCurrent} from "nodes/redux/actions";
 import {getAlias} from "aliases/redux/actions"
 import nodePageProps from "nodes/utils/nodePageProps"
 import userPageProps from "users/utils/userPageProps"
+import {singleNodeExpand} from "nodes/utils/nodeExpand"
 
 import nodeEditRoutes from "../nodes/node/edit/routes"
 
@@ -18,7 +19,7 @@ export default {
     yield put(resolveSagaStart('aliasResolve'))
 
     const aliasId = yield select(s => s.resolve.params.alias)
-    yield put(getAlias(aliasId, "user,node{text,user,comments{values*user}}"))
+    yield put(getAlias(aliasId, `user,node{${singleNodeExpand}}`))
 
     const {user, node} = yield select(s => s.aliases.current)
 

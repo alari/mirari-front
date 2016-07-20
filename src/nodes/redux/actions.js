@@ -11,8 +11,9 @@ NODE_UNPIN,
 NODE_SET_CURRENT
 } from "./constants";
 import {createApiAction} from "commons/api";
+import {singleNodeExpand, listNodesExpand} from "../utils/nodeExpand"
 
-export const getNodesList = ({offset, limit = 13, userId, layer, q, pinnedToId, _expand = "values*user", append = false}) => {
+export const getNodesList = ({offset, limit = 13, userId, layer, q, pinnedToId, _expand = listNodesExpand, append = false}) => {
   return createApiAction({
     url: '/nodes',
     method: 'GET',
@@ -29,7 +30,7 @@ export const getNodesList = ({offset, limit = 13, userId, layer, q, pinnedToId, 
   }, NODES_LIST)
 }
 
-export const getNode = (id, {_expand}) => {
+export const getNode = (id, {_expand = singleNodeExpand}) => {
   return createApiAction({
     url: '/nodes/:id',
     routeParams: {id},
@@ -42,7 +43,7 @@ export const saveNode = (base, changed) => {
   return createApiAction({
     url: base.id ? ("/nodes/" + base.id) : "/nodes",
     queryParams: {
-      _expand: "user,text"
+      _expand: singleNodeExpand
     },
     data: changed,
     method: 'POST',
