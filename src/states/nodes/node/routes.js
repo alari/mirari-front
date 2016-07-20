@@ -11,6 +11,8 @@ import NodeEditButton from "nodes/components/NodeAction/NodeEditButton";
 import nodePageProps from "nodes/utils/nodePageProps";
 import {push} from "react-router-redux"
 
+import {singleNodeExpand} from "nodes/utils/nodeExpand"
+
 export default {
   component: TriptychFullWrapper(
     Resolve(NodeView, 'nodeResolve'),
@@ -39,7 +41,7 @@ export default {
     }
 
     if (!(node && node.id === nodeId && !!node.user)) {
-      const v = yield put(getNode(nodeId, {_expand: "text,user,comments{values*user}"}))
+      const v = yield put(getNode(nodeId,{_expand:singleNodeExpand}))
       if(v.error) {
         if(v.error.status === 401) {
           yield put(push("/auth/in?next=/nodes/"+nodeId))

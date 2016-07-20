@@ -44,29 +44,18 @@ const addCommentReducer = (state, action) => (state.node && state.node.comments 
 }) : state;
 
 export default createReducer({}, {
-  [NODES_LIST.SUCCESS]: (state, action) => {
-    if (!!action.queryParams.pinnedToId) {
-      return {
+  [NODES_LIST.SUCCESS]: (state, action) => ({
         ...state,
-        pinned: action.append ? {
+        [action.key]: action.append ? {
           ...action.result.body,
           values: concat(state.list.values || [], action.result.body.values)
         } : action.result.body
-      }
-    } else {
-      return {
-        ...state,
-        list: action.append ? {
-          ...action.result.body,
-          values: concat(state.list.values || [], action.result.body.values)
-        } : action.result.body
-      }
-    }
-  },
+      }),
 
   [NODES_GET.REQUEST]: (state, action) => ({
     ...state,
     node: null,
+    comments: null,
     pinned:null
   }),
 
@@ -77,17 +66,21 @@ export default createReducer({}, {
   }),
 
   [NODES_SAVE.SUCCESS]: (state, action) => {
-    const node = action.result.body
-    const updated = clone(state)
-    if(action.params.pinToNodeId && action.params.pinToNodeId === state.node.id) {
-      updated.pinned.values.unshift(node)
-    } else {
-      if (action.result.status === 201 && updated.list && updated.list.values) {
-        updated.list.values.unshift(action.result.body)
+    if(action.transient) return state
+    else {
+      console.log("action is "+action)
+      const node = action.result.body
+      const updated = clone(state)
+      if (action.params.pinToNodeId && action.params.pinToNodeId === state.node.id) {
+        updated.pinned.values.unshift(node)
+      } else {
+        if (action.result.status === 201 && updated.list && updated.list.values) {
+          updated.list.values.unshift(action.result.body)
+        }
+        updated.node = node
       }
-      updated.node = node
+      return updated
     }
-    return updated
   },
 
   [NODES_COMMENT.SUCCESS]: addCommentReducer,

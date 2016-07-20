@@ -6,14 +6,14 @@ import {
   NODES_COMMENT,
   NODE_COMMENT_GET,
   NODE_COMMENT_REMOVE,
-NODE_PIN,
-NODE_UNPIN,
-NODE_SET_CURRENT
+  NODE_PIN,
+  NODE_UNPIN,
+  NODE_SET_CURRENT
 } from "./constants";
 import {createApiAction} from "commons/api";
 import {singleNodeExpand, listNodesExpand} from "../utils/nodeExpand"
 
-export const getNodesList = ({offset, limit = 13, userId, layer, q, pinnedToId, _expand = listNodesExpand, append = false}) => {
+export const getNodesList = ({key="list", offset, limit = 13, userId, layer, q, pinnedToId, _expand = listNodesExpand, append = false}) => {
   return createApiAction({
     url: '/nodes',
     method: 'GET',
@@ -26,7 +26,8 @@ export const getNodesList = ({offset, limit = 13, userId, layer, q, pinnedToId, 
       pinnedToId,
       _expand
     },
-    append
+    append,
+    key
   }, NODES_LIST)
 }
 
@@ -39,7 +40,7 @@ export const getNode = (id, {_expand = singleNodeExpand}) => {
   }, NODES_GET)
 }
 
-export const saveNode = (base, changed) => {
+export const saveNode = (base, changed, transient = false) => {
   return createApiAction({
     url: base.id ? ("/nodes/" + base.id) : "/nodes",
     queryParams: {
@@ -47,7 +48,8 @@ export const saveNode = (base, changed) => {
     },
     data: changed,
     method: 'POST',
-    nodeId: base.id
+    nodeId: base.id,
+    transient
   }, NODES_SAVE)
 }
 

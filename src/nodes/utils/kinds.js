@@ -4,5 +4,6 @@ export default {
   Poetry: "Поэзия",
   Article: "Статья",
   Label: "Метка",
-  Node: "Нода"
+  Node: "Нода",
+  Series: "Коллекция/Сериал"
 }

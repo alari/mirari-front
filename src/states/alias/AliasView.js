@@ -7,7 +7,7 @@ import NodeEditButton from "nodes/components/NodeAction/NodeEditButton";
 
 
 const mapStateToProps = (state) => ({
-  alias: state.aliases.current
+  alias: state.aliases.current || {}
 })
 
 const mapDispatchToProps = {}

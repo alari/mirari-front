@@ -22,7 +22,7 @@ const mapDispatchToProps = {
 const NodeContext = ({node, state: {q = "", nodes = []}, setState, loadNodes, pinned, pin, unpin}) => {
 
   const onNotesActive = () => {
-    loadNodes({limit: 50, layer: "Note", _expand: "values*text", pinnedToId: node.id})
+    loadNodes({limit: 50, layer: "Note", _expand: "values*text", pinnedToId: node.id, key: 'pinned'})
   }
 
   const pinUnpin = (n) => () => {

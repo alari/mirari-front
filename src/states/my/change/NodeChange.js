@@ -3,8 +3,8 @@ import {TriptychContent,TriptychWrapContent,TriptychRight} from "triptych"
 import {connect} from "react-redux";
 import {Link} from "react-router";
 import {map, keys, propOr, merge, equals, pickBy, isEmpty} from "ramda";
-import {TextField, RaisedButton, SelectField, MenuItem, Toggle, LinearProgress, FlatButton} from "material-ui";
-import {saveNode, deleteNode} from "nodes/redux/actions";
+import {TextField, RaisedButton, SelectField, MenuItem, Toggle, LinearProgress, FlatButton, AutoComplete} from "material-ui";
+import {saveNode, deleteNode, getNodesList} from "nodes/redux/actions";
 import {decorateWithState} from "commons/utils";
 import {NODES_SAVE} from "nodes/redux/constants";
 import ActionDelete from "material-ui/svg-icons/action/delete"
@@ -23,7 +23,8 @@ const mapStateToProps = (state) => ({
     kind: "Post"
   },
   pathname: state.resolve.pathname,
-  query: state.resolve.query
+  query: state.resolve.query,
+  seriesList: state.nodes.series && state.nodes.series.values || []
 })
 
 const mapDispatchToProps = {
@@ -33,11 +34,15 @@ const mapDispatchToProps = {
       kind: propOr(base.kind, "kind")(changed)
     })
   },
+  createSeries: (title) => {
+    return saveNode({}, {title, kind:'Series', layer:'Draft'}, true)
+  },
   deleteNode: (id) => deleteNode(id),
-  redirect: (url) => push(url)
+  redirect: (url) => push(url),
+  getNodesList: (params) => getNodesList(params)
 }
 
-const NodeChange = ({node, state: {contextOpened = true, inProgress = false, deleting = false, error, ...state}, setState, clearState, stateFieldChanged, deleteNode, saveNode, redirect, pathname, query}) => {
+const NodeChange = ({node, seriesList, createSeries, getNodesList, state: {contextOpened = true, inProgress = false, deleting = false, error, ...state}, setState, clearState, stateFieldChanged, deleteNode, saveNode, redirect, pathname, query}) => {
 
   const actualNode = merge(node, state)
 
@@ -83,6 +88,33 @@ const NodeChange = ({node, state: {contextOpened = true, inProgress = false, del
     })
   }
 
+  const seriesOnInput = (e) => {
+    getNodesList({
+      key: "series",
+      q: e,
+      layer: '!Note'
+    })
+  }
+
+  const seriesOnRequest = (e, i) => {
+    if(i >= 0) {
+      setState({inSeries: seriesList[i], seriesId: seriesList[i].id})
+    } else {
+      createSeries(e).then(({error = false, result}) => {
+        if(!error) {
+          setState({
+            inSeries: result.body,
+            seriesId: result.body.id
+          })
+        }
+      })
+    }
+  }
+
+  const seriesFilter = (q, t) => {
+    return true
+  }
+
   return (<TriptychWrapContent><TriptychContent header={{
     title: actualNode.title,
     button: <Button color="default" icon={<NavigationArrowForward/>} mobile size="m" title="Контекст" onClick={toggleContext} />
@@ -121,6 +153,17 @@ const NodeChange = ({node, state: {contextOpened = true, inProgress = false, del
         value={ actualNode.description }
         errorText={ pickError("description") }
       /> }
+
+      <AutoComplete
+        hintText="Сериал/Коллекция"
+        floatingLabelText="Сериал/Коллекция"
+        onUpdateInput={seriesOnInput}
+        dataSource={map(k => k.title, seriesList)}
+        searchText={actualNode.inSeries && actualNode.inSeries.title || ''}
+        openOnFocus={true}
+        onNewRequest={seriesOnRequest}
+        filter={seriesFilter}
+      />
 
       <div>
         { actualNode.layer !== "Note" && <SelectField

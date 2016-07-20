@@ -24,7 +24,7 @@ export default [{
       yield put(resolveSagaStart('resolveHome'))
       const offset = yield select(s => s.resolve.query.offset)
       return yield [
-        put(getNodesList({offset, limit: 13, _expand: "values*user"}))
+        put(getNodesList({offset, limit: 13}))
       ]
     },
 
