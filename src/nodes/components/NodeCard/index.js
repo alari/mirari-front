@@ -27,7 +27,7 @@ export default ({node}) => {
 
           { kinds[node.kind] }
 
-          { node.inSeries && <span>&thinsp;
+          { node.inSeries && node.inSeries.id && <span>&thinsp;
             &mdash;
             &thinsp;<Link to={nodeUrl(node.inSeries)}>{ node.inSeries.title }</Link></span> }
         </div>
