@@ -26,6 +26,10 @@ export default ({node}) => {
           }
 
           { kinds[node.kind] }
+
+          { node.inSeries && <span>&thinsp;
+            &mdash;
+            &thinsp;<Link to={nodeUrl(node.inSeries)}>{ node.inSeries.title }</Link></span> }
         </div>
       </div>
       <div className="Article-body">
