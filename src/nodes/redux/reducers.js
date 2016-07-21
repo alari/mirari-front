@@ -8,9 +8,10 @@ import {
   NODES_COMMENT,
   NODE_COMMENT_GET,
   NODE_COMMENT_REMOVE,
-NODE_PIN,
-NODE_UNPIN,
-NODE_SET_CURRENT
+  NODE_PIN,
+  NODE_UNPIN,
+  NODE_SET_CURRENT,
+  NODE_MOVE_INSIDE_SERIES
 } from "./constants";
 
 const prepareComments = (list) => {
@@ -125,6 +126,17 @@ export default createReducer({}, {
     ...state,
     pinned: {
       values: filter(n => n.id !== action.result.body.id, state.pinned.values)
+    }
+  } : state,
+
+  [NODE_MOVE_INSIDE_SERIES.SUCCESS]: (state, action) => (action.routeParams.nodeId === state.node.id) ? {
+    ...state,
+    node: {
+      ...state.node,
+      series: {
+        ...action.result.body,
+        nodes: map(i => find(n => n.id === i, state.node.series.nodes), action.result.body.nodeIds)
+      }
     }
   } : state,
 

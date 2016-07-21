@@ -12,5 +12,7 @@ export const NODE_COMMENT_REMOVE = createActionRequestTypes("NODE_COMMENT_REMOVE
 export const NODE_PIN = createActionRequestTypes("NODE_PIN")
 export const NODE_UNPIN = createActionRequestTypes("NODE_UNPIN")
 
+export const NODE_MOVE_INSIDE_SERIES = createActionRequestTypes("NODE_MOVE_INSIDE_SERIES")
+
 export const NODE_ENTER = "NODE_ENTER"
 export const NODE_SET_CURRENT = "NODE_SET_CURRENT"

@@ -6,7 +6,7 @@ import {Toolbar, ToolbarGroup, ToolbarTitle, ToolbarSeparator} from "material-ui
 import moment from "moment";
 import NodeAction from "nodes/components/NodeAction"
 import NodeText from "nodes/components/NodeText"
-import NodeCard from "nodes/components/NodeCard"
+import NodeSeries from "nodes/components/NodeSeries"
 
 import kinds from "nodes/utils/kinds"
 import UserLink from "users/components/UserLink"
@@ -28,6 +28,7 @@ const ArticleFooterItem = ({ content, itemProp }) => {
   )
 }
 
+
 const NodeView = ({ node }) => {
   const seriesSiblings = (node.inSeries && node.inSeries.series && node.inSeries.series.nodes) || []
   const currentIndex = findIndex(n => n.id === node.id, seriesSiblings)
@@ -40,7 +41,7 @@ const NodeView = ({ node }) => {
           <NodeText node={node}/>
         </article>
 
-        {node.series && node.series.nodes && map(n => <NodeCard node={n} key={n.id}/>, node.series.nodes)}
+        <NodeSeries node={node}/>
 
         <div className="ArticleFooter">
           <ArticleFooterItem content={<UserLink user={node.user}/>} itemProp="author" />

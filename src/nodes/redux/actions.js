@@ -8,7 +8,8 @@ import {
   NODE_COMMENT_REMOVE,
   NODE_PIN,
   NODE_UNPIN,
-  NODE_SET_CURRENT
+  NODE_SET_CURRENT,
+  NODE_MOVE_INSIDE_SERIES
 } from "./constants";
 import {createApiAction} from "commons/api";
 import {singleNodeExpand, listNodesExpand} from "../utils/nodeExpand"
@@ -102,6 +103,16 @@ export const nodeUnpin = (nodeId, targetId) => createApiAction({
     targetNodeId: targetId
   }
 }, NODE_UNPIN)
+
+export const nodeMoveInsideSeries = (nodeId, targetId, index) => createApiAction({
+  url: '/nodes/:nodeId/series/actions/move',
+  routeParams: {nodeId},
+  method: 'POST',
+  data: {
+    nodeId: targetId,
+    index
+  }
+}, NODE_MOVE_INSIDE_SERIES)
 
 export const nodeSetCurrent = (node) => ({
   type: NODE_SET_CURRENT,
