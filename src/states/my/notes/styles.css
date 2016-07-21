@@ -1,0 +1,16 @@
+@import "commons/styles/variables.css";
+@import "commons/styles/media-queries.css";
+
+@component Notes {
+  @descendent container {
+    display: flex;
+  }
+  @descendent list {
+    width: 250px;
+    flex: 0 0 250px;
+  }
+  @descendent content {
+    flex: 1;
+    padding-left: 48px;
+  }
+}
