@@ -19,7 +19,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   setPage: (p) =>
-    getNodesList({ ...p, layer: 'Draft' }),
+    getNodesList({ ...p, layer: 'Note' }),
 };
 
 const NotesView = ({ nodes, setPage, nodeId, q, children, title }) => {
