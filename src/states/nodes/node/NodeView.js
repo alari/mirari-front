@@ -14,7 +14,7 @@ import UserLink from "users/components/UserLink"
 import Comments from "nodes/components/Comments"
 
 import nodeUrl from "nodes/utils/nodeUrl"
-import {map} from "ramda"
+import {map, findIndex, find, drop, take, reverse} from "ramda"
 
 const mapStateToProps = (state) => ({
   node: state.nodes.node
@@ -29,7 +29,10 @@ const ArticleFooterItem = ({ content, itemProp }) => {
 }
 
 const NodeView = ({ node }) => {
-  console.log(node.series)
+  const seriesSiblings = (node.inSeries && node.inSeries.series && node.inSeries.series.nodes) || []
+  const currentIndex = findIndex(n => n.id === node.id, seriesSiblings)
+  const nextNode = (currentIndex >= 0 && find(n => !!n.id, drop(currentIndex+1, seriesSiblings)))
+  const prevNode = (currentIndex >= 0 && find(n => !!n.id, reverse(take(currentIndex, seriesSiblings))))
 
   return node && (
       <section className="Content Article" itemScope itemType="http://schema.org/Article">
@@ -51,6 +54,12 @@ const NodeView = ({ node }) => {
           <ArticleFooterItem content={<NodeAction node={node}><Link to={"/my/node/" + node.id}>Редактировать</Link></NodeAction>} />
           <ArticleFooterItem content={(node && node.views) + " просмотров"} />
         </div>
+
+        { (nextNode || prevNode) && <div>
+          {prevNode && <Link to={nodeUrl(prevNode)}>&larr; {prevNode.title}</Link>}
+          { node.inSeries &&  <Link to={nodeUrl(node.inSeries)}>{node.inSeries.title}</Link>}
+          {nextNode && <Link to={nodeUrl(nextNode)}>{nextNode.title} &rarr;</Link>}
+        </div> }
 
         <Comments />
       </section>
