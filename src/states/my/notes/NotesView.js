@@ -8,11 +8,13 @@ import LoadMore from 'commons/pagination/components/LoadMore';
 import { Card, CardItem } from 'commons/cards/components';
 import moment from 'moment';
 import NoteForm from 'nodes/components/NoteForm';
+import {TriptychContent,TriptychWrapContent,TriptychRight} from "triptych"
 
 const mapStateToProps = (state) => ({
   nodes: state.nodes.list,
   nodeId: state.resolve.params.nodeId,
   q: state.resolve.query.q || '',
+  title: state.page.title
 });
 
 const mapDispatchToProps = {
@@ -20,7 +22,7 @@ const mapDispatchToProps = {
     getNodesList({ ...p, layer: 'Draft' }),
 };
 
-const NotesView = ({ nodes, setPage, nodeId, q }) => {
+const NotesView = ({ nodes, setPage, nodeId, q, children, title }) => {
 
   const haveMore = nodes.values.length < nodes.total;
 
@@ -28,6 +30,10 @@ const NotesView = ({ nodes, setPage, nodeId, q }) => {
     setPage({ q, append: true, limit: nodes.limit, offset: nodes.offset + nodes.limit });
 
   return (
+    <TriptychWrapContent>
+      <TriptychContent header={{
+    title: title
+  }}>
     <div className="Notes">
       <div className="Notes-container">
         <div className="Notes-list">
@@ -44,10 +50,11 @@ const NotesView = ({ nodes, setPage, nodeId, q }) => {
           <LoadMore action={loadMore} haveMore={haveMore} />
         </div>
         <div className="Notes-content">
-          {!q && <NoteForm />}
+          {children || <NoteForm />}
         </div>
       </div>
     </div>
+      </TriptychContent></TriptychWrapContent>
   );
 };
 
