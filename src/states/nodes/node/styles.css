@@ -23,3 +23,16 @@
     }
   }
 }
+
+@component ArticlesNavigation {
+  padding: 20px 0 40px;
+
+  @media (--s) {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  @descendent link {
+    display: block;
+  }
+}
