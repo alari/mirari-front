@@ -23,7 +23,7 @@ export default {
       resolve.push(yield put(getNode(nodeId, {_expand: singleNodeExpand})))
     }
 
-    resolve.push(yield put(getNodesList({key:'series',layer:'!Note'})))
+    resolve.push(yield put(getNodesList({key:'series',layer:'!Note',kind:'Series'})))
 
     return resolve
   },
