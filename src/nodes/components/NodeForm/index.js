@@ -1,7 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import {Link} from "react-router";
-import {map, keys, propOr, merge, equals, pickBy, isEmpty} from "ramda";
+import {map, keys, propOr, equals, isEmpty} from "ramda";
 import {TextField, RaisedButton, SelectField, MenuItem, Toggle, LinearProgress, FlatButton} from "material-ui";
 import {saveNode, deleteNode} from "nodes/redux/actions";
 import {decorateWithState} from "commons/utils";
@@ -33,9 +33,13 @@ const mapDispatchToProps = {
   redirect: (url) => push(url)
 }
 
-const NodeForm = ({node, state: {inProgress = false, deleting = false, error, ...state}, setState, clearState, stateFieldChanged, deleteNode, saveNode, redirect, pathname, query}) => {
+const NodeForm = ({node, mixin = {}, state: {inProgress = false, deleting = false, error, ...state}, setState, clearState, stateFieldChanged, deleteNode, saveNode, redirect, pathname, query}) => {
 
-  const actualNode = merge(node, state)
+  const actualNode = {
+    ...node,
+    ...mixin,
+    ...state
+  }
 
   const isNotChanged = isEmpty(state)
 
@@ -45,7 +49,7 @@ const NodeForm = ({node, state: {inProgress = false, deleting = false, error, ..
       inProgress: true,
       deleting: false
     })
-    saveNode(actualNode, state).then(({error = false}) => {
+    saveNode(actualNode, {...mixin, ...state}).then(({error = false}) => {
       if(error) {
         setState({
           error: error.body,
@@ -109,27 +113,28 @@ const NodeForm = ({node, state: {inProgress = false, deleting = false, error, ..
       /> }
 
       <div>
-        { actualNode.layer !== "Note" && <SelectField
-          autoWidth={true}
-          value={ actualNode.kind }
-          onChange={(event, index, value) => {
+        { actualNode.layer !== "Note" && <div>
+          <SelectField
+            autoWidth={true}
+            value={ actualNode.kind }
+            onChange={(event, index, value) => {
                 setState({"kind": value})
               }}
-          errorText={ pickError("kind") }
-        >
-          { map((k) => <MenuItem key={k} primaryText={kinds[k]} value={k}/>, keys(kinds)) }
-        </SelectField>}
+            errorText={ pickError("kind") }
+          >
+            { map((k) => <MenuItem key={k} primaryText={kinds[k]} value={k}/>, keys(kinds)) }
+          </SelectField>
 
-        { actualNode.layer !== "Note" && <Toggle
-          label="Опубликовать"
-          labelPosition="right"
-          toggled={ actualNode.layer === "Pub" }
-          onToggle={(e) => {
+          <Toggle
+            label="Опубликовать"
+            labelPosition="right"
+            toggled={ actualNode.layer === "Pub" }
+            onToggle={(e) => {
               setState({"layer": actualNode.layer === "Pub" ? "Draft" : "Pub"})
               }}
-        />}
+          />
 
-        { actualNode.layer !== "Note" && <TextField
+          <TextField
           label="Адрес"
           hintText="Адрес, https://mirari.ru/..."
           floatingLabelText={"Адрес, https://mirari.ru/"+(actualNode.alias || "...")}
@@ -137,7 +142,8 @@ const NodeForm = ({node, state: {inProgress = false, deleting = false, error, ..
           onChange={stateFieldChanged("alias")}
           value={ actualNode.alias || "" }
           errorText={ pickError("alias") }
-        />}
+        />
+        </div> }
 
         { inProgress ? <LinearProgress /> :
           <RaisedButton label="Сохранить" primary={true} disabled={isNotChanged} onClick={action}/> }

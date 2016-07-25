@@ -7,7 +7,7 @@ import { getNodesList } from 'nodes/redux/actions';
 import LoadMore from 'commons/pagination/components/LoadMore';
 import { Card, CardItem } from 'commons/cards/components';
 import moment from 'moment';
-import NoteForm from 'nodes/components/NoteForm';
+import NodeForm from 'nodes/components/NodeForm';
 import {TriptychContent,TriptychWrapContent,TriptychRight} from "triptych"
 import Button from "commons/button"
 import AddIcon from "material-ui/svg-icons/content/add";
@@ -53,7 +53,7 @@ const NotesView = ({ nodes, setPage, nodeId, q, children, title }) => {
           <LoadMore action={loadMore} haveMore={haveMore} />
         </div>
         <div className="Notes-content">
-          {children || <NoteForm />}
+          {children || <NodeForm mixin={{layer: 'Note'}} />}
         </div>
       </div>
     </div>
