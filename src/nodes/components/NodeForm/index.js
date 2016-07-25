@@ -11,7 +11,7 @@ import {push} from "react-router-redux"
 import kinds from "nodes/utils/kinds"
 
 const mapStateToProps = (state) => ({
-  node: (state.nodes.node && (state.nodes.node.id === state.resolve.params.nodeId || state.nodes.node.alias === state.resolve.params.alias)) ? state.nodes.node : {
+  node: (state.nodes.node && ((state.resolve.params.nodeId && state.nodes.node.id === state.resolve.params.nodeId) || (state.resolve.params.alias && state.nodes.node.alias === state.resolve.params.alias))) ? state.nodes.node : {
     title: "",
     description: "",
     text: {version: 0, content: ""},

@@ -9,6 +9,8 @@ import { Card, CardItem } from 'commons/cards/components';
 import moment from 'moment';
 import NoteForm from 'nodes/components/NoteForm';
 import {TriptychContent,TriptychWrapContent,TriptychRight} from "triptych"
+import Button from "commons/button"
+import AddIcon from "material-ui/svg-icons/content/add";
 
 const mapStateToProps = (state) => ({
   nodes: state.nodes.list,
@@ -32,7 +34,8 @@ const NotesView = ({ nodes, setPage, nodeId, q, children, title }) => {
   return (
     <TriptychWrapContent>
       <TriptychContent header={{
-    title: title
+    title: title,
+    button: <Button color="default" icon={<AddIcon />} mobile size="m" title="Заметка" url="/my/notes" disabled={!nodeId} />
   }}>
     <div className="Notes">
       <div className="Notes-container">
