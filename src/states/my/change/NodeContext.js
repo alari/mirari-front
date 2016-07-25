@@ -9,6 +9,10 @@ import {map, find} from "ramda";
 import Button from "commons/button";
 import {decorateWithState} from "commons/utils";
 
+import ActionLockOpen from "material-ui/svg-icons/action/lock-open"
+import ActionLockOutline from "material-ui/svg-icons/action/lock-outline"
+import ContentClear from "material-ui/svg-icons/content/clear"
+
 const mapStateToProps = (state) => ({
   pinned: state.nodes.pinned
 })
@@ -19,7 +23,7 @@ const mapDispatchToProps = {
   unpin: (nodeId, targetId) => nodeUnpin(nodeId, targetId)
 }
 
-const NodeContext = ({node, state: {q = "", nodes = []}, setState, loadNodes, pinned, pin, unpin}) => {
+const NodeContext = ({node, state: {q = "", nodes = [], focus = false}, setState, loadNodes, pinned, pin, unpin}) => {
 
   const onNotesActive = () => {
     loadNodes({limit: 50, layer: "Note", _expand: "values*text", pinnedToId: node.id, key: 'pinned'})
@@ -36,16 +40,27 @@ const NodeContext = ({node, state: {q = "", nodes = []}, setState, loadNodes, pi
 
   const isPinned = (n) => n.pinnedToNodeIds.indexOf(node.id) > -1
 
-  const onQChange = (e) => {
-    setState({q: e.target.value})
-    loadNodes({limit: 50, layer: "Note", _expand: "values*text", q: e.target.value}).then(({error=false, result}) => {
+  const fetchNotes = (q) => {
+    loadNodes({limit: 50, layer: "Note", _expand: "values*text", q: q || undefined}).then(({error=false, result}) => {
       if (!error) {
         setState({nodes: result.body.values})
       }
     })
   }
 
-  const list = !!q ? nodes : (pinned && pinned.values || [])
+  const onQChange = (e) => {
+    setState({q: e.target.value})
+    fetchNotes(e.target.value)
+  }
+
+  const onFocus = () => {
+    setState({focus:true})
+    fetchNotes(q)
+  }
+
+  const list = (!!q || focus) ? nodes : (pinned && pinned.values || [])
+
+  console.log("q", q, "focus", focus, "list", list, "pinned", pinned)
 
   return (<Tabs>
     <Tab label="Предпросмотр">
@@ -53,22 +68,23 @@ const NodeContext = ({node, state: {q = "", nodes = []}, setState, loadNodes, pi
     </Tab>
     { node.id ? <Tab label="Заметки" onActive={onNotesActive}>
 
-      { !q && <NoteForm pinToNodeId={node.id}/> }
+      { !q && !focus && <NoteForm pinToNodeId={node.id}/> }
 
-      <TextField
+      <div><span><TextField
         hintText="Или искать по заметкам"
         floatingLabelText="Искать по заметкам"
-        fullWidth={true}
         onChange={onQChange}
         value={ q }
+        onFocus={onFocus}
         errorText={ q && list.length === 0 && "Ничего не найдено" }
-      />
-      {q && <span onClick={() => setState({q: ""})}>Очистить</span>}
+      /></span>
+      {(q || focus) && <Button icon={<ContentClear/>} onClick={() => setState({q: "", focus: false})}/>}
+        </div>
 
       {map(n => <div className="NodeContext" key={n.id}>
         <div className="NodeContext-main"><NodeText node={n}/></div>
         <div className="NodeContext-controls">
-          <Button title={isPinned(n) ? "Открепить" : "Прикрепить"} size="m" color="default" onClick={pinUnpin(n)} />
+          <Button icon={isPinned(n) ? <ActionLockOutline/> : <ActionLockOpen/>} size="m" color="default" onClick={pinUnpin(n)} />
         </div>
       </div>, list)}
 

@@ -89,6 +89,7 @@ export const nodeCommentRemoved = (nodeId, commentId) => ({
 export const nodePin = (nodeId, targetId) => createApiAction({
   url: '/nodes/:nodeId/actions/pin',
   routeParams: {nodeId},
+  queryParams: {_expand:"text"},
   method: 'POST',
   data: {
     targetNodeId: targetId

@@ -1,4 +1,4 @@
-import {concat, map, filter, groupBy, find, sortBy, clone} from "ramda";
+import {concat, map, filter, groupBy, find, sortBy, clone, prepend} from "ramda";
 import {createReducer, update} from "commons/utils";
 import {
   NODES_LIST,
@@ -118,7 +118,8 @@ export default createReducer({}, {
   [NODE_PIN.SUCCESS]: (state, action) => (action.data.targetNodeId === state.node.id) ? {
     ...state,
     pinned: {
-      values: state.pinned.values.unshift(action.result.body)
+      ...state.pinned,
+      values: prepend(action.result.body, state.pinned.values)
     }
   } : state,
 
