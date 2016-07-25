@@ -1,6 +1,6 @@
 @component NodeSeries {
   @descendent list {
-    margin-bottom: 1.5rem);
+    margin-bottom: 1.5rem;
     padding-left: 24px;
     list-style-type: disc;
   }
