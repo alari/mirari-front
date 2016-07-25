@@ -1,13 +1,17 @@
-import React from "react";
-import {Link} from "react-router";
-import {connect} from "react-redux";
-import { DragSource } from "react-dnd";
-import nodeUrl from "nodes/utils/nodeUrl";
+import React from 'react';
+import { Link } from 'react-router';
+import { connect } from 'react-redux';
+import { DragSource } from 'react-dnd';
+import nodeUrl from 'nodes/utils/nodeUrl';
 
-const NodeSortableView = ({node, connectDragSource, isDragging}) =>
-  connectDragSource(<div style={{
-        opacity: isDragging ? 0.5 : 1
-      }}><Link to={nodeUrl(node)}>{node.title}</Link></div>)
+const NodeSortableView = ({ node, connectDragSource, isDragging }) =>
+  connectDragSource(
+    <div
+      style={{ opacity: isDragging ? 0.5 : 1 }}
+    >
+      <Link to={nodeUrl(node)}>{node.title}</Link>
+    </div>
+  );
 
 const nodeSource = {
   beginDrag(props) {

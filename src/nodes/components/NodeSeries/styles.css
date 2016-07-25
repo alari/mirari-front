@@ -1,0 +1,12 @@
+@component NodeSeries {
+  @descendent list {
+    margin-bottom: 1.5rem);
+    padding-left: 24px;
+    list-style-type: disc;
+  }
+  @descendent item {
+    display: list-item;
+    margin-bottom: 5px;
+  }
+  @descendent link {}
+}
