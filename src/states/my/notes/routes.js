@@ -4,7 +4,7 @@ import {getNodesList, getNode} from "nodes/redux/actions";
 import NotesView from "./NotesView";
 import {TriptychMainWrapper} from "triptych";
 import React from "react";
-import NodeForm from "nodes/components/NodeForm"
+import NoteView from "./NoteView"
 
 export default {
   component: Resolve(NotesView, 'resolveNotes'),
@@ -25,7 +25,7 @@ export default {
   childRoutes: [
     {
       path: ":nodeId",
-      component: Resolve(NodeForm, "resolveNote"),
+      component: Resolve(NoteView, "resolveNote"),
 
       resolve: function* resolveNote(){
         yield put(resolveSagaStart('resolveNote'))
