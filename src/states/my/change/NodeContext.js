@@ -60,8 +60,6 @@ const NodeContext = ({node, state: {q = "", nodes = [], focus = false}, setState
 
   const list = (!!q || focus) ? nodes : (pinned && pinned.values || [])
 
-  console.log("q", q, "focus", focus, "list", list, "pinned", pinned)
-
   return (<Tabs>
     <Tab label="Предпросмотр">
       <div style={{paddingTop:'20px'}}><NodeText node={node}/></div>
