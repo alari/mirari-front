@@ -14,7 +14,7 @@ export default {
     yield put(resolveSagaStart('resolveNotes'))
     const q = yield select(s => s.resolve.query.q)
     return yield [
-      put(getNodesList({q, limit: 13, layer: "Note"}))
+      put(getNodesList({q, limit: 13, layer: "Note", _expand:"values{*text,*pinnedToNodes}"}))
     ]
   },
 
@@ -35,7 +35,7 @@ export default {
         const {node} = yield select(s => s.nodes)
 
         if (!(node && node.id === nodeId && !!node.user)) {
-          yield put(getNode(nodeId, {_expand: "text"}))
+          yield put(getNode(nodeId, {_expand: "text,pinnedToNodes"}))
         }
       }
     }

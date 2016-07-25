@@ -46,6 +46,10 @@ const NotesView = ({ nodes, setPage, nodeId, q, children, title }) => {
                 <Link to={"/my/notes/" + n.id}>
                   {n.title || '***'}, {moment(n.lastUpdated).fromNow()}
                 </Link>
+
+                { n.pinnedToNodes && <div>
+                  { map(p => <Link key={p.id} to={"/my/node/"+p.id} style={{fontSize:"small",color:'gray'}}>{p.title}</Link>, n.pinnedToNodes) }
+                </div> }
               </CardItem>
             </Card>, nodes.values)
           }

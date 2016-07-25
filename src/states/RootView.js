@@ -55,7 +55,8 @@ const AuthMenu = ({user}) => {
       <NavList>
         <NavListItem url="/my/drafts" title="Черновики"/>
         <NavListItem url="/my/notes" title="Заметки"/>
-        <NavListItem url="/my/profile" title="Профиль"/>
+        <NavListItem url="/my/profile" title="Настройки"/>
+        <NavListItem url={"/" + (user.alias || ("users/" + user.id))} title="Профиль" />
       </NavList>
   ) : (
       <NavList>
