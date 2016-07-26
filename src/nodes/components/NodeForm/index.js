@@ -78,7 +78,7 @@ const NodeForm = ({node, mixin = {}, state: {inProgress = false, deleting = fals
   }
 
   return (
-    <form className="Content" onSubmit={action}>
+    <form onSubmit={action}>
       <TextField
         hintText="Заголовок"
         floatingLabelText="Заголовок"
