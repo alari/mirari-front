@@ -1,5 +1,5 @@
 import './styles.css';
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { map } from 'ramda';
@@ -25,7 +25,6 @@ const mapDispatchToProps = {
 };
 
 const NotesView = ({ nodes, setPage, nodeId, q, children, title }) => {
-
   const haveMore = nodes.values.length < nodes.total;
 
   const loadMore = () =>
@@ -35,7 +34,7 @@ const NotesView = ({ nodes, setPage, nodeId, q, children, title }) => {
     <TriptychWrapContent>
       <TriptychContent
         header={{
-          title: title,
+          title,
           button: <Button
             color="default"
             icon={<AddIcon />}
@@ -47,44 +46,53 @@ const NotesView = ({ nodes, setPage, nodeId, q, children, title }) => {
           />,
         }}
       >
-    <div className="Notes">
-      <div className="Notes-container">
-        <div className="Notes-list">
-          <div className="Notes-listContainer">
-            {map((n) =>
-              <Card key={n.id} isActive={n.id === nodeId}>
-                <CardItem>
-                  <Link to={'/my/notes/' + n.id}>
-                    {n.title || '***'}, {moment(n.lastUpdated).fromNow()}
-                  </Link>
+        <div className="Notes">
+          <div className="Notes-container">
+            <div className="Notes-list">
+              <div className="Notes-listContainer">
+                {map((n) =>
+                  <Card key={n.id} isActive={n.id === nodeId}>
+                    <CardItem>
+                      <Link to={`/my/notes/${n.id}`}>
+                        {n.title || '***'}, {moment(n.lastUpdated).fromNow()}
+                      </Link>
 
-                  {n.pinnedToNodes &&
-                    <div>
-                      {map(p =>
-                        <Link
-                          key={p.id}
-                          to={'/my/node/' + p.id}
-                          style={{ fontSize:"small",color:'gray' }}
-                        >
-                          {p.title}
-                        </Link>, n.pinnedToNodes)
+                      {n.pinnedToNodes &&
+                      <div>
+                        {map(p =>
+                          <Link
+                            key={p.id}
+                            to={`/my/node/${p.id}`}
+                            style={{ fontSize: 'small', color: 'gray', display: 'block' }}
+                          >
+                            {p.title}
+                          </Link>, n.pinnedToNodes)
+                        }
+                      </div>
                       }
-                    </div>
-                  }
-                </CardItem>
-              </Card>, nodes.values)
-            }
+                    </CardItem>
+                  </Card>, nodes.values)
+                }
 
-            <LoadMore action={loadMore} haveMore={haveMore} />
+                <LoadMore action={loadMore} haveMore={haveMore} />
+              </div>
+            </div>
+            <div className="Notes-content">
+              {children || <NodeForm mixin={{ layer: 'Note' }} />}
+            </div>
           </div>
         </div>
-        <div className="Notes-content">
-          {children || <NodeForm mixin={{ layer: 'Note' }} />}
-        </div>
-      </div>
-    </div>
       </TriptychContent></TriptychWrapContent>
   );
 };
+
+NotesView.propTypes = {
+  nodes: PropTypes.list,
+  setPage: PropTypes.func,
+  nodeId: PropTypes.string,
+  q: PropTypes.string,
+  children: PropTypes.any,
+  title: PropTypes.string,
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(NotesView);

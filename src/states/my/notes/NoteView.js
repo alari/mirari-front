@@ -25,7 +25,7 @@ const NoteView = ({ state: { isEditing = false }, setState, node }) =>
       <div>
         <hr />
         {map(p =>
-          <Link key={p.id} to={'/my/node/' + p.id} style={{ fontSize: 'small', color: 'gray' }}>
+          <Link key={p.id} to={`/my/node/${p.id}`} style={{ fontSize: 'small', color: 'gray', padding: '1rem' }}>
             {p.title}
           </Link>, node.pinnedToNodes)
         }
