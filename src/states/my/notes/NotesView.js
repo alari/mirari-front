@@ -8,15 +8,15 @@ import LoadMore from 'commons/pagination/components/LoadMore';
 import { Card, CardItem } from 'commons/cards/components';
 import moment from 'moment';
 import NodeForm from 'nodes/components/NodeForm';
-import {TriptychContent,TriptychWrapContent,TriptychRight} from "triptych"
-import Button from "commons/button"
-import AddIcon from "material-ui/svg-icons/content/add";
+import { TriptychContent, TriptychWrapContent } from 'triptych';
+import Button from 'commons/button';
+import AddIcon from 'material-ui/svg-icons/content/add';
 
 const mapStateToProps = (state) => ({
   nodes: state.nodes.list,
   nodeId: state.resolve.params.nodeId,
   q: state.resolve.query.q || '',
-  title: state.page.title
+  title: state.page.title,
 });
 
 const mapDispatchToProps = {
@@ -33,31 +33,53 @@ const NotesView = ({ nodes, setPage, nodeId, q, children, title }) => {
 
   return (
     <TriptychWrapContent>
-      <TriptychContent header={{
-    title: title,
-    button: <Button color="default" icon={<AddIcon />} mobile size="m" title="Заметка" url="/my/notes" disabled={!nodeId} />
-  }}>
+      <TriptychContent
+        header={{
+          title: title,
+          button: <Button
+            color="default"
+            icon={<AddIcon />}
+            mobile
+            size="m"
+            title="Заметка"
+            url="/my/notes"
+            disabled={!nodeId}
+          />,
+        }}
+      >
     <div className="Notes">
       <div className="Notes-container">
         <div className="Notes-list">
-          {map((n) =>
-            <Card key={n.id} isActive={n.id === nodeId}>
-              <CardItem>
-                <Link to={"/my/notes/" + n.id}>
-                  {n.title || '***'}, {moment(n.lastUpdated).fromNow()}
-                </Link>
+          <div className="Notes-listContainer">
+            {map((n) =>
+              <Card key={n.id} isActive={n.id === nodeId}>
+                <CardItem>
+                  <Link to={'/my/notes/' + n.id}>
+                    {n.title || '***'}, {moment(n.lastUpdated).fromNow()}
+                  </Link>
 
-                { n.pinnedToNodes && <div>
-                  { map(p => <Link key={p.id} to={"/my/node/"+p.id} style={{fontSize:"small",color:'gray'}}>{p.title}</Link>, n.pinnedToNodes) }
-                </div> }
-              </CardItem>
-            </Card>, nodes.values)
-          }
+                  {n.pinnedToNodes &&
+                    <div>
+                      {map(p =>
+                        <Link
+                          key={p.id}
+                          to={'/my/node/' + p.id}
+                          style={{ fontSize:"small",color:'gray' }}
+                        >
+                          {p.title}
+                        </Link>, n.pinnedToNodes)
+                      }
+                    </div>
+                  }
+                </CardItem>
+              </Card>, nodes.values)
+            }
 
-          <LoadMore action={loadMore} haveMore={haveMore} />
+            <LoadMore action={loadMore} haveMore={haveMore} />
+          </div>
         </div>
         <div className="Notes-content">
-          {children || <NodeForm mixin={{layer: 'Note'}} />}
+          {children || <NodeForm mixin={{ layer: 'Note' }} />}
         </div>
       </div>
     </div>

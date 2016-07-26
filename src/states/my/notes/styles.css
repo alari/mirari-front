@@ -2,15 +2,27 @@
 @import "commons/styles/media-queries.css";
 
 @component Notes {
+  position: relative;
+  display: flex;
+  min-height: calc(100vh - 170px);
+
   @descendent container {
     display: flex;
   }
   @descendent list {
-    width: 250px;
-    flex: 0 0 250px;
+    position: relative;
+    width: 270px;
+    flex: 0 0 270px;
+
+    position: absolute;
+    height: 100%;
+    overflow-y: auto;
+  }
+  @descendent listContainer {
+    padding-right: 20px;
   }
   @descendent content {
     flex: 1;
-    padding-left: 48px;
+    padding-left: 290px;
   }
 }
