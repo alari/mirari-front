@@ -13,7 +13,11 @@ const renderers = {
       const children = this.props.children
 
       if (length(children) === 1 && typeof children[0] === 'string' && ReactPlayer.canPlay(children[0])) {
-        return (<ReactPlayer url={children[0]} controls={true} />);
+        return (
+          <div className="Player">
+          <ReactPlayer className="Player-content" url={children[0]} controls={true} />
+          </div>
+        );
       } else {
         return (<p>{children}</p>);
       }

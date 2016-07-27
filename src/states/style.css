@@ -250,3 +250,25 @@ a {
   padding: 24px 0;
   flex: 1;
 }
+
+@component Player {
+  position: relative;
+  margin-bottom: 1.5rem;
+
+  &:before {
+    display: block;
+    content: "";
+    width: 100%;
+    padding-top: 56.25%;
+  }
+
+  @descendent content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: auto !important;
+    height: auto !important;
+  }
+}
