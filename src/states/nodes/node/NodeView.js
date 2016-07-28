@@ -44,6 +44,8 @@ const NodeView = ({ node }) => {
         <NodeSeries node={node} />
 
         <div className="ArticleFooter">
+          <div className="ArticleFooter-container">
+
           <ArticleFooterItem content={<UserLink user={node.user} />} itemProp="author" />
           <ArticleFooterItem content={kinds[node.kind]} />
           {
@@ -63,6 +65,7 @@ const NodeView = ({ node }) => {
             }
           />
           <ArticleFooterItem content={(node && node.views) + ' просмотров'} />
+        </div>
         </div>
 
         {(nextNode || prevNode) &&

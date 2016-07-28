@@ -2,15 +2,25 @@
 @import "commons/styles/media-queries.css";
 
 @component ArticleFooter {
-  padding: 16px 24px;
-  font-size: 14px;
-  background-color: #f2f2f2;
+  position: relative;
 
-  @media (--s) {
-    display: flex;
-    align-items: center;
+  &:before {
+    display: block;
+    content: "";
+    width: 100%;
+    padding-top: 15%;
   }
 
+  @descendent container {
+    padding: 16px 24px;
+    font-size: 14px;
+    background-color: #f2f2f2;
+
+    @media (--s) {
+      display: flex;
+      align-items: center;
+    }
+  }
   @descendent item {
     @media (--s) {
       margin-left: 16px;
