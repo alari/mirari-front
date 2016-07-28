@@ -22,8 +22,42 @@
     color: #212121;
     text-decoration: none;
 
-    &:visited {
+    &:after {
+      content: 'прочитано';
+      font-size: 0.7rem;
+      position: relative;
+      top: -6px;
+      background-color: #fff;
+      color: #fff;
+      padding: 2px 5px;
+      margin-left: 5px;
+    }
+
+    &:visited:after {
+      background-color: #f3f8fb;
       color: #757575;
+    }
+
+    &:visited {
+      color: #212121;
+    }
+
+    &:hover {
+      color: #81C784;
+    }
+  }
+
+  @descendent readLabel {
+    font-size: 0.7rem;
+    position: relative;
+    top: -5px;
+    background: #e7f7ff;
+    padding: 2px 5px;
+    margin-left: 5px;
+    display: none;
+
+    .Article-titleLink:visited + & {
+      display: inline-block;
     }
   }
 }

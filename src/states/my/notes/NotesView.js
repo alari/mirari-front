@@ -93,6 +93,6 @@ NotesView.propTypes = {
   q: PropTypes.string,
   children: PropTypes.any,
   title: PropTypes.string,
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(NotesView);

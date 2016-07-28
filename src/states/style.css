@@ -61,14 +61,14 @@ h6 {
 
 h1 {
   font-size: 2 * var(--scale) * 1rem;
-  line-height: 2 * 1.5rem;
-  margin-bottom: 2 * 1.5rem;
+  line-height: 3rem;
+  margin-bottom: 1.5rem;
 }
 
 h2 {
   font-size: calc(1.5 * var(--scale) * 1rem);
-  line-height: 1.5 * 1.5rem;
-  margin-bottom: 1.5 * 1.5rem;
+  line-height: 2.5rem;
+  margin-bottom: 1rem;
 }
 
 h3 {
