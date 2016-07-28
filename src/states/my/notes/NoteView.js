@@ -13,7 +13,7 @@ const mapStateToProps = (state) => ({
 
 const NoteView = ({ state: { isEditing = false }, setState, node }) =>
   <div>
-    <div>
+    <div className="Notes-controls">
       <Button
         onClick={() => setState({ isEditing: !isEditing })}
         title={isEditing ? 'В просмотр' : 'Редактировать'}
@@ -25,7 +25,11 @@ const NoteView = ({ state: { isEditing = false }, setState, node }) =>
       <div>
         <hr />
         {map(p =>
-          <Link key={p.id} to={`/my/node/${p.id}`} style={{ fontSize: 'small', color: 'gray', padding: '1rem' }}>
+          <Link
+            key={p.id}
+            to={`/my/node/${p.id}`}
+            style={{ fontSize: 'small', color: 'gray', padding: '1rem' }}
+          >
             {p.title}
           </Link>, node.pinnedToNodes)
         }
