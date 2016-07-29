@@ -18,7 +18,6 @@ const AliasView = ({alias, children}) => {
     <TriptychWrapContent>
       <TriptychContent header={{
         title: (alias.node && alias.node.title) || (alias.user && alias.user.name),
-        isCenter: true,
         button: alias.node && <NodeEditButton />
       }}>
 

@@ -9,7 +9,7 @@
   z-index: var(--AppHeader-zIndex);
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
   flex-shrink: 0;
-  
+
   @descendent container {
     display: flex;
     padding-left: 24px;
@@ -40,10 +40,7 @@
       flex: 1;
       line-height: 2rem;
       font-size: 1.5rem;
-
-      @modifier center {
-        text-align: center;
-      }
+      text-align: center;
     }
   }
 
