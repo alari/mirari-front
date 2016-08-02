@@ -17,7 +17,7 @@ const NoteView = ({ state: { isEditing = false }, setState, node }) =>
       {node.pinnedToNodes &&
         <div>
           {map(p =>
-            <Link key={p.id} to={`/my/node/${p.id}`} >
+            <Link className="Link Link--secondary" key={p.id} to={`/my/node/${p.id}`} >
               {p.title}
             </Link>, node.pinnedToNodes)
           }

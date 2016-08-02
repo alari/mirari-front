@@ -272,3 +272,15 @@ a {
     height: auto !important;
   }
 }
+
+@component Link {
+  @modifier secondary {
+    &:hover {
+      color: gray;
+    }
+
+    &:visited {
+      color: gray;
+    }
+  }
+}

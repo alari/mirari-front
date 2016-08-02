@@ -37,6 +37,9 @@
     align-items: center;
     border-bottom: 2px solid #e7e7e7;
   }
+  @descendent controlsLink {
+    color: gray;
+  }
   @descendent controlsDivider {
     flex: 1
   }
