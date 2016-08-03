@@ -1,4 +1,4 @@
-import createActionRequestTypes from 'commons/utils/createActionRequestTypes'
+import createActionRequestTypes from 'commons/utils/createActionRequestTypes';
 
 export const NODES_LIST = createActionRequestTypes('NODES_LIST')
 export const NODES_GET = createActionRequestTypes('NODES_GET')
@@ -13,6 +13,8 @@ export const NODE_PIN = createActionRequestTypes("NODE_PIN")
 export const NODE_UNPIN = createActionRequestTypes("NODE_UNPIN")
 
 export const NODE_MOVE_INSIDE_SERIES = createActionRequestTypes("NODE_MOVE_INSIDE_SERIES")
+
+export const NODE_MOVE_TO_DRAFTS = createActionRequestTypes("NODE_MOVE_TO_DRAFTS")
 
 export const NODE_ENTER = "NODE_ENTER"
 export const NODE_SET_CURRENT = "NODE_SET_CURRENT"

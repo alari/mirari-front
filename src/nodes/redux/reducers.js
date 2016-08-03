@@ -1,5 +1,5 @@
-import {concat, map, filter, groupBy, find, sortBy, clone, prepend} from "ramda";
-import {createReducer, update} from "commons/utils";
+import { concat, map, filter, groupBy, find, sortBy, clone, prepend } from 'ramda';
+import { createReducer, update } from 'commons/utils';
 import {
   NODES_LIST,
   NODES_GET,
@@ -11,8 +11,9 @@ import {
   NODE_PIN,
   NODE_UNPIN,
   NODE_SET_CURRENT,
-  NODE_MOVE_INSIDE_SERIES
-} from "./constants";
+  NODE_MOVE_INSIDE_SERIES,
+  NODE_MOVE_TO_DRAFTS
+} from './constants';
 
 const prepareComments = (list) => {
   const byReplyId = groupBy(c => c.replyTo || "root", list)
@@ -46,18 +47,18 @@ const addCommentReducer = (state, action) => (state.node && state.node.comments 
 
 export default createReducer({}, {
   [NODES_LIST.SUCCESS]: (state, action) => ({
-        ...state,
-        [action.key]: action.append ? {
-          ...action.result.body,
-          values: concat(state.list.values || [], action.result.body.values)
-        } : action.result.body
-      }),
+    ...state,
+    [action.key]: action.append ? {
+      ...action.result.body,
+      values: concat(state.list.values || [], action.result.body.values)
+    } : action.result.body
+  }),
 
   [NODES_GET.REQUEST]: (state, action) => ({
     ...state,
     node: null,
     comments: null,
-    pinned:null
+    pinned: null
   }),
 
   [NODES_GET.SUCCESS]: (state, action) => ({
@@ -67,9 +68,9 @@ export default createReducer({}, {
   }),
 
   [NODES_SAVE.SUCCESS]: (state, action) => {
-    if(action.transient) return state
+    if (action.transient) return state
     else {
-      console.log("action is "+action)
+      console.log("action is " + action)
       const node = action.result.body
       const updated = clone(state)
       if (action.params.pinToNodeId && action.params.pinToNodeId === state.node.id) {
@@ -139,6 +140,11 @@ export default createReducer({}, {
         nodes: map(i => find(n => n.id === i, state.node.series.nodes), action.result.body.nodeIds)
       }
     }
+  } : state,
+
+  [NODE_MOVE_TO_DRAFTS.SUCCESS]: (state, action) => (action.routeParams.nodeId === state.node.id) ? {
+    ...state,
+    node: action.result.body
   } : state,
 
   [NODE_SET_CURRENT]: (state, action) => ({

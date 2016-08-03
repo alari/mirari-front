@@ -11,6 +11,7 @@ import NodeForm from 'nodes/components/NodeForm';
 import { TriptychContent, TriptychWrapContent } from 'triptych';
 import Button from 'commons/button';
 import AddIcon from 'material-ui/svg-icons/content/add';
+import nodeUrl from 'nodes/utils/nodeUrl';
 
 const mapStateToProps = (state) => ({
   nodes: state.nodes.list,
@@ -53,7 +54,7 @@ const NotesView = ({ nodes, setPage, nodeId, q, children, title }) => {
                 {map((n) =>
                   <Card key={n.id} isActive={n.id === nodeId}>
                     <CardItem>
-                      <Link to={`/my/notes/${n.id}`}>
+                      <Link to={nodeUrl(n)}>
                         {n.title || '***'}, {moment(n.lastUpdated).fromNow()}
                       </Link>
 
