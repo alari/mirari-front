@@ -1,24 +1,35 @@
-import React from 'react'
-import {TriptychContent,TriptychWrapContent,TriptychRight} from "triptych"
-import {connect} from "react-redux";
-import {Link} from "react-router";
-import {map, keys, propOr, merge, equals, pickBy, isEmpty} from "ramda";
-import {TextField, RaisedButton, SelectField, MenuItem, Toggle, LinearProgress, FlatButton, AutoComplete} from "material-ui";
-import {saveNode, deleteNode, getNodesList} from "nodes/redux/actions";
-import {decorateWithState} from "commons/utils";
-import {NODES_SAVE} from "nodes/redux/constants";
-import ActionDelete from "material-ui/svg-icons/action/delete"
-import {push} from "react-router-redux"
-import kinds from "nodes/utils/kinds"
-import Button from "commons/button";
-import NavigationArrowForward from "material-ui/svg-icons/navigation/arrow-forward"
-import NodeContext from "./NodeContext"
+import React from 'react';
+import { TriptychContent, TriptychWrapContent, TriptychRight } from 'triptych';
+import { connect } from 'react-redux';
+import { Link } from 'react-router';
+import { map, keys, propOr, merge, equals, pickBy, isEmpty } from 'ramda';
+import {
+  TextField,
+  RaisedButton,
+  SelectField,
+  MenuItem,
+  Toggle,
+  LinearProgress,
+  FlatButton,
+  AutoComplete
+} from 'material-ui';
+import { saveNode, deleteNode, getNodesList } from 'nodes/redux/actions';
+import { decorateWithState } from 'commons/utils';
+import { NODES_SAVE } from 'nodes/redux/constants';
+import ActionDelete from 'material-ui/svg-icons/action/delete';
+import { push } from 'react-router-redux';
+import kinds from 'nodes/utils/kinds';
+import Button from 'commons/button';
+import NavigationArrowForward from 'material-ui/svg-icons/navigation/arrow-forward';
+import NodeContext from './NodeContext';
+import { FileInput } from 'commons/files/components';
+
 
 const mapStateToProps = (state) => ({
   node: (state.nodes.node && state.nodes.node.id === state.resolve.params.nodeId) ? state.nodes.node : {
     title: "",
     description: "",
-    text: {version: 0, content: ""},
+    text: { version: 0, content: "" },
     layer: "Draft",
     kind: "Post"
   },
@@ -35,14 +46,14 @@ const mapDispatchToProps = {
     })
   },
   createSeries: (title) => {
-    return saveNode({}, {title, kind:'Series', layer:'Draft'}, true)
+    return saveNode({}, { title, kind: 'Series', layer: 'Draft' }, true)
   },
   deleteNode: (id) => deleteNode(id),
   redirect: (url) => push(url),
   getNodesList: (params) => getNodesList(params)
 }
 
-const NodeChange = ({node, seriesList, createSeries, getNodesList, state: {contextOpened = true, inProgress = false, deleting = false, error, ...state}, setState, clearState, stateFieldChanged, deleteNode, saveNode, redirect, pathname, query}) => {
+const NodeChange = ({ node, seriesList, createSeries, getNodesList, state: { contextOpened = true, inProgress = false, deleting = false, error, ...state }, setState, clearState, stateFieldChanged, deleteNode, saveNode, redirect, pathname, query }) => {
 
   const actualNode = merge(node, state)
 
@@ -54,8 +65,8 @@ const NodeChange = ({node, seriesList, createSeries, getNodesList, state: {conte
       inProgress: true,
       deleting: false
     })
-    saveNode(actualNode, state).then(({error = false}) => {
-      if(error) {
+    saveNode(actualNode, state).then(({ error = false }) => {
+      if (error) {
         setState({
           error: error.body,
           inProgress: false
@@ -84,7 +95,7 @@ const NodeChange = ({node, seriesList, createSeries, getNodesList, state: {conte
       deleting: true
     })
     deleteNode(node.id).then(() => {
-      redirect({pathname: pathname.substring(0, pathname.indexOf(node.id)-1), query})
+      redirect({ pathname: pathname.substring(0, pathname.indexOf(node.id) - 1), query })
     })
   }
 
@@ -97,11 +108,11 @@ const NodeChange = ({node, seriesList, createSeries, getNodesList, state: {conte
   }
 
   const seriesOnRequest = (e, i) => {
-    if(i >= 0) {
-      setState({inSeries: seriesList[i], seriesId: seriesList[i].id})
+    if (i >= 0) {
+      setState({ inSeries: seriesList[i], seriesId: seriesList[i].id })
     } else {
-      createSeries(e).then(({error = false, result}) => {
-        if(!error) {
+      createSeries(e).then(({ error = false, result }) => {
+        if (!error) {
           setState({
             inSeries: result.body,
             seriesId: result.body.id
@@ -174,7 +185,7 @@ const NodeChange = ({node, seriesList, createSeries, getNodesList, state: {conte
               }}
           errorText={ pickError("kind") }
         >
-          { map((k) => <MenuItem key={k} primaryText={kinds[k]} value={k}/>, keys(kinds)) }
+          { map((k) => <MenuItem key={k} primaryText={kinds[k]} value={k} />, keys(kinds)) }
         </SelectField>}
 
         { actualNode.layer !== "Note" && <Toggle
@@ -196,13 +207,19 @@ const NodeChange = ({node, seriesList, createSeries, getNodesList, state: {conte
           errorText={ pickError("alias") }
         />}
 
-        { inProgress ? <LinearProgress /> :
-          <RaisedButton label="Сохранить" primary={true} disabled={isNotChanged} onClick={action}/> }
+        <FileInput label="Загрузить обложку" onUpload={(i) => setState({ imageId: i.id })} />
 
-        { actualNode.id && !inProgress && <FlatButton icon={<ActionDelete/>} label={deleting && "Удалить"} secondary={true} onClick={ () => deleting ? actionDelete() : setState({deleting: true}) } /> }
+        { actualNode.imageId && <img src={`/api/images/${actualNode.imageId}`}/> }
+
+        { inProgress ? <LinearProgress /> :
+          <RaisedButton label="Сохранить" primary={true} disabled={isNotChanged} onClick={action} /> }
+
+        { actualNode.id && !inProgress &&
+        <FlatButton icon={<ActionDelete/>} label={deleting && "Удалить"} secondary={true}
+                    onClick={ () => deleting ? actionDelete() : setState({deleting: true}) } /> }
 
         { actualNode.id && actualNode.layer !== 'Note' &&
-        <FlatButton label="На страницу" onClick={() => redirect("/nodes/"+actualNode.id)} secondary={true}/>}
+        <FlatButton label="На страницу" onClick={() => redirect("/nodes/"+actualNode.id)} secondary={true} />}
 
       </div>
 
