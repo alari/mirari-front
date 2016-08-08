@@ -52,6 +52,7 @@
 
   @descendent coverContainer {
     margin-bottom: 1.6rem;
+    text-align: center;
 
     @media (--m) {
       margin-left: -5rem;
@@ -75,5 +76,40 @@
     .Article-titleLink:visited + & {
       display: inline-block;
     }
+  }
+}
+
+
+@component Cover {
+  position: relative;
+  margin-bottom: 1.5rem;
+
+  &:before {
+    display: block;
+    content: "";
+    width: 100%;
+    padding-top: 30%;
+  }
+
+  @descendent content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: auto !important;
+    height: auto !important;
+    overflow: hidden;
+  }
+
+  @descendent img {
+    position: absolute;
+    display: block;
+    max-width: 100%;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
   }
 }

@@ -36,6 +36,14 @@ export default ({node}) => {
         <h2 className="Article-title">
           <Link to={nodeUrl(node)} className="Article-titleLink" itemProp="url">{ node.title }</Link>
         </h2>
+        {node.imageId &&
+          <div className="Cover">
+            <div className="Cover-content">
+              <img className="Cover-img" src={`/api/images/${node.imageId}`} role="presentation" />
+            </div>
+          </div>
+        }
+
         { node.description && <p itemProp="description">{ node.description }</p> }
       </div>
 
