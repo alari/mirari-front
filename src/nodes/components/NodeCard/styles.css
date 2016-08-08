@@ -88,7 +88,11 @@
     display: block;
     content: "";
     width: 100%;
-    padding-top: 30%;
+    padding-top: 56.6%;
+
+    @media (--m) {
+      padding-top: 30%;
+    }
   }
 
   @descendent content {
