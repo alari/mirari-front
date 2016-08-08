@@ -2,11 +2,21 @@
   padding: 24px 0;
   border-bottom: 1px solid #e7e7e7;
 
-  @descendent main {    
+  @descendent main {
     margin-bottom: 12px;
   }
 
   @descendent controls {
 
+  }
+}
+
+@component Form {
+  @descendent item {
+    margin-bottom: 1.6rem;
+  }
+
+  @descendent cover {
+    max-width: 100%;
   }
 }

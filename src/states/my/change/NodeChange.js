@@ -1,3 +1,4 @@
+import './style.css';
 import React from 'react';
 import { TriptychContent, TriptychWrapContent, TriptychRight } from 'triptych';
 import { connect } from 'react-redux';
@@ -131,7 +132,7 @@ const NodeChange = ({ node, seriesList, createSeries, getNodesList, state: { con
     button: <Button color="default" icon={<NavigationArrowForward/>} mobile size="m" title="Контекст" onClick={toggleContext} />
   }}>
 
-    <form className="Content" onSubmit={action}>
+    <form className="Content Form" onSubmit={action}>
       <TextField
         hintText="Заголовок"
         floatingLabelText="Заголовок"
@@ -140,6 +141,20 @@ const NodeChange = ({ node, seriesList, createSeries, getNodesList, state: { con
         value={ actualNode.title }
         errorText={ pickError("title") }
       />
+
+      <div className="Form-item">
+        <FileInput label="Загрузить обложку" onUpload={(i) => setState({ imageId: i.id })} />
+      </div>
+
+      {actualNode.imageId &&
+        <div className="Form-item">
+          <img
+            className="Form-cover"
+            src={`/api/images/${actualNode.imageId}`}
+            role="presentation"
+          />
+        </div>
+      }
 
       <TextField
         hintText="Основной текст"
@@ -206,10 +221,6 @@ const NodeChange = ({ node, seriesList, createSeries, getNodesList, state: { con
           value={ actualNode.alias || "" }
           errorText={ pickError("alias") }
         />}
-
-        <FileInput label="Загрузить обложку" onUpload={(i) => setState({ imageId: i.id })} />
-
-        { actualNode.imageId && <img src={`/api/images/${actualNode.imageId}`}/> }
 
         { inProgress ? <LinearProgress /> :
           <RaisedButton label="Сохранить" primary={true} disabled={isNotChanged} onClick={action} /> }
