@@ -38,6 +38,9 @@ const NodeView = ({ node }) => {
   return node && (
       <section className="Content Article" itemScope itemType="http://schema.org/Article">
         <article className="Article-body" itemProp="articleBody">
+          <div className="Article-coverContainer">
+            <img className="Article-cover" src={`/api/images/${node.imageId}`} />
+          </div>
           <NodeText node={node} />
         </article>
 

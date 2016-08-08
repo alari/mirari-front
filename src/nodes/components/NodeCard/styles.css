@@ -1,3 +1,6 @@
+@import "commons/styles/variables.css";
+@import "commons/styles/media-queries.css";
+
 @component Article {
   display: block;
   margin-bottom: 72px;
@@ -45,6 +48,19 @@
     &:hover {
       color: #81C784;
     }
+  }
+
+  @descendent coverContainer {
+    margin-bottom: 1.6rem;
+
+    @media (--m) {
+      margin-left: -5rem;
+      margin-right: -5rem;
+    }
+  }
+
+  @descendent cover {
+    max-width: 100%;
   }
 
   @descendent readLabel {
