@@ -97,7 +97,7 @@ const NodeView = ({ node }) => {
             <ArticleFooterItem content={(node && node.views) + ' просмотров'} />
           </div>
 
-          <div className="ShareButtons">
+          { node.layer === 'Pub' && <div className="ShareButtons">
             <div className="ShareButton">
               <LinkedinShareButton
                 url={shareUrl} title={shareTitle} description={shareDescription}
@@ -137,7 +137,7 @@ const NodeView = ({ node }) => {
               </TwitterShareButton>
             </div>
 
-          </div>
+          </div>}
         </div>
 
         {(nextNode || prevNode) &&
