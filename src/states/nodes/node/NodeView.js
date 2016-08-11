@@ -53,7 +53,7 @@ const NodeView = ({ node }) => {
   const nextNode = (currentIndex >= 0 && find(n => !!n.id, drop(currentIndex + 1, seriesSiblings)));
   const prevNode = (currentIndex >= 0 && find(n => !!n.id, reverse(take(currentIndex, seriesSiblings))));
 
-  const shareUrl = location && (location.protocol + '//' + location.hostname) + nodeUrl(node);
+  const shareUrl = (typeof location !== 'undefined' && (location.protocol + '//' + location.hostname) || "https://mirari.ru") + nodeUrl(node);
   const shareTitle = node.title;
   const shareDescription = node.description
 
