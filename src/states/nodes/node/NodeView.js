@@ -15,11 +15,33 @@ import Comments from 'nodes/components/Comments';
 import nodeUrl from 'nodes/utils/nodeUrl';
 import { findIndex, find, drop, take, reverse } from 'ramda';
 
+import { ShareButtons, ShareCounts, generateShareIcon } from 'react-share';
+
 const mapStateToProps = (state) => ({
   node: state.nodes.node,
 });
 
 const mapDispatchToProps = {};
+
+const {
+  FacebookShareButton,
+  TwitterShareButton,
+  VKShareButton,
+  GooglePlusShareButton,
+  LinkedinShareButton,
+} = ShareButtons;
+
+const {
+  FacebookShareCount,
+  GooglePlusShareCount,
+  LinkedinShareCount,
+} = ShareCounts;
+
+const FacebookIcon = generateShareIcon('facebook');
+const GooglePlusIcon = generateShareIcon('google');
+const LinkedinIcon = generateShareIcon('linkedin');
+const TwitterIcon = generateShareIcon('twitter');
+const VKIcon = generateShareIcon('vk');
 
 const ArticleFooterItem = ({ content, itemProp }) => {
   return (
@@ -34,6 +56,9 @@ const NodeView = ({ node }) => {
   const currentIndex = findIndex(n => n.id === node.id, seriesSiblings);
   const nextNode = (currentIndex >= 0 && find(n => !!n.id, drop(currentIndex + 1, seriesSiblings)));
   const prevNode = (currentIndex >= 0 && find(n => !!n.id, reverse(take(currentIndex, seriesSiblings))));
+
+  const shareUrl = nodeUrl(node);
+  const shareTitle = node.title;
 
   return node && (
       <section className="Content Article" itemScope itemType="http://schema.org/Article">
@@ -54,27 +79,74 @@ const NodeView = ({ node }) => {
 
         <div className="ArticleFooter">
           <div className="ArticleFooter-container">
-
-          <ArticleFooterItem content={<UserLink user={node.user} />} itemProp="author" />
-          <ArticleFooterItem content={kinds[node.kind]} />
-          {
-            node.inSeries &&
-            <ArticleFooterItem
-              content={<Link to={nodeUrl(node.inSeries)}>{node.inSeries.title}</Link>}
-            />
-          }
-          {node.published &&
-            <ArticleFooterItem content={moment(node.published).fromNow()} />
-          }
-          <ArticleFooterItem
-            content={
-              <NodeAction node={node}>
-                <Link to={'/my/node/' + node.id}>Редактировать</Link>
-              </NodeAction>
+            <ArticleFooterItem content={<UserLink user={node.user} />} itemProp="author" />
+            <ArticleFooterItem content={kinds[node.kind]} />
+            {
+              node.inSeries &&
+              <ArticleFooterItem
+                content={<Link to={nodeUrl(node.inSeries)}>{node.inSeries.title}</Link>}
+              />
             }
-          />
-          <ArticleFooterItem content={(node && node.views) + ' просмотров'} />
-        </div>
+            {node.published &&
+              <ArticleFooterItem content={moment(node.published).fromNow()} />
+            }
+            <ArticleFooterItem
+              content={
+                <NodeAction node={node}>
+                  <Link to={'/my/node/' + node.id}>Редактировать</Link>
+                </NodeAction>
+              }
+            />
+            <ArticleFooterItem content={(node && node.views) + ' просмотров'} />
+          </div>
+
+          <div className="ShareButtons">
+            <div className="ShareButton">
+              <LinkedinShareButton
+                url={shareUrl}
+                title={shareTitle}
+                windowWidth={750}
+                windowHeight={600}
+              >
+                <LinkedinIcon size={32} rect />
+              </LinkedinShareButton>
+              <LinkedinShareCount url={shareUrl}>
+                {count => count}
+              </LinkedinShareCount>
+            </div>
+
+            <div className="ShareButton">
+              <FacebookShareButton url={shareUrl} title={shareTitle}>
+                <FacebookIcon size={32} rect />
+              </FacebookShareButton>
+
+              <FacebookShareCount url={shareUrl}>
+                {count => count}
+              </FacebookShareCount>
+            </div>
+
+            <div className="ShareButton">
+              <GooglePlusShareButton url={shareUrl}>
+                <GooglePlusIcon size={32} rect />
+              </GooglePlusShareButton>
+              <GooglePlusShareCount url={shareUrl}>
+                {count => count}
+              </GooglePlusShareCount>
+            </div>
+
+            <div className="ShareButton">
+              <VKShareButton url={shareUrl} windowWidth={660} windowHeight={460}>
+                <VKIcon size={32} rect />
+              </VKShareButton>
+            </div>
+
+            <div className="ShareButton">
+              <TwitterShareButton url={shareUrl} title={shareTitle}>
+                <TwitterIcon size={32} rect />
+              </TwitterShareButton>
+            </div>
+
+          </div>
         </div>
 
         {(nextNode || prevNode) &&

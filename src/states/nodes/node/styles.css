@@ -46,3 +46,16 @@
     display: block;
   }
 }
+
+@component ShareButtons {
+  display: flex;
+  padding: 16px 24px;
+}
+@component ShareButton {
+  margin-left: 10px;
+  text-align: center;
+
+  &:first-child {
+    margin-left: 0;
+  }
+}
