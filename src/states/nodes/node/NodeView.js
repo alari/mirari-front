@@ -6,15 +6,11 @@ import moment from 'moment';
 import NodeAction from 'nodes/components/NodeAction';
 import NodeText from 'nodes/components/NodeText';
 import NodeSeries from 'nodes/components/NodeSeries';
-
 import kinds from 'nodes/utils/kinds';
 import UserLink from 'users/components/UserLink';
-
 import Comments from 'nodes/components/Comments';
-
 import nodeUrl from 'nodes/utils/nodeUrl';
 import { findIndex, find, drop, take, reverse } from 'ramda';
-
 import { ShareButtons, ShareCounts, generateShareIcon } from 'react-share';
 
 const mapStateToProps = (state) => ({
@@ -51,26 +47,27 @@ const ArticleFooterItem = ({ content, itemProp }) => {
 
 const NodeView = ({ node }) => {
   const seriesSiblings = (
-    node.inSeries && node.inSeries.series && node.inSeries.series.nodes
-  ) || [];
+      node.inSeries && node.inSeries.series && node.inSeries.series.nodes
+    ) || [];
   const currentIndex = findIndex(n => n.id === node.id, seriesSiblings);
   const nextNode = (currentIndex >= 0 && find(n => !!n.id, drop(currentIndex + 1, seriesSiblings)));
   const prevNode = (currentIndex >= 0 && find(n => !!n.id, reverse(take(currentIndex, seriesSiblings))));
 
-  const shareUrl = nodeUrl(node);
+  const shareUrl = location && (location.protocol + '//' + location.hostname) + nodeUrl(node);
   const shareTitle = node.title;
+  const shareDescription = node.description
 
   return node && (
       <section className="Content Article" itemScope itemType="http://schema.org/Article">
         <article className="Article-body" itemProp="articleBody">
           {node.imageId &&
-            <div className="Article-coverContainer">
-              <img
-                className="Article-cover"
-                src={`/api/images/${node.imageId}`}
-                role="presentation"
-              />
-            </div>
+          <div className="Article-coverContainer">
+            <img
+              className="Article-cover"
+              src={`/api/images/${node.imageId}`}
+              role="presentation"
+            />
+          </div>
           }
           <NodeText node={node} />
         </article>
@@ -88,7 +85,7 @@ const NodeView = ({ node }) => {
               />
             }
             {node.published &&
-              <ArticleFooterItem content={moment(node.published).fromNow()} />
+            <ArticleFooterItem content={moment(node.published).fromNow()} />
             }
             <ArticleFooterItem
               content={
@@ -103,45 +100,39 @@ const NodeView = ({ node }) => {
           <div className="ShareButtons">
             <div className="ShareButton">
               <LinkedinShareButton
-                url={shareUrl}
-                title={shareTitle}
+                url={shareUrl} title={shareTitle} description={shareDescription}
                 windowWidth={750}
                 windowHeight={600}
               >
                 <LinkedinIcon size={32} rect />
               </LinkedinShareButton>
-              <LinkedinShareCount url={shareUrl}>
-                {count => count}
-              </LinkedinShareCount>
+              <LinkedinShareCount url={shareUrl} />
             </div>
 
             <div className="ShareButton">
-              <FacebookShareButton url={shareUrl} title={shareTitle}>
+              <FacebookShareButton url={shareUrl} title={shareTitle} description={shareDescription}>
                 <FacebookIcon size={32} rect />
               </FacebookShareButton>
 
-              <FacebookShareCount url={shareUrl}>
-                {count => count}
-              </FacebookShareCount>
+              <FacebookShareCount url={shareUrl} />
             </div>
 
             <div className="ShareButton">
-              <GooglePlusShareButton url={shareUrl}>
+              <GooglePlusShareButton url={shareUrl} title={shareTitle} description={shareDescription}>
                 <GooglePlusIcon size={32} rect />
               </GooglePlusShareButton>
-              <GooglePlusShareCount url={shareUrl}>
-                {count => count}
-              </GooglePlusShareCount>
+              <GooglePlusShareCount url={shareUrl} />
             </div>
 
             <div className="ShareButton">
-              <VKShareButton url={shareUrl} windowWidth={660} windowHeight={460}>
+              <VKShareButton windowWidth={660} windowHeight={460} url={shareUrl} title={shareTitle}
+                             description={shareDescription}>
                 <VKIcon size={32} rect />
               </VKShareButton>
             </div>
 
             <div className="ShareButton">
-              <TwitterShareButton url={shareUrl} title={shareTitle}>
+              <TwitterShareButton url={shareUrl} title={shareTitle} description={shareDescription}>
                 <TwitterIcon size={32} rect />
               </TwitterShareButton>
             </div>
@@ -150,31 +141,31 @@ const NodeView = ({ node }) => {
         </div>
 
         {(nextNode || prevNode) &&
-          <div className="ArticlesNavigation">
-            {prevNode &&
-              <Link
-                className="ArticlesNavigation-link"
-                to={nodeUrl(prevNode)}
-                title={prevNode.title}
-              >
-                &larr; Предыдущая статья
-              </Link>
-            }
-            {nextNode &&
-              <Link
-                className="ArticlesNavigation-link"
-                to={nodeUrl(nextNode)}
-                title={nextNode.title}
-              >
-                Следующая статья &rarr;
-              </Link>
-            }
-          </div>
+        <div className="ArticlesNavigation">
+          {prevNode &&
+          <Link
+            className="ArticlesNavigation-link"
+            to={nodeUrl(prevNode)}
+            title={prevNode.title}
+          >
+            &larr; Предыдущая статья
+          </Link>
+          }
+          {nextNode &&
+          <Link
+            className="ArticlesNavigation-link"
+            to={nodeUrl(nextNode)}
+            title={nextNode.title}
+          >
+            Следующая статья &rarr;
+          </Link>
+          }
+        </div>
         }
 
         <Comments />
       </section>
-  );
+    );
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NodeView);
