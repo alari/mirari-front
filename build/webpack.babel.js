@@ -64,8 +64,8 @@ export default [{
       vendor: [
         'react',
         'react-dom',
-        'react-router',  
-        'material-ui',  
+        'react-router',
+        'material-ui',
         'redux',
         'ramda'
       ],
@@ -111,6 +111,10 @@ export default [{
       new webpack.optimize.CommonsChunkPlugin(/* chunkName= */"vendor", /* filename= */"vendor.bundle.js"),
       new ExtractTextPlugin("[name].css"),
       new CopyWebpackPlugin([
+        {
+          from: 'src/assets/googlee3dbde9fef1e2828.html',
+          to: 'googlee3dbde9fef1e2828.html'
+        },
         {
           from: 'src/assets',
           to: 'assets'
