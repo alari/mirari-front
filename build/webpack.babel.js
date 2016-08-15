@@ -116,6 +116,10 @@ export default [{
           to: 'googlee3dbde9fef1e2828.html'
         },
         {
+          from: 'src/assets/robots.txt',
+          to: 'robots.txt'
+        },
+        {
           from: 'src/assets',
           to: 'assets'
         }
