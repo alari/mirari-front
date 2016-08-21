@@ -55,11 +55,12 @@ const NodeView = ({ node }) => {
 
   const shareUrl = (typeof location !== 'undefined' && (location.protocol + '//' + location.hostname) || "https://mirari.ru") + nodeUrl(node);
   const shareTitle = node.title;
-  const shareDescription = node.description
+  const shareDescription = node.description;
 
   return node && (
       <section className="Content Article" itemScope itemType="http://schema.org/Article">
         <article className="Article-body" itemProp="articleBody">
+          <h1 className="Article-title" itemProp="name">{node.title}</h1>
           {node.imageId &&
           <div className="Article-coverContainer">
             <img

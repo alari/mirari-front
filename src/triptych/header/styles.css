@@ -9,6 +9,19 @@
   z-index: var(--AppHeader-zIndex);
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
   flex-shrink: 0;
+  will-change: transform;
+  transition: transform 0.2s ease-in-out;
+
+  .Triptych.is-scrollDown & {
+    @media (--m) {
+      transform: translateY(-100%);
+    }
+  }
+  .Triptych.is-scrollDown & {
+    @media (--m) {
+      transform: translateY(0);
+    }
+  }
 
   @descendent container {
     display: flex;
@@ -41,6 +54,18 @@
       line-height: 2rem;
       font-size: 1.5rem;
       text-align: center;
+      transition: opacity 0.2s ease-in-out;
+
+      .Triptych.is-scrollDown & {
+        @media (--m) {
+          opacity: 1;
+        }
+      }
+      .Triptych.is-scrollUp & {
+        @media (--m) {
+          opacity: 0;
+        }
+      }
     }
   }
 
