@@ -1,3 +1,4 @@
+import './styles.css';
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
@@ -31,7 +32,11 @@ const mapDispatchToProps = {
     saveProject(data, id, _expand)
 };
 
-const CreateProjectView = ({ state: { inProgress = false, error, title = '' }, setState, clearState, stateFieldChanged, saveProject }) => {
+const CreateProjectView = ({
+  state: {
+    inProgress = false, error, title = '',
+  },
+  setState, clearState, stateFieldChanged, saveProject }) => {
 
   const pickError = pickErrors(error)
 
@@ -54,20 +59,23 @@ const CreateProjectView = ({ state: { inProgress = false, error, title = '' }, s
     })
   }
 
-  return (<div>
-    <h4>Создать проект</h4>
-    <TextField
-      hintText="Название"
-      floatingLabelText="Название"
-      fullWidth={true}
-      onChange={stateFieldChanged("title")}
-      value={ title }
-      errorText={ pickError("title") }
-    />
-    { inProgress ? <LinearProgress /> :
-      <RaisedButton label="Сохранить" primary={true} disabled={!title} onClick={action} /> }
-  </div>)
-}
+  return (
+    <div className="CreateProject">
+      <h3>Создать проект</h3>
+      <TextField
+        hintText="Название"
+        floatingLabelText="Название"
+        fullWidth={true}
+        onChange={stateFieldChanged('title')}
+        value={title}
+        errorText={pickError('title')}
+      />
+      {inProgress ? <LinearProgress /> :
+        <RaisedButton label="Сохранить" primary={true} disabled={!title} onClick={action} />
+      }
+  </div>
+  );
+};
 
 const CreateProject = decorateWithState(CreateProjectView)
 
@@ -77,16 +85,21 @@ const ProjectsView = ({ projects: { values, total, limit, offset }, userId, setP
   const loadMore = () =>
     setPage({ userId, append: true, limit, offset: offset + limit });
 
-  return (<div>
+  return (
+    <div className="Content">
 
       <CreateProject saveProject={saveProject} />
 
-      { map(p => <div key={p.id}>
+      {map(p => <div key={p.id}>
         {p.imageId && <div className="ProfileForm-avatarContainer">
-          <img className="ProfileForm-avatar" src={"/api/images/"+p.imageId} />
-        </div>}
-        <Link to={'/my/projects/'+p.id}>{p.title}</Link>
-        <hr/>
+          <img className="ProfileForm-avatar" src={'/api/images/'+p.imageId} role="presentation" />
+        </div>
+      }
+        <Card>
+          <CardItem>
+            <Link to={'/my/projects/'+p.id}>{p.title}</Link>
+          </CardItem>
+        </Card>
       </div>, values)}
 
       <LoadMore action={loadMore} haveMore={haveMore} />
