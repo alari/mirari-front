@@ -8,6 +8,7 @@ import NodeText from 'nodes/components/NodeText';
 import NodeSeries from 'nodes/components/NodeSeries';
 import kinds from 'nodes/utils/kinds';
 import UserLink from 'users/components/UserLink';
+import ProjectLink from 'projects/components/ProjectLink';
 import Comments from 'nodes/components/Comments';
 import nodeUrl from 'nodes/utils/nodeUrl';
 import { findIndex, find, drop, take, reverse } from 'ramda';
@@ -76,7 +77,8 @@ const NodeView = ({ node }) => {
 
         <div className="ArticleFooter">
           <div className="ArticleFooter-container">
-            <ArticleFooterItem content={<UserLink user={node.user} />} itemProp="author" />
+            {node.user && <ArticleFooterItem content={<UserLink user={node.user} />} itemProp="author" />}
+            {node.project && <ArticleFooterItem content={<ProjectLink project={node.project} />} itemProp="author" />}
             <ArticleFooterItem content={kinds[node.kind]} />
             {
               node.inSeries &&
