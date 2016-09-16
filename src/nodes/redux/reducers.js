@@ -1,5 +1,5 @@
 import { concat, map, filter, groupBy, find, sortBy, clone, prepend } from 'ramda';
-import { createReducer, update } from 'commons/utils';
+import { createReducer } from 'commons/utils';
 import {
   NODES_LIST,
   NODES_GET,
@@ -61,16 +61,16 @@ export default createReducer({}, {
     pinned: null
   }),
 
-  [NODES_GET.SUCCESS]: (state, action) => ({
-    ...state,
-    node: action.result.body,
-    comments: action.result.body.comments && prepareComments(action.result.body.comments.values)
-  }),
+  [NODES_GET.SUCCESS]: (state, action) => {
+    return ({
+      ...state,
+      node: action.result.body,
+      comments: action.result.body.comments && action.result.body.comments.values && prepareComments(action.result.body.comments.values)
+    })},
 
-  [NODES_SAVE.SUCCESS]: (state, action) => {
+      [NODES_SAVE.SUCCESS]: (state, action) => {
     if (action.transient) return state
     else {
-      console.log("action is " + action)
       const node = action.result.body
       const updated = clone(state)
       if (action.params.pinToNodeId && action.params.pinToNodeId === state.node.id) {

@@ -18,7 +18,7 @@ import {
   AutoComplete
 } from 'material-ui';
 import pickErrors from 'commons/utils/pickError';
-
+import ProjectImage from 'projects/components/ProjectImage';
 
 const mapStateToProps = (state) => ({
   projects: state.projects.list,
@@ -36,7 +36,8 @@ const CreateProjectView = ({
   state: {
     inProgress = false, error, title = '',
   },
-  setState, clearState, stateFieldChanged, saveProject }) => {
+  setState, clearState, stateFieldChanged, saveProject
+}) => {
 
   const pickError = pickErrors(error)
 
@@ -45,7 +46,7 @@ const CreateProjectView = ({
       error: null,
       inProgress: true
     })
-    saveProject({ data: { title } }).then(({ error=false }) => {
+    saveProject({ data: { title } }).then(({ error = false }) => {
       if (error) {
         setState({
           error: error.body,
@@ -73,7 +74,7 @@ const CreateProjectView = ({
       {inProgress ? <LinearProgress /> :
         <RaisedButton label="Сохранить" primary={true} disabled={!title} onClick={action} />
       }
-  </div>
+    </div>
   );
 };
 
@@ -91,13 +92,10 @@ const ProjectsView = ({ projects: { values, total, limit, offset }, userId, setP
       <CreateProject saveProject={saveProject} />
 
       {map(p => <div key={p.id}>
-        {p.imageId && <div className="ProfileForm-avatarContainer">
-          <img className="ProfileForm-avatar" src={'/api/images/'+p.imageId} role="presentation" />
-        </div>
-      }
+        <ProjectImage project={p} />
         <Card>
           <CardItem>
-            <Link to={'/my/projects/'+p.id}>{p.title}</Link>
+            <Link to={'/my/projects/' + p.id}>{p.title}</Link>
           </CardItem>
         </Card>
       </div>, values)}

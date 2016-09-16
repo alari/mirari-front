@@ -15,13 +15,14 @@ import {
 import { createApiAction } from 'commons/api';
 import { singleNodeExpand, listNodesExpand } from '../utils/nodeExpand';
 
-export const getNodesList = ({ key = 'list', offset, limit = 13, userId, layer, q, pinnedToId, _expand = listNodesExpand, append = false }) => createApiAction({
+export const getNodesList = ({ key = 'list', offset, limit = 13, userId, projectId, layer, q, pinnedToId, _expand = listNodesExpand, append = false }) => createApiAction({
     url: '/nodes',
     method: 'GET',
     queryParams: {
       offset,
       limit,
       userId,
+      projectId,
       layer,
       q,
       pinnedToId,
