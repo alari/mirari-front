@@ -182,7 +182,7 @@ const NodeChange = ({ node, projects, seriesList, createSeries, getNodesList, st
         errorText={ pickError("description") }
       /> }
 
-      <AutoComplete
+      <div><AutoComplete
         autoWidth={true}
         hintText="Сериал/Коллекция"
         floatingLabelText="Сериал/Коллекция"
@@ -192,7 +192,7 @@ const NodeChange = ({ node, projects, seriesList, createSeries, getNodesList, st
         openOnFocus={true}
         onNewRequest={seriesOnRequest}
         filter={seriesFilter}
-      />
+      /></div>
 
       { projects && projects.values && <SelectField
         autoWidth={true}
@@ -201,7 +201,7 @@ const NodeChange = ({ node, projects, seriesList, createSeries, getNodesList, st
           setState({
             projectId: value,
             project: value && find(p => p.id === value, projects.values),
-            seriesId: null,
+            seriesId: '',
             inSeries: null
           })
           getNodesList({
@@ -212,7 +212,7 @@ const NodeChange = ({ node, projects, seriesList, createSeries, getNodesList, st
         }}
         errorText={ pickError("projectId") }
       >
-        <MenuItem primaryText={<i>Нет</i>} value={null}/>
+        <MenuItem primaryText={<i>Нет</i>} value={''}/>
         { map((p) => <MenuItem key={p.id} primaryText={p.title} value={p.id} />, projects.values) }
       </SelectField>}
 
