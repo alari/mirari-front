@@ -1,4 +1,4 @@
-FROM node:6.2
+FROM node:6.6
 
 ENV NODE_APP_PREFIX MR
 ENV MR_ENV production
