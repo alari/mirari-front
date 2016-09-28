@@ -3,7 +3,7 @@ import React from 'react';
 import { TriptychContent, TriptychWrapContent, TriptychRight } from 'triptych';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { map, keys, propOr, merge, equals, pickBy, isEmpty } from 'ramda';
+import { map, keys, propOr, merge, equals, pickBy, isEmpty, find } from 'ramda';
 import {
   TextField,
   RaisedButton,
@@ -36,7 +36,8 @@ const mapStateToProps = (state) => ({
   },
   pathname: state.resolve.pathname,
   query: state.resolve.query,
-  seriesList: state.nodes.series && state.nodes.series.values || []
+  seriesList: state.nodes.series && state.nodes.series.values || [],
+  projects: state.projects.list
 })
 
 const mapDispatchToProps = {
@@ -46,15 +47,15 @@ const mapDispatchToProps = {
       kind: propOr(base.kind, "kind")(changed)
     })
   },
-  createSeries: (title) => {
-    return saveNode({}, { title, kind: 'Series', layer: 'Draft' }, true)
+  createSeries: (title, projectId) => {
+    return saveNode({}, { title, kind: 'Series', layer: 'Draft', projectId }, true)
   },
   deleteNode: (id) => deleteNode(id),
   redirect: (url) => push(url),
   getNodesList: (params) => getNodesList(params)
 }
 
-const NodeChange = ({ node, seriesList, createSeries, getNodesList, state: { contextOpened = true, inProgress = false, deleting = false, error, ...state }, setState, clearState, stateFieldChanged, deleteNode, saveNode, redirect, pathname, query }) => {
+const NodeChange = ({ node, projects, seriesList, createSeries, getNodesList, state: { contextOpened = true, inProgress = false, deleting = false, error, ...state }, setState, clearState, stateFieldChanged, deleteNode, saveNode, redirect, pathname, query }) => {
 
   const actualNode = merge(node, state)
 
@@ -104,7 +105,8 @@ const NodeChange = ({ node, seriesList, createSeries, getNodesList, state: { con
     getNodesList({
       key: "series",
       q: e,
-      layer: '!Note'
+      layer: '!Note',
+      projectId: actualNode.projectId
     })
   }
 
@@ -112,7 +114,7 @@ const NodeChange = ({ node, seriesList, createSeries, getNodesList, state: { con
     if (i >= 0) {
       setState({ inSeries: seriesList[i], seriesId: seriesList[i].id })
     } else {
-      createSeries(e).then(({ error = false, result }) => {
+      createSeries(e, actualNode.projectId).then(({ error = false, result }) => {
         if (!error) {
           setState({
             inSeries: result.body,
@@ -181,6 +183,7 @@ const NodeChange = ({ node, seriesList, createSeries, getNodesList, state: { con
       /> }
 
       <AutoComplete
+        autoWidth={true}
         hintText="Сериал/Коллекция"
         floatingLabelText="Сериал/Коллекция"
         onUpdateInput={seriesOnInput}
@@ -190,6 +193,28 @@ const NodeChange = ({ node, seriesList, createSeries, getNodesList, state: { con
         onNewRequest={seriesOnRequest}
         filter={seriesFilter}
       />
+
+      { projects && projects.values && <SelectField
+        autoWidth={true}
+        value={ actualNode.projectId }
+        onChange={(event, index, value) => {
+          setState({
+            projectId: value,
+            project: value && find(p => p.id === value, projects.values),
+            seriesId: null,
+            inSeries: null
+          })
+          getNodesList({
+            key: "series",
+            layer: '!Note',
+            projectId: value
+          })
+        }}
+        errorText={ pickError("projectId") }
+      >
+        <MenuItem primaryText={<i>Нет</i>} value={null}/>
+        { map((p) => <MenuItem key={p.id} primaryText={p.title} value={p.id} />, projects.values) }
+      </SelectField>}
 
       <div>
         { actualNode.layer !== "Note" && <SelectField

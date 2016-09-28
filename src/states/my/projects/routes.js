@@ -1,6 +1,7 @@
 import { Resolve, resolveSagaStart } from 'commons/resolve';
 import { put, select } from 'redux-saga/effects';
 import { getProjectsList, getProject } from 'projects/redux/actions';
+import { getNodesList } from 'nodes/redux/actions'
 import ProjectsView from './ProjectsView';
 import ProjectView from './ProjectView'
 import { TriptychFullWrapper } from 'triptych';
@@ -10,7 +11,7 @@ export default {
   component: TriptychFullWrapper(Resolve(ProjectsView, 'resolveMyProjects'), "/my/projects"),
   path: 'projects',
 
-  resolve: function* resolveDrafts() {
+  resolve: function* resolveMyProjects() {
     yield put(resolveSagaStart('resolveMyProjects'))
     const userId = yield select(s => s.auth.userId)
     return yield [
@@ -32,11 +33,13 @@ export default {
 
         const projectId = yield select(s => s.resolve.params.projectId)
 
-        const {project} = yield select(s => s.nodes)
+        const {project} = yield select(s => s.projects)
 
         if (!(project && project.id === projectId)) {
           yield put(getProject(projectId))
         }
+
+        yield put(getNodesList({projectId, layer: 'Draft'}))
       }
     }
   ]

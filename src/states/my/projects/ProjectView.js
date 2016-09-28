@@ -16,7 +16,7 @@ import {
   AutoComplete
 } from 'material-ui';
 import { FileInput } from 'commons/files/components';
-
+import NodesFeed from 'nodes/components/NodesFeed';
 
 const mapStateToProps = (state) => ({
   project: state.projects.project,
@@ -84,6 +84,11 @@ const ProjectView = ({ state: { inProgress = false, error, ...state }, setState,
 
     { inProgress ? <LinearProgress /> :
       <RaisedButton label="Сохранить" primary={true} disabled={isEmpty(state)} onClick={action} /> }
+
+    <hr/>
+    <h4>Черновики</h4>
+
+    <NodesFeed filter={{ projectId: project.id, layer: 'Draft' }} />
 
   </div>)
 };

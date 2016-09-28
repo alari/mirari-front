@@ -11,6 +11,6 @@ const mapDispatchToProps = {
 }
 
 const NodeAction = ({node, userId, roles, children}) =>
-  (node && userId && node.userId === userId) ? children : null
+  (node && userId && (node.userId === userId || (node.project && node.project.userId === userId))) ? children : null
 
 export default connect(mapStateToProps, mapDispatchToProps)(NodeAction)

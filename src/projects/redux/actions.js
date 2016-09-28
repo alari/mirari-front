@@ -2,7 +2,7 @@ import {
   PROJECT_GET,
   PROJECT_SAVE,
   PROJECTS_LIST,
-PROJECT_SET_CURRENT
+  PROJECT_SET_CURRENT
 } from './constants';
 import { createApiAction } from 'commons/api';
 

@@ -8,7 +8,9 @@ export default (n) => ({
     { property: "og:title", content: n.title },
     {
       property: "og:image",
-      content: (n.imageId || n.user.imageId) ? ("https://mirari.ru/api/images/" + (n.imageId || n.user.imageId) + "?q=80") : n.user.avatarUrl
+      content: (n.imageId || (n.user && n.user.imageId) || (n.project && n.project.imageId)) ?
+        ("https://mirari.ru/api/images/" + (n.imageId || (n.user && n.user.imageId) || (n.project && n.project.imageId)) + "?q=80") :
+        (n.user ? n.user.avatarUrl : "")
     },
     {
       property: "og:description",
