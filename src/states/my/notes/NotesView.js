@@ -51,6 +51,9 @@ const NotesView = ({ nodes, setPage, nodeId, q, children, title }) => {
           <div className="Notes-container">
             <div className="Notes-list">
               <div className="Notes-listContainer">
+                <Card isActive>
+                  <CardItem>Новая заметка</CardItem>
+                </Card>
                 {map((n) =>
                   <Card key={n.id} isActive={n.id === nodeId}>
                     <CardItem>
