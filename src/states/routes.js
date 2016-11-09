@@ -14,6 +14,8 @@ import {TriptychFullWrapper} from 'triptych'
 import React from 'react'
 import NodeAddButton from "nodes/components/NodeAddButton"
 
+import TestRoutes from "./test/routes";
+
 export default [{
   component: RootView,
   path: '/',
@@ -48,12 +50,14 @@ export default [{
 
   childRoutes: [
     NodesRoutes,
-    AuthRoutes,
+    TestRoutes,
     MyRoutes,
     UsersRoutes,
     ProjectsRoutes,
 
-    AliasRoutes
+    AliasRoutes,
+
+    TestRoutes
   ]
 }
 ]
