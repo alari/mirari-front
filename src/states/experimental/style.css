@@ -1,0 +1,36 @@
+:root {
+  --app-container-width: 600px;
+  --app-indent: 20px;
+
+  --base-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  --base-font: 22px;
+  --base-line-height: 34px;
+
+  --article-title-font: 22px;
+  --article-title-line-height: 34px;
+}
+
+@component App {
+  @descendent container {
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: var(--app-indent);
+    padding-left: var(--app-indent);
+    max-width: var(--app-container-width);
+  }
+}
+
+@component Article {
+  @descendent header {}
+
+  @descendent headerTitle {
+    line-height: var(--article-title-line-height);
+    font-size: var(--article-title-font);
+  }
+
+  @descendent articleBody {
+    line-height: var(--base-line-height);
+    font-size: var(--base-font);
+  }
+}
