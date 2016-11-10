@@ -1,7 +1,6 @@
 import HomeView from "./HomeView/HomeView";
 import RootView from "./RootView";
 import NodesRoutes from "./nodes/routes";
-import AuthRoutes from "./auth/routes";
 import MyRoutes from "./my/routes";
 import AliasRoutes from "./alias/routes"
 import UsersRoutes from "./users/routes"
@@ -14,9 +13,13 @@ import {TriptychFullWrapper} from 'triptych'
 import React from 'react'
 import NodeAddButton from "nodes/components/NodeAddButton"
 
-import TestRoutes from "./test/routes";
+import ExperimentalRoutes from "./experimental/routes";
 
-export default [{
+export default [
+
+  ExperimentalRoutes,
+
+  {
   component: RootView,
   path: '/',
 
@@ -50,14 +53,11 @@ export default [{
 
   childRoutes: [
     NodesRoutes,
-    TestRoutes,
     MyRoutes,
     UsersRoutes,
     ProjectsRoutes,
 
-    AliasRoutes,
-
-    TestRoutes
+    AliasRoutes
   ]
 }
 ]
