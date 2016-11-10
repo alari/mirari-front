@@ -1,7 +1,51 @@
 import "./style.css";
 import React from "react";
+import {AppBar, IconMenu, MenuItem, IconButton, Paper} from "material-ui";
+import {NavigationMoreVert} from "material-ui/svg-icons";
+import getMuiTheme from "material-ui/styles/getMuiTheme";
+import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+import {green100, green500, green700} from "material-ui/styles/colors";
+import {connect} from "react-redux";
+import {Link} from "react-router";
+import {push} from "react-router-redux";
+import {logout} from "commons/auth";
+import Helmet from "react-helmet";
+import {Triptych} from "triptych";
 
-export default () =>
+import moment from "moment";
+import "moment/locale/ru"
+
+moment.locale('ru')
+
+const mapStateToProps = (state) => ({
+  title: state.page.title,
+  meta: (state.page.meta || []).concat([
+    {name: "viewport", content: "width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"}
+  ]),
+  link: (state.page.link || []).concat([
+    {rel:"stylesheet",href:"https://fonts.googleapis.com/css?family=Roboto|Roboto+Slab:400,700&subset=cyrillic",type:"text/css"},
+    {rel:"stylesheet",href:"/bundle.css",type:"text/css",media:"screen,projection"},
+    {rel:"icon",type:"image/png",sizes:"192x192",href:"/assets/favicon/android-icon-192x192.png"},
+    {rel:"icon",type:"image/png",sizes:"32x32",href:"/assets/favicon/favicon-32x32.png"},
+    {rel:"icon",type:"image/png",sizes:"96x96",href:"/assets/favicon/favicon-96x96.png"},
+    {rel:"icon",type:"image/png",sizes:"16x16",href:"/assets/favicon/favicon-16x16.png"}
+  ]),
+  user: state.auth.user
+})
+
+export default connect(mapStateToProps)(({title, link, meta, user, children}) => <div>
+  <Helmet
+    title={title}
+    defaultTitle="Мирари"
+    link={link}
+    meta={meta}
+  />
+
+  {children || <ExperimentalContent />}
+
+</div>);
+
+const ExperimentalContent = () =>
   <div className="App">
     <div className="App-container">
       <article className="Article">
