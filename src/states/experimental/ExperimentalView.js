@@ -1,10 +1,5 @@
 import "./style.css";
 import React from "react";
-import {AppBar, IconMenu, MenuItem, IconButton, Paper} from "material-ui";
-import {NavigationMoreVert} from "material-ui/svg-icons";
-import getMuiTheme from "material-ui/styles/getMuiTheme";
-import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-import {green100, green500, green700} from "material-ui/styles/colors";
 import {connect} from "react-redux";
 import {Link} from "react-router";
 import {push} from "react-router-redux";
