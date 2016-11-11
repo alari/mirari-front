@@ -7,6 +7,8 @@ import {logout} from "commons/auth";
 import Helmet from "react-helmet";
 import {Triptych} from "triptych";
 
+import Headroom from 'react-headrooms'
+
 import moment from "moment";
 import "moment/locale/ru"
 
@@ -35,6 +37,18 @@ export default connect(mapStateToProps)(({title, link, meta, user, children}) =>
     link={link}
     meta={meta}
   />
+
+  <Headroom tolerance={5} offset={200} classes={{
+    initial: 'headroom',
+    pinned: 'is-scrollUp',
+    unpinned: 'is-scrollDown'
+  }}
+  >
+    <div style={{background:'rgba(255,255,255,0.5)', borderBottom:'1px solid black'}}>
+      <span>К контексту</span>
+      <span style={{float:'right'}}>Стать участником | Вход</span>
+    </div>
+  </Headroom>
 
   {children || <ExperimentalContent />}
 

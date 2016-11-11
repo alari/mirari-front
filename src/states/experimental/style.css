@@ -5,6 +5,10 @@
   --app-indent: 20px;
 }
 
+body {
+  background-color: rgba(255, 232, 189, 0.37);
+}
+
 @component ExpApp {
   @descendent container {
     margin-right: auto;
