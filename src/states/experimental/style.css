@@ -41,7 +41,23 @@ body {
     }
   }
   @descendent itemLink {
+    display: inline-block;
+    padding-top: 5px;
+    padding-bottom: 5px;
     color: var(--header-link-color);
+  }
+
+  @descendent logo {}
+  @descendent logoLink {
+    display: flex;
+    padding-top: 0;
+    padding-bottom: 0;
+    height: 100%;
+    align-items: center;
+  }
+  @descendent logoIcon {
+    width: 32px;
+    height: 32px;
   }
 }
 
