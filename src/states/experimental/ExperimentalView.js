@@ -20,7 +20,7 @@ const mapStateToProps = (state) => ({
     {name: "viewport", content: "width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"}
   ]),
   link: (state.page.link || []).concat([
-    {rel:"stylesheet",href:"https://fonts.googleapis.com/css?family=Roboto|Roboto+Slab:400,700&subset=cyrillic",type:"text/css"},
+    {rel:"stylesheet",href:"https://fonts.googleapis.com/css?family=Istok+Web|Lora|Oranienbaum",type:"text/css"},
     {rel:"stylesheet",href:"/bundle.css",type:"text/css",media:"screen,projection"},
     {rel:"icon",type:"image/png",sizes:"192x192",href:"/assets/favicon/android-icon-192x192.png"},
     {rel:"icon",type:"image/png",sizes:"32x32",href:"/assets/favicon/favicon-32x32.png"},
@@ -44,9 +44,14 @@ export default connect(mapStateToProps)(({title, link, meta, user, children}) =>
     unpinned: 'is-scrollDown'
   }}
   >
-    <div style={{background:'rgba(255,255,255,0.5)', borderBottom:'1px solid black'}}>
-      <span>К контексту</span>
-      <span style={{float:'right'}}>Стать участником | Вход</span>
+    <div className="ExpHeader">
+      <div className="ExpHeader-item">
+        <a className="ExpHeader-itemLink" href="#">К контексту</a>
+      </div>
+      <div className="ExpHeader-item--divider"/>
+      <div className="ExpHeader-item">
+        <a className="ExpHeader-itemLink" href="#">Стать участником | Вход</a>
+      </div>
     </div>
   </Headroom>
 
