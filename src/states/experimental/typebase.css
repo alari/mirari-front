@@ -6,15 +6,12 @@
   /* Base font size in pixels. This would result in 22px on desktop */
   --base-font-size: 22;
 
+  --scale: 1.618;
+
   /* How large the line height is as a multiple of font size */
   --base-line-height: 1.5;
 
   --leading: calc(var(--base-line-height) * 1rem);
-
-  /* Rate of growth for headings
-     I actually like this to be slightly smaller then the leading. Makes for tight headings.
-  */
-  --scale: 1.414;
 }
 
 /* Setup */
@@ -76,26 +73,26 @@ h6 {
     line-height: var(--leading);
 }
 h1 {
-    font-size: calc(3 * var(--scale) * 1rem);
-    line-height: calc(3 * var(--leading));
-    margin-top: calc(2 * var(--leading));
+    font-size: calc(var(--scale) * var(--scale) * 1rem);
+    line-height: calc(var(--scale) * var(--leading));
+    margin-top: calc(var(--scale) * var(--leading));
 }
 h2 {
-    font-size: calc(2 * var(--scale) * 1rem);
-    line-height: calc(2 * var(--leading));
-    margin-top: calc(2 * var(--leading));
+    font-size: calc(var(--scale) * 1rem);
+    line-height: calc(var(--scale) * var(--leading));
+    margin-top: calc(var(--scale) * var(--leading));
 }
 h3 {
-    font-size: calc(1 * var(--scale) * 1rem);
+    font-size: calc(var(--scale) * 1rem);
 }
 h4 {
-    font-size: calc(var(--scale) / 2 * 1rem);
+    font-size: 1rem;
 }
 h5 {
-    font-size: calc(var(--scale) / 3 * 1rem);
+    font-size: calc((1 / var(--scale)) * 1rem);
 }
 h6 {
-    font-size: calc(var(--scale) / 4 * 1rem);
+    font-size: calc((1 / var(--scale) / var(--scale)) * 1rem);
 }
 /* Tables */
 

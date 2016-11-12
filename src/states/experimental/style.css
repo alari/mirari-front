@@ -35,6 +35,16 @@ body {
   font-family: var(--interface-font-family);
   font-size: calc(var(--scale) / 2 * 1rem);
 
+  .is-scrollUp {
+    /*TODO: скроллим вверх -- показываем*/
+    position: fixed;
+    top: 0;
+  }
+  .is-scrollDown {
+    /*TODO: скроллим вниз -- прячем*/
+    visibility: hidden;
+  }
+
   @descendent item {
     @modifier divider {
       flex: 1;
@@ -63,6 +73,10 @@ body {
 
 @component ExpAppArticle {
   @descendent header {}
+  @descendent credits {
+    font-family: var(--interface-font-family);
+    font-size: calc(var(--scale) / 2 * 1rem);
+  }
   @descendent headerTitle,
   h1,
   h2,
@@ -71,9 +85,19 @@ body {
   h5,
   h6 {
     font-family: var(--titles-font-family);
+    text-indent: -0.5em;
+    padding-left: 0.5em;
   }
   @descendent articleBody,
   p {
     font-family: var(--text-font-family);
   }
+  @descendent articleBody {
+    padding-bottom: 30%;
+  }
+}
+
+.cta-block {
+  background-color: #394e45;
+  color: #ffe8bd
 }
