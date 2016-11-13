@@ -9,6 +9,7 @@
   --interface-font-family: 'Istok Web', sans-serif;
 
   --header-link-color: #306F68;
+  --header-heght: 43px;
 }
 
 body {
@@ -27,22 +28,38 @@ body {
 }
 
 @component ExpHeader {
-  display: flex;
-  padding-right: var(--app-indent);
-  padding-left: var(--app-indent);
-  background-color: rgba(255,255,255,0.5);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+  position: relative;
   font-family: var(--interface-font-family);
   font-size: calc(var(--scale) / 2 * 1rem);
 
-  .is-scrollUp {
-    /*TODO: скроллим вверх -- показываем*/
+  @descendent natural {
     position: fixed;
+    z-index: 100;
     top: 0;
+    right: 0;
+    left: 0;
+    height: var(--header-heght);
+    background-color: rgba(255,255,255,0.5);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+    transition: transform .15s ease;
+    will-change: transform;
+
+    .is-scrollDown > & {
+      transform: translate3d(0, -100%, 0);
+    }
+    .is-scrollUp > & {
+      transform: none;
+    }
   }
-  .is-scrollDown {
-    /*TODO: скроллим вниз -- прячем*/
-    visibility: hidden;
+
+  @descendent substitute {
+    height: var(--header-heght);
+  }
+
+  @descendent container {
+    display: flex;
+    padding-right: var(--app-indent);
+    padding-left: var(--app-indent);
   }
 
   @descendent item {
@@ -71,9 +88,12 @@ body {
   }
 }
 
-@component ExpAppArticle {
+@component ExpArticle {
   @descendent header {}
   @descendent credits {
+    line-height: var(--leading);
+    margin-top: var(--leading);
+    margin-bottom: 0;
     font-family: var(--interface-font-family);
     font-size: calc(var(--scale) / 2 * 1rem);
   }
@@ -88,16 +108,39 @@ body {
     text-indent: -0.5em;
     padding-left: 0.5em;
   }
-  @descendent articleBody,
+  @descendent body,
   p {
     font-family: var(--text-font-family);
   }
-  @descendent articleBody {
-    padding-bottom: 30%;
+  @descendent body {
+    padding-bottom: calc(var(--scale) * 4rem);
   }
 }
 
-.cta-block {
+@component Interaction {
+  padding-top: var(--leading);
+  padding-bottom: var(--leading);
   background-color: #394e45;
-  color: #ffe8bd
+  color: #ffe8bd;
+
+  @descendent container {
+    padding-right: var(--app-indent);
+    padding-left: var(--app-indent);
+  }
+  @descendent title {
+    padding-bottom: var(--leading);
+    line-height: var(--leading);
+    text-align: center;
+    font-size: calc(var(--scale) * 1rem);
+  }
+  @descendent list {
+    display: flex;
+    margin-right: -var(--app-indent);
+    margin-left: -var(--app-indent);
+  }
+  @descendent item {
+    flex: 1;
+    padding-right: var(--app-indent);
+    padding-left: var(--app-indent);
+  }
 }
