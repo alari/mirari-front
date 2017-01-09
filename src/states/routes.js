@@ -1,6 +1,7 @@
 import HomeView from "./HomeView/HomeView";
 import RootView from "./RootView";
 import NodesRoutes from "./nodes/routes";
+import AuthRoutes from "./auth/routes";
 import MyRoutes from "./my/routes";
 import AliasRoutes from "./alias/routes"
 import UsersRoutes from "./users/routes"
@@ -56,6 +57,7 @@ export default [
     MyRoutes,
     UsersRoutes,
     ProjectsRoutes,
+    AuthRoutes,
 
     AliasRoutes
   ]
